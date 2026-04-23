@@ -733,10 +733,12 @@
 
     .footer-top{
       display:flex;
-      justify-content:space-between;
+      flex-direction:column;
+      justify-content:center;
       align-items:center;
       gap:22px;
       margin-bottom:22px;
+      text-align:center;
     }
 
     .footer-contact p{
@@ -747,6 +749,7 @@
     .footer-socials{
       display:flex;
       flex-wrap:wrap;
+      justify-content:center;
       gap:18px;
     }
 
@@ -764,11 +767,13 @@
 
     .footer-bottom{
       display:flex;
-      flex-wrap:wrap;
-      justify-content:space-between;
-      gap:10px 18px;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
       color:rgba(255,255,255,.56);
       font-size:13px;
+      text-align:center;
     }
 
     .footer-bottom a{
@@ -915,29 +920,20 @@
       <button class="menu-toggle" aria-label="Menu">☰</button>
 
       <nav class="main-nav">
-        <a href="index.html">Domov</a>
+        <a href="cennik.html">Cenník</a>
+        <a href="duo.html">DUO BALÍKY</a>
+        <a href="referencie.html">Referencie</a>
+        <a href="portfolio.html">Portfólio</a>
+        <a href="objednavka.html">Rezervácia</a>
 
         <div class="nav-item">
           <button class="nav-btn">Služby ▾</button>
           <div class="dropdown">
             <a href="sluzby.html">Prehľad služieb</a>
-            <a href="cennik.html">Cenník</a>
-            <a href="odporucanie.html">Zľavy</a>
           </div>
         </div>
 
-        <div class="nav-item">
-          <button class="nav-btn">Portfólio ▾</button>
-          <div class="dropdown">
-            <a href="portfolio.html">Video projekty</a>
-            <a href="referencie.html">Referencie</a>
-          </div>
-        </div>
-
-        <a href="omne.html">O mne</a>
         <a href="kontakt.html">Kontakt</a>
-        <a href="objednavka.html">Rezervovať termín</a>
-        <a href="duo.html">DUO BALÍKY</a>
       </nav>
     </div>
   </header>
@@ -955,12 +951,11 @@
       <div class="hero-copy reveal">
         <div class="eyebrow">Kamera • Postprodukcia • Cinematic vizuál</div>
         <h1>
-          Video, ktoré <span>má atmosféru</span>
+          Kamera <span>& postprodukcia</span>
         </h1>
         <p>
-          Moderná vizuálna prezentácia pre stužkové, svadby, eventy a klipy.
-          Tvoja značka, tvoj moment alebo tvoj príbeh spracovaný tak, aby nepôsobil ako obyčajné video,
-          ale ako zážitok.
+          Portfólio vybraných video projektov, kde je dôraz na atmosféru, emóciu, rytmus strihu a výsledný cinematic dojem.
+          Jednoducho ukážka mojej práce v oblasti kamery a postprodukcie.
         </p>
         <div class="hero-actions">
           <a href="objednavka.html" class="btn btn-primary">Rezervovať termín</a>
@@ -986,19 +981,19 @@
           </div>
 
           <div class="mini-panel panel-1" id="panelOne">
-            <span>Štýl</span>
-            <strong>Film look</strong>
-            <span>Glow / depth / motion</span>
+            <span>Referencia</span>
+            <strong>„Top video”</strong>
+            <span>Skvelý prístup a výsledok</span>
           </div>
 
           <div class="mini-panel panel-2" id="panelTwo">
-            <span>Obsah</span>
-            <strong>Events</strong>
-            <span>Stužkové • Svadby • Klipy</span>
+            <span>Referencia</span>
+            <strong>„Odporúčam”</strong>
+            <span>Rýchla komunikácia a kvalita</span>
           </div>
 
           <div class="side-quote" id="sideQuote">
-            Nie len záznam. Skôr vizuálny pocit, rytmus a energia, ktorá funguje aj na webe, aj vo videu.
+            Referencia: „Profesionálny prístup, krásne spracovanie a video, ku ktorému sa stále radi vraciame.”
           </div>
         </div>
       </div>
@@ -1007,61 +1002,6 @@
     <div class="scroll-cue">
       <span>Scroll</span>
       <span></span>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <div class="section-title reveal">
-        <h2>Prezentácia, ktorá nepôsobí obyčajne</h2>
-        <p>
-          Ponechal som tvoje odkazy, kontakty a základné smerovanie, ale celú stránku som posunul do viac filmového,
-          moderného a “high-end” vizuálu.
-        </p>
-      </div>
-
-      <div class="intro-grid">
-        <div class="feature-card reveal">
-          <h3>Čo je nové</h3>
-          <p>
-            Namiesto klasickej jednoduchej štruktúry je tu väčší dôraz na dojem, vrstvy, presklené panely,
-            glow efekty, jemný parallax pohyb a sekcie, ktoré lepšie predajú tvoju značku.
-          </p>
-          <div class="feature-list">
-            <div>
-              <strong>Cinematic hero</strong>
-              <p>Video pozadie, presklený floating panel a silnejší prvý dojem.</p>
-            </div>
-            <div>
-              <strong>Luxusnejší feel</strong>
-              <p>Glassmorphism, kontrast, svetlá a moderne pôsobiace rozloženie.</p>
-            </div>
-            <div>
-              <strong>Portfólio v lepšom layoute</strong>
-              <p>Videá pôsobia ako showcase, nie len ako vložené iframy.</p>
-            </div>
-            <div>
-              <strong>Viac pohybu</strong>
-              <p>Scroll a pohyb myši oživujú stránku bez toho, aby bola prehnaná.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="stats-card reveal">
-          <div class="stat">
-            <strong>01</strong>
-            <p>Silný úvodný dojem, ktorý sa viac hodí ku kameramanovi a editorovi.</p>
-          </div>
-          <div class="stat">
-            <strong>02</strong>
-            <p>Obsah ostáva tvoj, len vizuál a flow pôsobia profesionálnejšie.</p>
-          </div>
-          <div class="stat">
-            <strong>03</strong>
-            <p>Stále je to čisté HTML, CSS a JavaScript bez nutnosti frameworku.</p>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -1127,13 +1067,12 @@
     <div class="container">
       <div class="cta-grid">
         <div class="cta-card reveal">
-          <h3>Chceš rezervovať termín?</h3>
+          <h3>Rezervácia</h3>
           <p>
-            Ak chceš, aby tvoja stránka aj značka pôsobili modernejšie a prémiovejšie, tento štýl vie fungovať aj na ďalších podstránkach.
-            Napríklad kontakt, cenník, DUO balíky alebo referencie.
+            Ak ťa moja tvorba zaujala a chceš si rezervovať termín, stačí prejsť na objednávku alebo ma kontaktovať priamo.
           </p>
           <div class="hero-actions">
-            <a href="objednavka.html" class="btn btn-primary">Prejsť na objednávku</a>
+            <a href="objednavka.html" class="btn btn-primary">Prejsť na rezerváciu</a>
             <a href="kontakt.html" class="btn btn-secondary">Kontakt</a>
           </div>
         </div>
