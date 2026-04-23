@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Prometheus VFX Scroll</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+overflow-x:hidden;
+background:black;
+font-family:Arial, sans-serif;
+color:white;
+height:700vh;
+}
+
+/* WEBGL canvas */
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+/* HERO */
+.hero{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+perspective:2000px;
+}
+
+.card{
+
+width:500px;
+height:300px;
+
+background:
+linear-gradient(
+135deg,
+rgba(255,255,255,.12),
+rgba(0,180,255,.05)
+);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.15);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:60px;
+font-weight:bold;
+letter-spacing:4px;
+
+transform-style:preserve-3d;
+
+box-shadow:
+0 0 80px rgba(0,180,255,.2);
+
+transition:transform .15s linear;
+}
+
+section{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:90px;
+font-weight:700;
+text-transform:uppercase;
+letter-spacing:10px;
+opacity:.15;
+}
+
+.video-panel{
+
+width:70vw;
+height:70vh;
+
+border-radius:30px;
+overflow:hidden;
+
+transform-style:preserve-3d;
+
+box-shadow:
+0 0 80px rgba(255,255,255,.15);
+
+}
+
+.video-panel video{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+</style>
+</head>
+<body>
+
+<div class="hero">
+<div class="card" id="card">
+PROMETHEUS
+</div>
+</div>
+
+
+<section>Immersion</section>
+
+<section>
+<div class="video-panel">
+<video autoplay muted loop>
+<source src="https://www.w3schools.com/html/mov_bbb.mp4">
+</video>
+</div>
+</section>
+
+<section>VFX Depth</section>
+
+<section>
+<div class="video-panel">
+<video autoplay muted loop>
+<source src="https://www.w3schools.com/html/movie.mp4">
+</video>
+</div>
+</section>
+
+
+<script>
+
+/* ---------- THREE JS SPACE ---------- */
+
+let scene = new THREE.Scene();
+
+let camera = new THREE.PerspectiveCamera(
+75,
+window.innerWidth/window.innerHeight,
+0.1,
+1000
+);
+
+camera.position.z=30;
+
+let renderer=new THREE.WebGLRenderer({
+alpha:true,
+antialias:true
+});
+
+renderer.setSize(
+window.innerWidth,
+window.innerHeight
+);
+
+document.body.appendChild(renderer.domElement);
+
+
+/* particles */
+
+const geometry = new THREE.BufferGeometry();
+
+let vertices=[];
+
+for(let i=0;i<4000;i++){
+
+vertices.push(
+Math.random()*300-150,
+Math.random()*300-150,
+Math.random()*300-150
+);
+
+}
+
+geometry.setAttribute(
+'position',
+new THREE.Float32BufferAttribute(vertices,3)
+);
+
+let material = new THREE.PointsMaterial({
+size:0.25
+});
+
+let stars=new THREE.Points(
+geometry,
+material
+);
+
+scene.add(stars);
+
+
+function animate(){
+
+requestAnimationFrame(animate);
+
+stars.rotation.y +=0.0008;
+stars.rotation.x +=0.0002;
+
+renderer.render(scene,camera);
+
+}
+
+animate();
+
+
+/* ---------- SCROLL CINEMATIC ---------- */
+
+const card=document.getElementById("card");
+
+window.addEventListener("scroll",()=>{
+
+let s=window.scrollY;
+
+let rotateY=s*0.07;
+let rotateX=s*0.03;
+
+let z=s*-1.2;
+
+card.style.transform=
+`
+rotateY(${rotateY}deg)
+rotateX(${rotateX}deg)
+translateZ(${z}px)
+translateY(${s*0.6}px)
+`;
+
+camera.position.z=30+(s*0.02);
+stars.rotation.z=s*0.0004;
+
+});
+
+
+window.addEventListener("resize",()=>{
+
+camera.aspect=
+window.innerWidth/window.innerHeight;
+
+camera.updateProjectionMatrix();
+
+renderer.setSize(
+window.innerWidth,
+window.innerHeight
+);
+
+});
+
+</script>
+
+</body>
+</html>
