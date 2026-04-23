@@ -1,260 +1,1262 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Viktor Boguský | Kamera & Postprodukcia</title>
+  <link rel="icon" type="image/png" href="Viktor-removebg-preview.png" />
+  <style>
+    :root{
+      --bg:#050505;
+      --bg-soft:#0b0b0d;
+      --panel:rgba(255,255,255,0.07);
+      --panel-strong:rgba(255,255,255,0.12);
+      --line:rgba(255,255,255,0.12);
+      --text:#ffffff;
+      --muted:rgba(255,255,255,0.72);
+      --accent:#d6e7ff;
+      --glow:rgba(150,190,255,0.22);
+      --max:1240px;
+      --radius:28px;
+      --header-h:72px;
+      --shadow:0 30px 80px rgba(0,0,0,.45);
+    }
 
-<title>Prometheus VFX Scroll</title>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    html{
+      scroll-behavior:smooth;
+    }
 
-<style>
+    body{
+      background:
+        radial-gradient(circle at 20% 20%, rgba(90,120,255,0.12), transparent 28%),
+        radial-gradient(circle at 80% 10%, rgba(255,255,255,0.08), transparent 18%),
+        radial-gradient(circle at 50% 100%, rgba(130,70,255,0.10), transparent 28%),
+        var(--bg);
+      color:var(--text);
+      font-family:Arial, Helvetica, sans-serif;
+      padding-top:var(--header-h);
+      overflow-x:hidden;
+    }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size:48px 48px;
+      mask-image:radial-gradient(circle at center, black 30%, transparent 90%);
+      opacity:.18;
+      z-index:-2;
+    }
 
-body{
-overflow-x:hidden;
-background:black;
-font-family:Arial, sans-serif;
-color:white;
-height:700vh;
-}
+    a{ color:inherit; }
 
-/* WEBGL canvas */
-canvas{
-position:fixed;
-top:0;
-left:0;
-z-index:-1;
-}
+    .container{
+      width:min(100% - 32px, var(--max));
+      margin:0 auto;
+    }
 
-/* HERO */
-.hero{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-perspective:2000px;
-}
+    /* Header */
+    header{
+      position:fixed;
+      inset:0 0 auto 0;
+      height:var(--header-h);
+      z-index:1000;
+      background:rgba(0,0,0,.55);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
 
-.card{
+    .header-inner{
+      width:min(100% - 32px, var(--max));
+      height:100%;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+    }
 
-width:500px;
-height:300px;
+    .logo{
+      color:#fff;
+      text-decoration:none;
+      font-size:16px;
+      letter-spacing:2px;
+      font-weight:700;
+      white-space:nowrap;
+    }
 
-background:
-linear-gradient(
-135deg,
-rgba(255,255,255,.12),
-rgba(0,180,255,.05)
-);
+    .menu-toggle{
+      display:none;
+      background:none;
+      border:none;
+      color:#fff;
+      font-size:28px;
+      cursor:pointer;
+    }
 
-backdrop-filter:blur(20px);
+    .main-nav{
+      display:flex;
+      align-items:center;
+      gap:28px;
+    }
 
-border:1px solid rgba(255,255,255,.15);
+    .main-nav a,
+    .nav-btn{
+      background:none;
+      border:none;
+      color:#fff;
+      text-decoration:none;
+      font-size:14px;
+      cursor:pointer;
+      opacity:.85;
+      padding:8px 0;
+      font-family:inherit;
+      transition:.25s ease;
+    }
 
-display:flex;
-justify-content:center;
-align-items:center;
+    .main-nav a:hover,
+    .nav-btn:hover{
+      opacity:1;
+      transform:translateY(-1px);
+    }
 
-font-size:60px;
-font-weight:bold;
-letter-spacing:4px;
+    .nav-item{ position:relative; }
 
-transform-style:preserve-3d;
+    .dropdown{
+      position:absolute;
+      top:calc(100% + 12px);
+      left:0;
+      min-width:220px;
+      display:none;
+      flex-direction:column;
+      padding:10px;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:16px;
+      background:rgba(10,10,12,.94);
+      box-shadow:var(--shadow);
+    }
 
-box-shadow:
-0 0 80px rgba(0,180,255,.2);
+    .dropdown a{
+      padding:10px 12px;
+      border-radius:10px;
+      font-size:13px;
+      white-space:nowrap;
+    }
 
-transition:transform .15s linear;
-}
+    .dropdown a:hover{
+      background:rgba(255,255,255,.06);
+    }
 
-section{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:90px;
-font-weight:700;
-text-transform:uppercase;
-letter-spacing:10px;
-opacity:.15;
-}
+    .nav-item.active .dropdown{
+      display:flex;
+    }
 
-.video-panel{
+    /* Hero */
+    .hero{
+      position:relative;
+      min-height:calc(100vh - var(--header-h));
+      display:flex;
+      align-items:center;
+      overflow:hidden;
+      isolation:isolate;
+    }
 
-width:70vw;
-height:70vh;
+    .hero-video-wrap{
+      position:absolute;
+      inset:0;
+      overflow:hidden;
+      z-index:-3;
+    }
 
-border-radius:30px;
-overflow:hidden;
+    .hero video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transform:scale(1.08);
+      filter:brightness(.38) saturate(1.08);
+    }
 
-transform-style:preserve-3d;
+    .hero-overlay{
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,.36), rgba(0,0,0,.62)),
+        radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,.2) 45%, rgba(0,0,0,.7) 100%);
+      z-index:-2;
+    }
 
-box-shadow:
-0 0 80px rgba(255,255,255,.15);
+    .hero-glow,
+    .hero-glow::before,
+    .hero-glow::after{
+      position:absolute;
+      border-radius:999px;
+      filter:blur(35px);
+      pointer-events:none;
+    }
 
-}
+    .hero-glow{
+      width:42vw;
+      height:42vw;
+      right:-12vw;
+      top:5vh;
+      background:rgba(94, 129, 255, .14);
+      z-index:-1;
+      animation:floatGlow 12s ease-in-out infinite;
+    }
 
-.video-panel video{
-width:100%;
-height:100%;
-object-fit:cover;
-}
+    .hero-glow::before{
+      content:"";
+      width:24vw;
+      height:24vw;
+      left:-18vw;
+      top:28vh;
+      background:rgba(157, 104, 255, .12);
+      animation:floatGlow 10s ease-in-out infinite reverse;
+    }
 
-</style>
+    .hero-glow::after{
+      content:"";
+      width:16vw;
+      height:16vw;
+      left:-2vw;
+      top:12vh;
+      background:rgba(255,255,255,.08);
+    }
+
+    @keyframes floatGlow{
+      0%,100%{ transform:translate3d(0,0,0); }
+      50%{ transform:translate3d(-2vw,2vh,0); }
+    }
+
+    .hero-inner{
+      width:min(100% - 32px, var(--max));
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:center;
+      padding:48px 0 36px;
+    }
+
+    .hero-copy{
+      max-width:720px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 14px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      color:rgba(255,255,255,.85);
+      font-size:12px;
+      letter-spacing:1.4px;
+      text-transform:uppercase;
+      margin-bottom:18px;
+      backdrop-filter:blur(8px);
+    }
+
+    .eyebrow::before{
+      content:"";
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--accent);
+      box-shadow:0 0 18px var(--accent);
+    }
+
+    .hero h1{
+      font-size:clamp(42px, 8vw, 92px);
+      line-height:.95;
+      letter-spacing:-2px;
+      max-width:8ch;
+      text-transform:uppercase;
+    }
+
+    .hero h1 span{
+      display:block;
+      color:rgba(255,255,255,.58);
+    }
+
+    .hero-copy p{
+      margin-top:22px;
+      max-width:620px;
+      font-size:clamp(16px, 2vw, 19px);
+      line-height:1.6;
+      color:var(--muted);
+    }
+
+    .hero-actions{
+      margin-top:30px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      min-height:50px;
+      padding:0 24px;
+      border-radius:999px;
+      text-decoration:none;
+      font-weight:700;
+      font-size:14px;
+      transition:.28s ease;
+      border:1px solid transparent;
+    }
+
+    .btn-primary{
+      background:#fff;
+      color:#000;
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-2px);
+      box-shadow:0 12px 30px rgba(255,255,255,.18);
+    }
+
+    .btn-secondary{
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      border-color:rgba(255,255,255,.1);
+      backdrop-filter:blur(10px);
+    }
+
+    .btn-secondary:hover{
+      background:rgba(255,255,255,.1);
+      transform:translateY(-2px);
+    }
+
+    .hero-side{
+      position:relative;
+      height:600px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      perspective:1400px;
+    }
+
+    .floating-scene{
+      position:relative;
+      width:min(100%, 520px);
+      height:100%;
+    }
+
+    .glass-card,
+    .mini-panel,
+    .side-quote{
+      position:absolute;
+      border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+      backdrop-filter:blur(18px);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .glass-card{
+      inset:50px 40px 100px 40px;
+      border-radius:34px;
+      transform:rotateX(10deg) rotateY(-18deg) translate3d(0,0,0);
+      transform-style:preserve-3d;
+      transition:transform .18s linear;
+    }
+
+    .glass-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(115deg, rgba(255,255,255,.12), transparent 34%),
+        radial-gradient(circle at 70% 30%, rgba(120,170,255,.16), transparent 20%),
+        radial-gradient(circle at 30% 75%, rgba(170,120,255,.12), transparent 22%);
+      pointer-events:none;
+    }
+
+    .glass-inner-video{
+      position:absolute;
+      inset:0;
+    }
+
+    .glass-inner-video video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      filter:brightness(.56) contrast(1.08);
+    }
+
+    .glass-ui{
+      position:absolute;
+      inset:auto 18px 18px 18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:16px;
+      z-index:2;
+    }
+
+    .glass-tag{
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      font-size:12px;
+      letter-spacing:1px;
+      text-transform:uppercase;
+    }
+
+    .glass-title{
+      font-size:clamp(30px, 4vw, 44px);
+      font-weight:800;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      text-shadow:0 10px 30px rgba(0,0,0,.55);
+    }
+
+    .mini-panel{
+      width:180px;
+      height:110px;
+      border-radius:22px;
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      color:rgba(255,255,255,.88);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      transition:transform .2s linear;
+    }
+
+    .mini-panel strong{
+      font-size:22px;
+      letter-spacing:0;
+    }
+
+    .panel-1{ top:36px; right:0; transform:rotateZ(7deg); }
+    .panel-2{ bottom:34px; left:0; transform:rotateZ(-8deg); }
+
+    .side-quote{
+      right:-12px;
+      bottom:160px;
+      width:210px;
+      padding:18px;
+      border-radius:24px;
+      font-size:13px;
+      line-height:1.6;
+      color:var(--muted);
+      transform:rotateY(-16deg);
+    }
+
+    .scroll-cue{
+      position:absolute;
+      left:50%;
+      bottom:28px;
+      transform:translateX(-50%);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:10px;
+      color:rgba(255,255,255,.66);
+      font-size:12px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+    }
+
+    .scroll-cue span:last-child{
+      width:1px;
+      height:42px;
+      background:linear-gradient(to bottom, rgba(255,255,255,.8), transparent);
+      animation:scrollLine 1.7s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine{
+      0%{ transform:scaleY(.35); transform-origin:top; opacity:.3; }
+      50%{ transform:scaleY(1); transform-origin:top; opacity:1; }
+      100%{ transform:scaleY(.35); transform-origin:bottom; opacity:.3; }
+    }
+
+    /* Sections */
+    .section{
+      position:relative;
+      padding:110px 0;
+    }
+
+    .section-title{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:24px;
+      margin-bottom:34px;
+    }
+
+    .section-title h2{
+      font-size:clamp(30px, 5vw, 54px);
+      line-height:1;
+      text-transform:uppercase;
+      letter-spacing:-1px;
+    }
+
+    .section-title p{
+      max-width:440px;
+      color:var(--muted);
+      line-height:1.65;
+    }
+
+    .intro-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:28px;
+      align-items:stretch;
+    }
+
+    .feature-card,
+    .stats-card,
+    .cta-card,
+    .contact-card{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      backdrop-filter:blur(14px);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .feature-card{
+      min-height:420px;
+      padding:28px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .feature-card::before{
+      content:"";
+      position:absolute;
+      inset:auto auto -120px -80px;
+      width:260px;
+      height:260px;
+      border-radius:50%;
+      background:var(--glow);
+      filter:blur(25px);
+      pointer-events:none;
+    }
+
+    .feature-card h3,
+    .stats-card h3,
+    .contact-card h3,
+    .cta-card h3{
+      font-size:26px;
+      margin-bottom:14px;
+      text-transform:uppercase;
+      letter-spacing:-.5px;
+    }
+
+    .feature-card p,
+    .stats-card p,
+    .contact-card p,
+    .cta-card p{
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .feature-list{
+      margin-top:26px;
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:16px;
+    }
+
+    .feature-list div{
+      padding:16px;
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:20px;
+      background:rgba(255,255,255,.03);
+    }
+
+    .feature-list strong{
+      display:block;
+      margin-bottom:6px;
+      font-size:15px;
+    }
+
+    .stats-card{
+      padding:28px;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
+      min-height:420px;
+    }
+
+    .stat{
+      padding:18px;
+      border-radius:20px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .stat strong{
+      display:block;
+      font-size:34px;
+      margin-bottom:6px;
+    }
+
+    /* Portfolio */
+    .portfolio{
+      padding-top:40px;
+    }
+
+    .portfolio-grid{
+      display:grid;
+      grid-template-columns:repeat(12, 1fr);
+      gap:22px;
+    }
+
+    .video-card{
+      grid-column:span 4;
+      position:relative;
+      border-radius:28px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background:#000;
+      box-shadow:var(--shadow);
+      transform:translateY(0) scale(1);
+      transition:transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+    }
+
+    .video-card:hover{
+      transform:translateY(-6px) scale(1.01);
+      border-color:rgba(255,255,255,.18);
+      box-shadow:0 30px 90px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.04) inset;
+    }
+
+    .video-card.large{
+      grid-column:span 6;
+    }
+
+    .video-shell{
+      position:relative;
+      width:100%;
+      padding-top:56.25%;
+      background:#000;
+      overflow:hidden;
+    }
+
+    .video-shell iframe{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      border:0;
+    }
+
+    .video-meta{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding:16px 18px;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    }
+
+    .video-meta strong{
+      font-size:15px;
+    }
+
+    .video-meta span{
+      font-size:12px;
+      color:rgba(255,255,255,.6);
+      text-transform:uppercase;
+      letter-spacing:1.2px;
+      white-space:nowrap;
+    }
+
+    /* CTA / Contact */
+    .cta-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:28px;
+    }
+
+    .cta-card,
+    .contact-card{
+      padding:30px;
+    }
+
+    .contact-list{
+      margin-top:22px;
+      display:grid;
+      gap:14px;
+    }
+
+    .contact-item{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      padding:14px 16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      text-decoration:none;
+    }
+
+    .contact-item span{
+      color:rgba(255,255,255,.65);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:1.2px;
+    }
+
+    .contact-item strong{
+      font-size:15px;
+      word-break:break-word;
+    }
+
+    footer.footer{
+      padding:38px 0 28px;
+      border-top:1px solid rgba(255,255,255,.08);
+      margin-top:20px;
+    }
+
+    .footer-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:22px;
+      margin-bottom:22px;
+    }
+
+    .footer-contact p{
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .footer-socials{
+      display:flex;
+      flex-wrap:wrap;
+      gap:18px;
+    }
+
+    .footer-socials a{
+      color:#fff;
+      text-decoration:none;
+      opacity:.72;
+      transition:.25s ease;
+    }
+
+    .footer-socials a:hover{
+      opacity:1;
+      transform:translateY(-1px);
+    }
+
+    .footer-bottom{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      gap:10px 18px;
+      color:rgba(255,255,255,.56);
+      font-size:13px;
+    }
+
+    .footer-bottom a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    /* Reveal */
+    .reveal{
+      opacity:0;
+      transform:translateY(34px);
+      transition:opacity .8s ease, transform .8s ease;
+    }
+
+    .reveal.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 1080px){
+      .hero-inner,
+      .intro-grid,
+      .cta-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero-side{
+        height:500px;
+      }
+
+      .section-title{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .video-card,
+      .video-card.large{
+        grid-column:span 6;
+      }
+    }
+
+    @media (max-width: 768px){
+      :root{
+        --header-h:64px;
+        --radius:22px;
+      }
+
+      .menu-toggle{
+        display:block;
+      }
+
+      .main-nav{
+        position:absolute;
+        top:100%;
+        left:0;
+        width:100%;
+        padding:14px 16px 18px;
+        flex-direction:column;
+        align-items:stretch;
+        gap:0;
+        display:none;
+        background:rgba(5,5,5,.96);
+        border-bottom:1px solid rgba(255,255,255,.08);
+      }
+
+      .main-nav.active{
+        display:flex;
+      }
+
+      .main-nav a,
+      .nav-btn{
+        width:100%;
+        text-align:left;
+        padding:14px 6px;
+        font-size:15px;
+      }
+
+      .dropdown{
+        position:static;
+        margin:0 0 8px 0;
+        border-radius:14px;
+        box-shadow:none;
+        min-width:100%;
+      }
+
+      .hero{
+        min-height:auto;
+      }
+
+      .hero-inner{
+        padding:34px 0 72px;
+      }
+
+      .hero h1{
+        max-width:none;
+      }
+
+      .hero-side{
+        height:420px;
+      }
+
+      .glass-card{
+        inset:36px 22px 92px 22px;
+      }
+
+      .mini-panel{
+        width:145px;
+        height:94px;
+      }
+
+      .side-quote{
+        width:170px;
+        right:0;
+        bottom:130px;
+      }
+
+      .feature-list{
+        grid-template-columns:1fr;
+      }
+
+      .portfolio-grid{
+        grid-template-columns:1fr;
+      }
+
+      .video-card,
+      .video-card.large{
+        grid-column:auto;
+      }
+
+      .footer-top,
+      .footer-bottom{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<div class="hero">
-<div class="card" id="card">
-PROMETHEUS
-</div>
-</div>
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo">Viktor Boguský</a>
+      <button class="menu-toggle" aria-label="Menu">☰</button>
 
+      <nav class="main-nav">
+        <a href="index.html">Domov</a>
 
-<section>Immersion</section>
+        <div class="nav-item">
+          <button class="nav-btn">Služby ▾</button>
+          <div class="dropdown">
+            <a href="sluzby.html">Prehľad služieb</a>
+            <a href="cennik.html">Cenník</a>
+            <a href="odporucanie.html">Zľavy</a>
+          </div>
+        </div>
 
-<section>
-<div class="video-panel">
-<video autoplay muted loop>
-<source src="https://www.w3schools.com/html/mov_bbb.mp4">
-</video>
-</div>
-</section>
+        <div class="nav-item">
+          <button class="nav-btn">Portfólio ▾</button>
+          <div class="dropdown">
+            <a href="portfolio.html">Video projekty</a>
+            <a href="referencie.html">Referencie</a>
+          </div>
+        </div>
 
-<section>VFX Depth</section>
+        <a href="omne.html">O mne</a>
+        <a href="kontakt.html">Kontakt</a>
+        <a href="objednavka.html">Rezervovať termín</a>
+        <a href="duo.html">DUO BALÍKY</a>
+      </nav>
+    </div>
+  </header>
 
-<section>
-<div class="video-panel">
-<video autoplay muted loop>
-<source src="https://www.w3schools.com/html/movie.mp4">
-</video>
-</div>
-</section>
+  <section class="hero" id="top">
+    <div class="hero-video-wrap">
+      <video autoplay muted loop playsinline>
+        <source src="uvod_video.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-glow"></div>
 
+    <div class="hero-inner">
+      <div class="hero-copy reveal">
+        <div class="eyebrow">Kamera • Postprodukcia • Cinematic vizuál</div>
+        <h1>
+          Video, ktoré <span>má atmosféru</span>
+        </h1>
+        <p>
+          Moderná vizuálna prezentácia pre stužkové, svadby, eventy a klipy.
+          Tvoja značka, tvoj moment alebo tvoj príbeh spracovaný tak, aby nepôsobil ako obyčajné video,
+          ale ako zážitok.
+        </p>
+        <div class="hero-actions">
+          <a href="objednavka.html" class="btn btn-primary">Rezervovať termín</a>
+          <a href="#portfolio" class="btn btn-secondary">Pozrieť portfólio</a>
+        </div>
+      </div>
 
-<script>
+      <div class="hero-side reveal">
+        <div class="floating-scene" id="floatingScene">
+          <div class="glass-card" id="glassCard">
+            <div class="glass-inner-video">
+              <video autoplay muted loop playsinline>
+                <source src="uvod_video.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="glass-ui">
+              <div>
+                <div class="glass-tag">Cinematic Edit</div>
+                <div class="glass-title">Viktor</div>
+              </div>
+              <div class="glass-tag">4K / Motion</div>
+            </div>
+          </div>
 
-/* ---------- THREE JS SPACE ---------- */
+          <div class="mini-panel panel-1" id="panelOne">
+            <span>Štýl</span>
+            <strong>Film look</strong>
+            <span>Glow / depth / motion</span>
+          </div>
 
-let scene = new THREE.Scene();
+          <div class="mini-panel panel-2" id="panelTwo">
+            <span>Obsah</span>
+            <strong>Events</strong>
+            <span>Stužkové • Svadby • Klipy</span>
+          </div>
 
-let camera = new THREE.PerspectiveCamera(
-75,
-window.innerWidth/window.innerHeight,
-0.1,
-1000
-);
+          <div class="side-quote" id="sideQuote">
+            Nie len záznam. Skôr vizuálny pocit, rytmus a energia, ktorá funguje aj na webe, aj vo videu.
+          </div>
+        </div>
+      </div>
+    </div>
 
-camera.position.z=30;
+    <div class="scroll-cue">
+      <span>Scroll</span>
+      <span></span>
+    </div>
+  </section>
 
-let renderer=new THREE.WebGLRenderer({
-alpha:true,
-antialias:true
-});
+  <section class="section">
+    <div class="container">
+      <div class="section-title reveal">
+        <h2>Prezentácia, ktorá nepôsobí obyčajne</h2>
+        <p>
+          Ponechal som tvoje odkazy, kontakty a základné smerovanie, ale celú stránku som posunul do viac filmového,
+          moderného a “high-end” vizuálu.
+        </p>
+      </div>
 
-renderer.setSize(
-window.innerWidth,
-window.innerHeight
-);
+      <div class="intro-grid">
+        <div class="feature-card reveal">
+          <h3>Čo je nové</h3>
+          <p>
+            Namiesto klasickej jednoduchej štruktúry je tu väčší dôraz na dojem, vrstvy, presklené panely,
+            glow efekty, jemný parallax pohyb a sekcie, ktoré lepšie predajú tvoju značku.
+          </p>
+          <div class="feature-list">
+            <div>
+              <strong>Cinematic hero</strong>
+              <p>Video pozadie, presklený floating panel a silnejší prvý dojem.</p>
+            </div>
+            <div>
+              <strong>Luxusnejší feel</strong>
+              <p>Glassmorphism, kontrast, svetlá a moderne pôsobiace rozloženie.</p>
+            </div>
+            <div>
+              <strong>Portfólio v lepšom layoute</strong>
+              <p>Videá pôsobia ako showcase, nie len ako vložené iframy.</p>
+            </div>
+            <div>
+              <strong>Viac pohybu</strong>
+              <p>Scroll a pohyb myši oživujú stránku bez toho, aby bola prehnaná.</p>
+            </div>
+          </div>
+        </div>
 
-document.body.appendChild(renderer.domElement);
+        <div class="stats-card reveal">
+          <div class="stat">
+            <strong>01</strong>
+            <p>Silný úvodný dojem, ktorý sa viac hodí ku kameramanovi a editorovi.</p>
+          </div>
+          <div class="stat">
+            <strong>02</strong>
+            <p>Obsah ostáva tvoj, len vizuál a flow pôsobia profesionálnejšie.</p>
+          </div>
+          <div class="stat">
+            <strong>03</strong>
+            <p>Stále je to čisté HTML, CSS a JavaScript bez nutnosti frameworku.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <section class="section portfolio" id="portfolio">
+    <div class="container">
+      <div class="section-title reveal">
+        <h2>Portfólio</h2>
+        <p>
+          Tu si môžeš nechať svoje videá presne ako ich máš teraz. Ja som len upravil spôsob, ako sú vizuálne podané.
+        </p>
+      </div>
 
-/* particles */
+      <div class="portfolio-grid">
+        <article class="video-card large reveal">
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/3zES1AlxCd4" allowfullscreen></iframe></div>
+          <div class="video-meta"><strong>Video projekt</strong><span>Featured</span></div>
+        </article>
 
-const geometry = new THREE.BufferGeometry();
+        <article class="video-card large reveal">
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/V8z1SuHkfCk" allowfullscreen></iframe></div>
+          <div class="video-meta"><strong>Video projekt</strong><span>Featured</span></div>
+        </article>
 
-let vertices=[];
+        <article class="video-card reveal">
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/OFbEqTHUjWs" allowfullscreen></iframe></div>
+          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+        </article>
 
-for(let i=0;i<4000;i++){
+        <article class="video-card reveal">
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/gsAweub-Gak" allowfullscreen></iframe></div>
+          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+        </article>
 
-vertices.push(
-Math.random()*300-150,
-Math.random()*300-150,
-Math.random()*300-150
-);
+        <article class="video-card reveal">
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/LnRKT-GFs0k" allowfullscreen></iframe></div>
+          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+        </article>
 
-}
+        <article class="video-card reveal">
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/eMUl9JdsNG0" allowfullscreen></iframe></div>
+          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+        </article>
 
-geometry.setAttribute(
-'position',
-new THREE.Float32BufferAttribute(vertices,3)
-);
+        <article class="video-card reveal">
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/9Z8BojDP5no" allowfullscreen></iframe></div>
+          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+        </article>
 
-let material = new THREE.PointsMaterial({
-size:0.25
-});
+        <article class="video-card reveal">
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/NDVJBNPrBe0" allowfullscreen></iframe></div>
+          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+        </article>
 
-let stars=new THREE.Points(
-geometry,
-material
-);
+        <article class="video-card reveal">
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/4qI7UFOcfo4" allowfullscreen></iframe></div>
+          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
 
-scene.add(stars);
+  <section class="section">
+    <div class="container">
+      <div class="cta-grid">
+        <div class="cta-card reveal">
+          <h3>Chceš rezervovať termín?</h3>
+          <p>
+            Ak chceš, aby tvoja stránka aj značka pôsobili modernejšie a prémiovejšie, tento štýl vie fungovať aj na ďalších podstránkach.
+            Napríklad kontakt, cenník, DUO balíky alebo referencie.
+          </p>
+          <div class="hero-actions">
+            <a href="objednavka.html" class="btn btn-primary">Prejsť na objednávku</a>
+            <a href="kontakt.html" class="btn btn-secondary">Kontakt</a>
+          </div>
+        </div>
 
+        <div class="contact-card reveal">
+          <h3>Kontakt</h3>
+          <p>Detaily a odkazy som nechal tvoje, len som ich zabalil do vizuálne krajšej sekcie.</p>
+          <div class="contact-list">
+            <a class="contact-item" href="mailto:kontakt@viktorbogusky.sk">
+              <div>
+                <span>E-mail</span>
+                <strong>kontakt@viktorbogusky.sk</strong>
+              </div>
+            </a>
+            <a class="contact-item" href="tel:+421948933109">
+              <div>
+                <span>Telefón</span>
+                <strong>+421 948 933 109</strong>
+              </div>
+            </a>
+            <a class="contact-item" href="https://www.instagram.com/vittquoo/" target="_blank">
+              <div>
+                <span>Instagram</span>
+                <strong>@vittquoo</strong>
+              </div>
+            </a>
+            <a class="contact-item" href="https://www.tiktok.com/@viktorbogusky" target="_blank">
+              <div>
+                <span>TikTok</span>
+                <strong>@viktorbogusky</strong>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-function animate(){
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-contact">
+          <p>kontakt@viktorbogusky.sk</p>
+          <p>+421 948 933 109</p>
+        </div>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/vittquoo/" target="_blank">Instagram</a>
+          <a href="https://www.facebook.com/profile.php?id=100079203706823" target="_blank">Facebook</a>
+          <a href="https://www.tiktok.com/@viktorbogusky" target="_blank">TikTok</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>Vytvoril: Viktor Boguský</span>
+        <span><a href="gdpr.html">GDPR</a> | <a href="podmienky.html">Obchodné podmienky</a></span>
+      </div>
+    </div>
+  </footer>
 
-requestAnimationFrame(animate);
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.main-nav');
+    const navItems = document.querySelectorAll('.nav-item');
 
-stars.rotation.y +=0.0008;
-stars.rotation.x +=0.0002;
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      nav.classList.toggle('active');
+    });
 
-renderer.render(scene,camera);
+    navItems.forEach(item => {
+      const btn = item.querySelector('.nav-btn');
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navItems.forEach(i => {
+          if(i !== item) i.classList.remove('active');
+        });
+        item.classList.toggle('active');
+      });
+    });
 
-}
+    document.addEventListener('click', () => {
+      nav.classList.remove('active');
+      navItems.forEach(item => item.classList.remove('active'));
+    });
 
-animate();
+    const revealItems = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
 
+    revealItems.forEach(item => observer.observe(item));
 
-/* ---------- SCROLL CINEMATIC ---------- */
+    const glassCard = document.getElementById('glassCard');
+    const panelOne = document.getElementById('panelOne');
+    const panelTwo = document.getElementById('panelTwo');
+    const sideQuote = document.getElementById('sideQuote');
+    const hero = document.querySelector('.hero');
 
-const card=document.getElementById("card");
+    window.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5);
+      const y = (e.clientY / window.innerHeight - 0.5);
 
-window.addEventListener("scroll",()=>{
+      glassCard.style.transform = `rotateX(${10 - y * 12}deg) rotateY(${-18 + x * 20}deg) translate3d(${x * 14}px, ${y * -12}px, 0)`;
+      panelOne.style.transform = `rotateZ(7deg) translate3d(${x * 18}px, ${y * -14}px, 0)`;
+      panelTwo.style.transform = `rotateZ(-8deg) translate3d(${x * -14}px, ${y * 14}px, 0)`;
+      sideQuote.style.transform = `rotateY(-16deg) translate3d(${x * 12}px, ${y * 8}px, 0)`;
+    });
 
-let s=window.scrollY;
+    window.addEventListener('scroll', () => {
+      const rect = hero.getBoundingClientRect();
+      const progress = Math.min(Math.max(-rect.top / window.innerHeight, 0), 1.25);
 
-let rotateY=s*0.07;
-let rotateX=s*0.03;
+      hero.style.setProperty('--hero-progress', progress);
 
-let z=s*-1.2;
-
-card.style.transform=
-`
-rotateY(${rotateY}deg)
-rotateX(${rotateX}deg)
-translateZ(${z}px)
-translateY(${s*0.6}px)
-`;
-
-camera.position.z=30+(s*0.02);
-stars.rotation.z=s*0.0004;
-
-});
-
-
-window.addEventListener("resize",()=>{
-
-camera.aspect=
-window.innerWidth/window.innerHeight;
-
-camera.updateProjectionMatrix();
-
-renderer.setSize(
-window.innerWidth,
-window.innerHeight
-);
-
-});
-
-</script>
-
+      if(window.innerWidth > 768){
+        glassCard.style.transform += ` translateY(${progress * 40}px)`;
+        panelOne.style.transform += ` translateY(${progress * 18}px)`;
+        panelTwo.style.transform += ` translateY(${progress * 26}px)`;
+      }
+    }, { passive:true });
+  </script>
 </body>
 </html>
