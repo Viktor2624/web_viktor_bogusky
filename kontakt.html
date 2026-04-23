@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viktor Boguský | Kamera & Postprodukcia</title>
+<link rel="icon" type="image/png" href="Viktor-removebg-preview.png">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+  .hero-cta {
+  margin-top:25px;
+  padding:12px 28px;
+  background:#fff;
+  color:#000;
+  text-decoration:none;
+  font-weight:bold;
+  border-radius:30px;
+  transition:0.3s ease;
+  font-size:14px;
+}
+
+.hero-cta:hover{
+  background:#ddd;
+}
+
+body{
+  background:#000;
+  color:#fff;
+  padding-top:60px; /* offset pre fixed header */
+}
+
+/* ================= HEADER ================= */
+header{
+  position:fixed;
+  top:0;
+  width:100%;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter: blur(8px);
+  z-index:1000;
+}
+
+.header-inner{
+  max-width:1200px;
+  margin:auto;
+  padding:12px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  color:#fff;
+  text-decoration:none;
+  font-size:18px;
+  letter-spacing:2px;
+  font-weight:600;
+}
+
+/* ================= NAVIGATION ================= */
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.main-nav a,
+.nav-btn {
+  background: none;
+  border: none;
+  color:#fff;
+  text-decoration:none;
+  font-size:14px;
+  cursor:pointer;
+  opacity:0.85;
+  padding:8px 0;
+  font-family: inherit;
+}
+
+.main-nav a:hover,
+.nav-btn:hover {
+  opacity:1;
+}
+
+/* NAV ITEM */
+.nav-item {
+  position: relative;
+}
+
+/* DROPDOWN */
+.dropdown {
+  position: absolute;
+  top:100%;
+  left:0;
+  background:#111;
+  display:none;
+  flex-direction: column;
+  min-width:190px;
+  padding:10px 0;
+  border-radius:6px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.5);
+  z-index:2000;
+}
+
+.dropdown a {
+  padding:8px 16px;
+  font-size:13px;
+  white-space:nowrap;
+}
+
+.dropdown a:hover {
+  background:#1c1c1c;
+}
+
+/* SHOW DROPDOWN */
+.nav-item.active .dropdown {
+  display:flex;
+}
+
+/* ================= HAMBURGER ================= */
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:24px;
+  cursor:pointer;
+}
+
+/* ================= MOBILE ================= */
+@media(max-width:768px){
+  .menu-toggle{
+    display:block;
+  }
+
+  .main-nav{
+    position:absolute;
+    top:56px;
+    left:0;
+    width:100%;
+    flex-direction:column;
+    align-items:center;
+    display:none;
+    background: rgba(0,0,0,0.95);
+    z-index:999;
+    gap:0;
+  }
+
+  .main-nav.active{
+    display:flex;
+  }
+
+  .main-nav a,
+  .nav-btn{
+    padding:12px 0;
+    width:100%;
+    text-align:center;
+    font-size:15px;
+  }
+
+  .nav-item .dropdown{
+    position: static;
+    box-shadow:none;
+    border-radius:0;
+    width:100%;
+  }
+}
+
+/* ================= HERO ================= */
+.hero{
+  position:relative;
+  height:520px;
+  overflow:hidden;
+}
+
+.hero video{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  min-width:100%;
+  min-height:100%;
+  object-fit:cover;
+}
+
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.5);
+}
+
+.hero-text{
+  position:relative;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.hero-text h2{
+  font-size:48px;
+  letter-spacing:3px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.hero-text p{
+  font-size:18px;
+  opacity:0.85;
+  margin-top:10px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+@media(max-width:768px){
+  .hero{
+    height:420px;
+  }
+  .hero-text h2{
+    font-size:32px;
+  }
+}
+
+/* ================= CONTACT SECTION ================= */
+.contact-section{
+  max-width:1200px;
+  margin:80px auto;
+  padding:0 20px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+}
+
+.contact-form,
+.contact-info{
+  text-align: center;
+  background:#111;
+  padding:30px;
+  border-radius:14px;
+}
+
+.contact-form h2,
+.contact-info h2{
+  text-align: center;
+  margin-bottom:20px;
+  font-size:24px;
+}
+
+.contact-form input,
+.contact-form textarea{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  margin-bottom:15px;
+  border:none;
+  border-radius:8px;
+  background:#1c1c1c;
+  color:#fff;
+}
+
+.contact-form textarea{
+  min-height:150px;
+  resize: vertical;
+}
+
+.contact-form button{
+  padding:14px;
+  border:none;
+  border-radius:30px;
+  font-weight:700;
+  cursor:pointer;
+  background:#fff;
+  color:#000;
+  font-size:16px;
+  transition:0.3s;
+}
+
+.contact-form button:hover{
+  background:#ddd;
+}
+
+/* ================= FOOTER ================= */
+.footer{
+  background:#000;
+  padding:50px 20px 20px 20px;
+}
+
+.footer-top{
+  max-width:900px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  text-align:center;
+}
+
+.footer-contact p{
+  opacity:0.8;
+}
+
+.footer-socials a{
+  margin-left:20px;
+  color:#fff;
+  text-decoration:none;
+  opacity:0.7;
+}
+
+.footer-socials a:hover{
+  opacity:1;
+}
+
+.footer-bottom{
+  margin-top:30px;
+  text-align:center;
+  font-size:13px;
+  opacity:0.6;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.footer-bottom a{
+  color:#fff;
+  text-decoration:none;
+  opacity:0.6;
+}
+
+.footer-bottom a:hover{
+  opacity:1;
+}
+
+@media(max-width:900px){
+  .contact-section{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:768px){
+  .footer-top{
+    flex-direction:column;
+    gap:20px;
+  }
+  .footer-socials a{
+    margin:0 10px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">Viktor Boguský</a>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+
+    <nav class="main-nav">
+      <a href="index.html">Domov</a>
+
+      <div class="nav-item">
+        <button class="nav-btn">Služby ▾</button>
+        <div class="dropdown">
+          <a href="sluzby.html">Prehľad služieb</a>
+          <a href="cennik.html">Cenník</a>
+          <a href="odporucanie.html">Zľavy</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <button class="nav-btn">Portfólio ▾</button>
+        <div class="dropdown">
+          <a href="portfolio.html">Video projekty</a>
+          <a href="referencie.html">Referencie</a>
+        </div>
+      </div>
+
+      <a href="omne.html">O mne</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="objednavka.html">Rezervovať termín</a>
+      <a href="duo.html">DUO BALÍKY</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <video autoplay muted loop playsinline>
+    <source src="uvod_video.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <h2>Kamera & Postprodukcia</h2>
+    <p>Stužkové, svadby, eventy, klipy...</p>
+    <a href="objednavka.html" class="hero-cta">Rezervovať termín</a>
+  </div>
+</section>
+
+<section class="contact-section">
+  <div class="contact-form">
+    <h2>Kontaktujte ma</h2>
+    <form action="https://formsubmit.co/kontakt@viktorbogusky.sk" method="POST">
+      <input type="text" name="meno" placeholder="Meno a priezvisko*" required>
+      <input type="email" name="email" placeholder="Email*" required>
+      <input type="text" name="predmet" placeholder="Predmet*" required>
+      <textarea name="sprava" placeholder="Správa*" required></textarea>
+      <button type="submit">Odoslať</button>
+    </form>
+  </div>
+
+  <div class="contact-info">
+    <h2>Kontaktné údaje</h2>
+    <p>📧 Email: <a href="mailto:kontakt@viktorbogusky.sk" style="color:#fff;text-decoration:underline">kontakt@viktorbogusky.sk</a></p>
+    <p>📞 Telefón: <a href="tel:+421948933109" style="color:#fff;text-decoration:underline">+421 948 933 109</a></p>
+    <p>🏢 Kamera & Postprodukcia – Viktor Boguský</p>
+    <p>IČO: 57405786 | DIČ: 1130702320</p>
+    <p>Miesto podnikania: Juh 1064/47, 093 01 Vranov n/T</p>
+    <p>Zápis: Zapísaný v ŽR SR, Okresný úrad Vranov n/T</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-contact">
+      <p>kontakt@viktorbogusky.sk</p>
+      <p>+421 948 933 109</p>
+    </div>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/vittquoo/" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com/profile.php?id=100079203706823" target="_blank">Facebook</a>
+      <a href="https://www.tiktok.com/@viktorbogusky" target="_blank">TikTok</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>Vytvoril: Viktor Boguský</span>
+    <span><a href="gdpr.html">GDPR</a> | <a href="podmienky.html">Obchodné podmienky</a></span>
+  </div>
+</footer>
+
+<script>
+const toggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('.main-nav');
+const navItems = document.querySelectorAll('.nav-item');
+
+toggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  nav.classList.toggle('active');
+});
+
+navItems.forEach(item => {
+  const btn = item.querySelector('.nav-btn');
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation(); 
+    navItems.forEach(i => {
+      if(i !== item) i.classList.remove('active');
+    });
+    item.classList.toggle('active');
+  });
+});
+
+document.addEventListener('click', () => {
+  nav.classList.remove('active');
+  navItems.forEach(item => item.classList.remove('active'));
+});
+</script>
+
+</body>
+</html>
