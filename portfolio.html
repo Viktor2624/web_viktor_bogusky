@@ -286,7 +286,7 @@
     }
 
     .hero h1 span{
-      display:block;
+      display:inline;
       color:rgba(255,255,255,.58);
     }
 
@@ -360,20 +360,27 @@
     .glass-card,
     .mini-panel,
     .side-quote{
-      right:0;
-      bottom:200px;
-      width:300px;
-      min-height:180px;
-      padding:24px;
-      border-radius:24px;
-      font-size:15px;
-      line-height:1.7;
+      right:-20px;
+      top:160px;
+      width:260px;
+      padding:20px;
+      border-radius:22px;
+      font-size:14px;
+      line-height:1.6;
       color:var(--muted);
-      transform:rotateY(-10deg);
+      transform:rotateY(-8deg);
     }
 
     .glass-card{
-      display:none;
+      position:absolute;
+      inset:90px 40px 140px 120px;
+      border-radius:34px;
+      transform:rotateX(8deg) rotateY(-14deg);
+      opacity:.25;
+      pointer-events:none;
+      border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      backdrop-filter:blur(14px);
     }
 
     .glass-card::before{
@@ -447,8 +454,8 @@
       letter-spacing:0;
     }
 
-    .panel-1{ top:36px; right:0; transform:rotateZ(7deg); }
-    .panel-2{ bottom:34px; left:0; transform:rotateZ(-8deg); }
+    .panel-1{ top:40px; right:-40px; transform:rotateZ(8deg); }
+    .panel-2{ bottom:60px; right:20px; transform:rotateZ(-6deg); }
 
     .side-quote{
       right:-12px;
@@ -948,7 +955,7 @@
       <div class="hero-copy reveal">
         <div class="eyebrow">Kamera • Postprodukcia • Cinematic vizuál</div>
         <h1>
-          Kamera <span>& postprodukcia</span>
+          Kamera &amp; <span>postprodukcia</span>
         </h1>
         <p>
           Portfólio vybraných video projektov, kde je dôraz na atmosféru, emóciu, rytmus strihu a výsledný cinematic dojem.
@@ -1113,17 +1120,21 @@
       <div class="footer-top">
         <div class="footer-contact">
           <p>kontakt@viktorbogusky.sk</p>
+        </div>
+        <div class="footer-contact">
           <p>+421 948 933 109</p>
         </div>
-        <div class="footer-socials">
-          <a href="https://www.instagram.com/vittquoo/" target="_blank">Instagram</a>
-          <a href="https://www.facebook.com/profile.php?id=100079203706823" target="_blank">Facebook</a>
-          <a href="https://www.tiktok.com/@viktorbogusky" target="_blank">TikTok</a>
-        </div>
       </div>
+
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/vittquoo/" target="_blank">Instagram</a>
+        <a href="https://www.facebook.com/profile.php?id=100079203706823" target="_blank">Facebook</a>
+        <a href="https://www.tiktok.com/@viktorbogusky" target="_blank">TikTok</a>
+      </div>
+
       <div class="footer-bottom">
+        <span><a href="podmienky.html">Obchodné podmienky</a> | <a href="gdpr.html">GDPR</a></span>
         <span>Vytvoril: Viktor Boguský</span>
-        <span><a href="gdpr.html">GDPR</a> | <a href="podmienky.html">Obchodné podmienky</a></span>
       </div>
     </div>
   </footer>
@@ -1187,3 +1198,4 @@ window.addEventListener('mousemove',(e)=>{
   </script>
 </body>
 </html>
+
