@@ -23,7 +23,7 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:Arial, Helvetica, sans-serif;
 }
 
 html{scroll-behavior:smooth;}
@@ -89,41 +89,41 @@ header{
   white-space:nowrap;
 }
 
-.main-nav {
-  display: flex;
-  align-items: center;
-  gap: 28px;
+.main-nav{
+  display:flex;
+  align-items:center;
+  gap:28px;
 }
 
 .main-nav a,
-.nav-btn {
-  background: none;
-  border: none;
+.nav-btn{
+  background:none;
+  border:none;
   color:#fff;
   text-decoration:none;
   font-size:14px;
   cursor:pointer;
   opacity:.86;
   padding:8px 0;
-  font-family: inherit;
+  font-family:inherit;
   transition:.25s ease;
 }
 
 .main-nav a:hover,
-.nav-btn:hover {
+.nav-btn:hover{
   opacity:1;
   transform:translateY(-1px);
 }
 
-.nav-item { position: relative; }
+.nav-item{position:relative;}
 
-.dropdown {
-  position: absolute;
+.dropdown{
+  position:absolute;
   top:calc(100% + 12px);
   left:0;
   background:rgba(10,10,12,.96);
   display:none;
-  flex-direction: column;
+  flex-direction:column;
   min-width:220px;
   padding:10px;
   border-radius:16px;
@@ -132,15 +132,15 @@ header{
   z-index:2000;
 }
 
-.dropdown a {
+.dropdown a{
   padding:10px 12px;
   font-size:13px;
   white-space:nowrap;
   border-radius:10px;
 }
 
-.dropdown a:hover { background:rgba(255,255,255,.06); }
-.nav-item.active .dropdown { display:flex; }
+.dropdown a:hover{background:rgba(255,255,255,.06);}
+.nav-item.active .dropdown{display:flex;}
 
 .menu-toggle{
   display:none;
@@ -154,10 +154,10 @@ header{
 .hero{
   position:relative;
   min-height:calc(100vh - var(--header-h));
-  overflow:hidden;
-  isolation:isolate;
   display:flex;
   align-items:center;
+  overflow:hidden;
+  isolation:isolate;
 }
 
 .hero video,
@@ -376,8 +376,6 @@ header{
   background:rgba(255,255,255,.04);
 }
 
-.section{padding:110px 0;}
-
 .portfolio{
   width:min(100% - 32px, var(--max));
   margin:auto;
@@ -426,7 +424,7 @@ header{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(130deg, rgba(255,255,255,.12), transparent 24%, transparent 76%, rgba(120,100,255,.08));
+  background:linear-gradient(130deg, rgba(255,255,255,.14), transparent 24%, transparent 76%, rgba(120,100,255,.08));
   pointer-events:none;
   z-index:2;
   opacity:.6;
@@ -580,7 +578,7 @@ header{
   }
 
   .nav-item .dropdown{
-    position: static;
+    position:static;
     box-shadow:none;
     border-radius:14px;
     width:100%;
@@ -646,12 +644,12 @@ header{
         <div class="hero-badge">Portfólio</div>
         <h3>Ukážky mojej práce</h3>
         <p>
-          Táto podstránka je postavená jednoducho a čisto, aby hlavnú pozornosť dostali samotné videá. Každý projekt je zobrazený v modernejšej karte, ale obsah ostáva tvoj.
+          Táto podstránka je postavená v rovnakom štýle ako DUO balíky, aby celý web pôsobil konzistentne. Hlavný dôraz ostáva na videách a ich prehľadnom zobrazení.
         </p>
         <div class="hero-list">
-          <div>Čistý prehľad video projektov na jednom mieste</div>
-          <div>Prémiovejší vizuál bez zbytočného chaosu</div>
-          <div>Zladenie s ostatnými podstránkami webu</div>
+          <div>Prémiovejší vizuál a rovnaký dizajnový jazyk</div>
+          <div>Video karty zladené s ostatnými podstránkami</div>
+          <div>Jednoduchý prístup k portfóliu aj rezervácii</div>
         </div>
       </div>
     </div>
@@ -661,7 +659,7 @@ header{
 <section class="portfolio" id="portfolio-grid">
   <div class="section-title reveal">
     <h2>Portfólio</h2>
-    <p>Tu si môžeš nechať svoje videá presne ako ich máš teraz. Ja som len upravil spôsob, ako sú vizuálne podané.</p>
+    <p>Tu si môžeš nechať svoje videá presne ako ich máš teraz. Upravený je len vizuál a rozloženie, aby všetko ladilo s novším štýlom webu.</p>
   </div>
 
   <div class="portfolio-grid">
@@ -726,7 +724,7 @@ header{
     </div>
 
     <div class="footer-bottom">
-      <span><a href="gdpr.html">GDPR</a> | <a href="podmienky.html">Obchodné podmienky</a></span>
+      <span><a href="podmienky.html">Obchodné podmienky</a> | <a href="gdpr.html">GDPR</a></span>
       <span>Vytvoril: Viktor Boguský</span>
     </div>
   </div>
