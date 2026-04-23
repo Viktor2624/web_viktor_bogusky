@@ -739,6 +739,66 @@ header{
   .videos-grid .video-card,
   .videos-grid .video-card.large{grid-column:auto;}
 }
+  .highlight{
+  padding:100px 20px;
+  display:flex;
+  justify-content:center;
+}
+
+.highlight-box{
+  max-width:800px;
+  width:100%;
+  padding:40px;
+  border-radius:30px;
+
+  background:linear-gradient(
+    180deg,
+    rgba(255,255,255,0.08),
+    rgba(255,255,255,0.03)
+  );
+
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(20px);
+  box-shadow:0 40px 100px rgba(0,0,0,0.6);
+
+  text-align:center;
+}
+
+.highlight-badge{
+  display:inline-block;
+  padding:8px 14px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.2);
+  font-size:12px;
+  letter-spacing:1px;
+  margin-bottom:15px;
+  opacity:0.8;
+}
+
+.highlight h2{
+  font-size:42px;
+  line-height:1.1;
+  margin-bottom:20px;
+}
+
+.highlight p{
+  opacity:0.75;
+  line-height:1.6;
+  margin-bottom:25px;
+}
+
+.highlight-list{
+  display:grid;
+  gap:12px;
+}
+
+.highlight-list div{
+  padding:12px;
+  border-radius:14px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  font-size:14px;
+}
 </style>
 </head>
 
@@ -793,7 +853,29 @@ header{
 
     </div>
 </section>
+<section class="highlight">
+  <div class="highlight-box">
 
+    <div class="highlight-badge">KAMERA + POSTPRODUKCIA</div>
+
+    <h2>
+      JEDNA SPOLUPRÁCA,<br>
+      KOMPLETNÝ VÝSLEDOK
+    </h2>
+
+    <p>
+      Každý projekt beriem ako príbeh. Nejde len o zábery,
+      ale o emóciu, atmosféru a výsledok, ku ktorému sa budeš rád vracať.
+    </p>
+
+    <div class="highlight-list">
+      <div>Stužkové, svadby, eventy aj promo videá</div>
+      <div>Klipy, záznamy, pozvánky, farebné ladenie</div>
+      <div>Rýchla komunikácia a jednoduchá rezervácia</div>
+    </div>
+
+  </div>
+</section>
 <section class="section" id="about">
   <div class="section-title reveal">
     <h2>O mne</h2>
