@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Viktor Boguský | Portfólio</title>
+  <link rel="icon" type="image/png" href="Viktor-removebg-preview.png" />
+  <style>
+    :root{
+      --bg:#040404;
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.72);
+      --line:rgba(255,255,255,.11);
+      --panel:rgba(255,255,255,.07);
+      --shadow:0 30px 80px rgba(0,0,0,.45);
+      --radius:28px;
+      --header-h:72px;
+      --max:1260px;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+
+    body{
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(70,90,255,.12), transparent 26%),
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,.05), transparent 18%),
+        radial-gradient(circle at 65% 78%, rgba(130,70,255,.10), transparent 24%),
+        var(--bg);
+      padding-top:var(--header-h);
+      overflow-x:hidden;
+      min-height:100vh;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+      background-size:44px 44px;
+      mask-image:radial-gradient(circle at center, black 30%, transparent 88%);
+      opacity:.16;
+      z-index:-4;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(100,120,255,.13), transparent 16%),
+        radial-gradient(circle at calc(var(--mx, 50%) + 10%) calc(var(--my, 50%) - 8%), rgba(180,120,255,.08), transparent 14%);
+      filter:blur(20px);
+      z-index:-3;
+    }
+
+    a{color:inherit;}
+
+    .container{
+      width:min(100% - 32px, var(--max));
+      margin:0 auto;
+    }
+
+    header{
+      position:fixed;
+      inset:0 0 auto 0;
+      height:var(--header-h);
+      background:rgba(0,0,0,.52);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      z-index:1000;
+    }
+
+    .header-inner{
+      width:min(100% - 32px, var(--max));
+      height:100%;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .logo{
+      text-decoration:none;
+      font-size:16px;
+      font-weight:700;
+      letter-spacing:2px;
+      white-space:nowrap;
+    }
+
+    .menu-toggle{
+      display:none;
+      background:none;
+      border:none;
+      color:#fff;
+      font-size:28px;
+      cursor:pointer;
+    }
+
+    .main-nav{
+      display:flex;
+      align-items:center;
+      gap:28px;
+    }
+
+    .main-nav a,
+    .nav-btn{
+      background:none;
+      border:none;
+      color:#fff;
+      text-decoration:none;
+      font-size:14px;
+      font-family:inherit;
+      cursor:pointer;
+      opacity:.86;
+      transition:.25s ease;
+      padding:8px 0;
+    }
+
+    .main-nav a:hover,
+    .nav-btn:hover{opacity:1;transform:translateY(-1px);}
+
+    .nav-item{position:relative;}
+
+    .dropdown{
+      position:absolute;
+      top:calc(100% + 12px);
+      left:0;
+      display:none;
+      flex-direction:column;
+      min-width:220px;
+      padding:10px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(10,10,12,.96);
+      box-shadow:var(--shadow);
+    }
+
+    .dropdown a{
+      padding:10px 12px;
+      border-radius:10px;
+      font-size:13px;
+      white-space:nowrap;
+    }
+
+    .dropdown a:hover{background:rgba(255,255,255,.06);}
+    .nav-item.active .dropdown{display:flex;}
+
+    .hero{
+      position:relative;
+      min-height:calc(100vh - var(--header-h));
+      display:flex;
+      align-items:center;
+      overflow:hidden;
+      isolation:isolate;
+    }
+
+    .hero-video-wrap,
+    .hero-overlay,
+    .hero-glow,
+    .camera-grid{
+      position:absolute;
+      inset:0;
+    }
+
+    .hero-video-wrap{z-index:-5;}
+    .hero-video-wrap video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transform:scale(1.1);
+      filter:brightness(.28) saturate(1.04);
+    }
+
+    .hero-overlay{
+      z-index:-4;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,.26), rgba(0,0,0,.66)),
+        radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,.22) 42%, rgba(0,0,0,.72) 100%);
+    }
+
+    .hero-glow{
+      z-index:-3;
+      background:
+        radial-gradient(circle at 72% 28%, rgba(80,100,255,.18), transparent 18%),
+        radial-gradient(circle at 60% 70%, rgba(140,80,255,.12), transparent 22%),
+        radial-gradient(circle at 35% 60%, rgba(255,255,255,.05), transparent 20%);
+      filter:blur(22px);
+      pointer-events:none;
+    }
+
+    .camera-grid{
+      z-index:-2;
+      pointer-events:none;
+      background:
+        linear-gradient(transparent 0 96%, rgba(255,255,255,.03) 100%),
+        linear-gradient(90deg, transparent 0 96%, rgba(255,255,255,.03) 100%);
+      background-size:110px 110px;
+      mask-image:radial-gradient(circle at center, black 24%, transparent 90%);
+      opacity:.28;
+    }
+
+    .hero-inner{
+      width:min(100% - 32px, var(--max));
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:28px;
+      align-items:center;
+      padding:48px 0 52px;
+      text-align:center;
+    }
+
+    .hero-copy{
+      max-width:960px;
+      margin:0 auto;
+    }
+
+    .hero h1{
+      font-size:clamp(42px, 8vw, 100px);
+      line-height:.9;
+      letter-spacing:-2px;
+      text-transform:uppercase;
+    }
+
+    .hero h1 .muted{color:rgba(255,255,255,.58);}
+
+    .hero-copy p{
+      margin:24px auto 0;
+      max-width:760px;
+      font-size:clamp(16px, 2vw, 20px);
+      line-height:1.65;
+      color:var(--muted);
+    }
+
+    .hero-actions{
+      margin-top:30px;
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:14px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:50px;
+      padding:0 24px;
+      border-radius:999px;
+      text-decoration:none;
+      font-weight:700;
+      font-size:14px;
+      transition:.28s ease;
+      border:1px solid transparent;
+    }
+
+    .btn-primary{background:#fff;color:#000;}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,255,255,.16);}
+    .btn-secondary{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.10);backdrop-filter:blur(10px);}
+    .btn-secondary:hover{background:rgba(255,255,255,.1);transform:translateY(-2px);}
+
+    .hero-note{
+      margin-top:22px;
+      font-size:12px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.5);
+    }
+
+    .scroll-stage{
+      position:relative;
+      height:420vh;
+      margin-top:-2vh;
+    }
+
+    .stage-sticky{
+      position:sticky;
+      top:var(--header-h);
+      height:calc(100vh - var(--header-h));
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .film-track{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      perspective:1800px;
+      transform-style:preserve-3d;
+    }
+
+    .film-bg-ring,
+    .film-bg-ring::before,
+    .film-bg-ring::after{
+      position:absolute;
+      border-radius:50%;
+      border:1px solid rgba(255,255,255,.08);
+      pointer-events:none;
+    }
+
+    .film-bg-ring{
+      width:60vw;
+      height:60vw;
+      max-width:780px;
+      max-height:780px;
+      opacity:.42;
+    }
+
+    .film-bg-ring::before,
+    .film-bg-ring::after{
+      content:"";
+      inset:12%;
+    }
+
+    .film-bg-ring::after{
+      inset:24%;
+    }
+
+    .lens-core{
+      position:absolute;
+      width:320px;
+      height:320px;
+      border-radius:50%;
+      border:1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(circle at 35% 35%, rgba(255,255,255,.18), rgba(255,255,255,.02) 30%, rgba(0,0,0,.2) 65%),
+        radial-gradient(circle at 65% 70%, rgba(70,90,255,.14), transparent 28%),
+        rgba(255,255,255,.03);
+      backdrop-filter:blur(14px);
+      box-shadow:0 0 60px rgba(70,90,255,.10), inset 0 0 35px rgba(255,255,255,.05);
+    }
+
+    .lens-core::before,
+    .lens-core::after{
+      content:"";
+      position:absolute;
+      inset:18px;
+      border-radius:50%;
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .lens-core::after{ inset:52px; }
+
+    .floating-video{
+      position:absolute;
+      width:min(34vw, 420px);
+      aspect-ratio:16/9;
+      border-radius:28px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      box-shadow:var(--shadow);
+      transform-style:preserve-3d;
+      will-change:transform, opacity, filter;
+      transition:border-color .25s ease, box-shadow .25s ease;
+    }
+
+    .floating-video:hover{
+      border-color:rgba(255,255,255,.18);
+      box-shadow:0 36px 100px rgba(0,0,0,.55);
+    }
+
+    .floating-video iframe{
+      width:100%;
+      height:100%;
+      border:0;
+      display:block;
+    }
+
+    .video-overlay{
+      position:absolute;
+      inset:auto 14px 14px 14px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      pointer-events:none;
+    }
+
+    .video-chip{
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.34);
+      backdrop-filter:blur(10px);
+      font-size:11px;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.82);
+    }
+
+    .stage-copy{
+      position:absolute;
+      left:6%;
+      bottom:10%;
+      max-width:360px;
+      z-index:3;
+      pointer-events:none;
+    }
+
+    .stage-copy h2{
+      font-size:clamp(28px, 4vw, 54px);
+      line-height:.95;
+      letter-spacing:-1px;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .stage-copy p{
+      color:var(--muted);
+      line-height:1.65;
+    }
+
+    .stage-copy .small{
+      margin-top:18px;
+      font-size:12px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.44);
+    }
+
+    .section{padding:110px 0;}
+
+    .section-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:24px;
+      margin-bottom:34px;
+    }
+
+    .section-title h2{
+      font-size:clamp(30px, 5vw, 54px);
+      line-height:1;
+      letter-spacing:-1px;
+      text-transform:uppercase;
+    }
+
+    .section-title p{
+      max-width:440px;
+      color:var(--muted);
+      line-height:1.65;
+    }
+
+    .cta-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:28px;
+    }
+
+    .cta-card,
+    .contact-card{
+      padding:30px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      backdrop-filter:blur(14px);
+      box-shadow:var(--shadow);
+    }
+
+    .cta-card h3,
+    .contact-card h3{
+      font-size:26px;
+      margin-bottom:14px;
+      letter-spacing:-.5px;
+      text-transform:uppercase;
+    }
+
+    .cta-card p,
+    .contact-card p{
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .contact-list{
+      margin-top:22px;
+      display:grid;
+      gap:14px;
+    }
+
+    .contact-item{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      padding:14px 16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      text-decoration:none;
+    }
+
+    .contact-item span{
+      color:rgba(255,255,255,.65);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:1.2px;
+    }
+
+    .contact-item strong{
+      font-size:15px;
+      word-break:break-word;
+    }
+
+    footer.footer{
+      padding:38px 0 28px;
+      border-top:1px solid rgba(255,255,255,.08);
+      margin-top:20px;
+    }
+
+    .footer-top{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:26px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+      text-align:center;
+    }
+
+    .footer-contact p{
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .footer-socials{
+      display:flex;
+      justify-content:center;
+      gap:20px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+
+    .footer-socials a{
+      text-decoration:none;
+      opacity:.72;
+      transition:.25s ease;
+    }
+
+    .footer-socials a:hover{opacity:1;transform:translateY(-1px);}
+
+    .footer-bottom{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+      text-align:center;
+      font-size:13px;
+      color:rgba(255,255,255,.56);
+    }
+
+    .footer-bottom a{text-decoration:none;color:inherit;}
+
+    .reveal{
+      opacity:0;
+      transform:translateY(34px);
+      transition:opacity .8s ease, transform .8s ease;
+    }
+
+    .reveal.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    @media (max-width:1100px){
+      .floating-video{ width:min(42vw, 360px); }
+      .stage-copy{ left:4%; max-width:300px; }
+      .cta-grid{ grid-template-columns:1fr; }
+    }
+
+    @media (max-width:768px){
+      :root{--header-h:64px;--radius:22px;}
+      .menu-toggle{display:block;}
+
+      .main-nav{
+        position:absolute;
+        top:100%;
+        left:0;
+        width:100%;
+        padding:14px 16px 18px;
+        flex-direction:column;
+        align-items:stretch;
+        gap:0;
+        display:none;
+        background:rgba(5,5,5,.96);
+        border-bottom:1px solid rgba(255,255,255,.08);
+      }
+
+      .main-nav.active{display:flex;}
+
+      .main-nav a,
+      .nav-btn{
+        width:100%;
+        text-align:left;
+        padding:14px 6px;
+        font-size:15px;
+      }
+
+      .dropdown{
+        position:static;
+        margin:0 0 8px 0;
+        border-radius:14px;
+        box-shadow:none;
+        min-width:100%;
+      }
+
+      .hero{min-height:auto;}
+      .hero-inner{padding:34px 0 40px;}
+      .hero h1{max-width:none;}
+      .hero-note{display:none;}
+
+      .scroll-stage{ height:auto; margin-top:0; }
+      .stage-sticky{
+        position:relative;
+        top:auto;
+        height:auto;
+        padding:40px 0 20px;
+      }
+
+      .film-track{
+        position:relative;
+        display:grid;
+        gap:16px;
+        perspective:none;
+      }
+
+      .film-bg-ring,
+      .lens-core,
+      .stage-copy{display:none;}
+
+      .floating-video{
+        position:relative;
+        width:100%;
+        transform:none !important;
+        left:auto !important;
+        top:auto !important;
+      }
+
+      .footer-top,
+      .footer-bottom{align-items:center;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="logo">Viktor Boguský</a>
+      <button class="menu-toggle" aria-label="Menu">☰</button>
+
+      <nav class="main-nav">
+        <a href="cennik.html">Cenník</a>
+        <a href="duo.html">DUO BALÍKY</a>
+        <a href="referencie.html">Referencie</a>
+        <a href="portfolio.html">Portfólio</a>
+        <a href="objednavka.html">Rezervácia</a>
+        <div class="nav-item">
+          <button class="nav-btn">Služby ▾</button>
+          <div class="dropdown">
+            <a href="sluzby.html">Prehľad služieb</a>
+          </div>
+        </div>
+        <a href="kontakt.html">Kontakt</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="hero-video-wrap">
+      <video autoplay muted loop playsinline>
+        <source src="uvod_video.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-glow"></div>
+    <div class="camera-grid"></div>
+
+    <div class="hero-inner">
+      <div class="hero-copy reveal">
+        <h1>Kamera &amp; <span class="muted">postprodukcia</span></h1>
+        <p>
+          Scrolluj a prechádzaj cez video showcase ako cez filmový priestor. Videa sa pri scrollovaní otáčajú, presúvajú a menia hĺbku, aby celá stránka pôsobila viac ako zážitok než klasické portfólio.
+        </p>
+        <div class="hero-actions">
+          <a href="objednavka.html" class="btn btn-primary">Rezervovať termín</a>
+          <a href="#showcase" class="btn btn-secondary">Pozrieť showcase</a>
+        </div>
+        <div class="hero-note">Scroll driven video experience</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="scroll-stage" id="showcase">
+    <div class="stage-sticky">
+      <div class="film-track" id="filmTrack">
+        <div class="film-bg-ring"></div>
+        <div class="lens-core"></div>
+
+        <article class="floating-video" id="videoCard1">
+          <iframe src="https://www.youtube.com/embed/3zES1AlxCd4?rel=0" title="Video projekt 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <div class="video-overlay">
+            <span class="video-chip">Showcase 01</span>
+            <span class="video-chip">Cinematic</span>
+          </div>
+        </article>
+
+        <article class="floating-video" id="videoCard2">
+          <iframe src="https://www.youtube.com/embed/V8z1SuHkfCk?rel=0" title="Video projekt 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <div class="video-overlay">
+            <span class="video-chip">Showcase 02</span>
+            <span class="video-chip">Motion</span>
+          </div>
+        </article>
+
+        <article class="floating-video" id="videoCard3">
+          <iframe src="https://www.youtube.com/embed/OFbEqTHUjWs?rel=0" title="Video projekt 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <div class="video-overlay">
+            <span class="video-chip">Showcase 03</span>
+            <span class="video-chip">Edit</span>
+          </div>
+        </article>
+
+        <article class="floating-video" id="videoCard4">
+          <iframe src="https://www.youtube.com/embed/gsAweub-Gak?rel=0" title="Video projekt 4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <div class="video-overlay">
+            <span class="video-chip">Showcase 04</span>
+            <span class="video-chip">Story</span>
+          </div>
+        </article>
+
+        <div class="stage-copy">
+          <h2>Video stránka, nie obyčajný grid</h2>
+          <p>
+            Čím ďalej ide človek scrollom, tým viac sa video karty otáčajú zo strany na stranu, prelietavajú priestorom a menia perspektívu. Pozadie zároveň reaguje na pohyb myši ako svetlo objektívu.
+          </p>
+          <div class="small">kamera • edit • motion • depth</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-title reveal">
+        <h2>Rezervácia & kontakt</h2>
+        <p>Na konci som nechal praktickú časť jednoduchšiu, aby bol wow efekt hore a dole už len jasný kontakt a rezervácia.</p>
+      </div>
+
+      <div class="cta-grid">
+        <div class="cta-card reveal">
+          <h3>Rezervácia</h3>
+          <p>Ak ťa moja tvorba zaujala a chceš si rezervovať termín, stačí prejsť na objednávku alebo ma kontaktovať priamo.</p>
+          <div class="hero-actions" style="justify-content:flex-start;">
+            <a href="objednavka.html" class="btn btn-primary">Prejsť na rezerváciu</a>
+            <a href="kontakt.html" class="btn btn-secondary">Kontakt</a>
+          </div>
+        </div>
+
+        <div class="contact-card reveal">
+          <h3>Kontakt</h3>
+          <p>Detaily a odkazy som nechal tvoje, iba sú zabalené do rovnakého vizuálneho štýlu.</p>
+          <div class="contact-list">
+            <a class="contact-item" href="mailto:kontakt@viktorbogusky.sk">
+              <div>
+                <span>E-mail</span>
+                <strong>kontakt@viktorbogusky.sk</strong>
+              </div>
+            </a>
+            <a class="contact-item" href="tel:+421948933109">
+              <div>
+                <span>Telefón</span>
+                <strong>+421 948 933 109</strong>
+              </div>
+            </a>
+            <a class="contact-item" href="https://www.instagram.com/vittquoo/" target="_blank">
+              <div>
+                <span>Instagram</span>
+                <strong>@vittquoo</strong>
+              </div>
+            </a>
+            <a class="contact-item" href="https://www.tiktok.com/@viktorbogusky" target="_blank">
+              <div>
+                <span>TikTok</span>
+                <strong>@viktorbogusky</strong>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-contact"><p>kontakt@viktorbogusky.sk</p></div>
+        <div class="footer-contact"><p>+421 948 933 109</p></div>
+      </div>
+
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/vittquoo/" target="_blank">Instagram</a>
+        <a href="https://www.facebook.com/profile.php?id=100079203706823" target="_blank">Facebook</a>
+        <a href="https://www.tiktok.com/@viktorbogusky" target="_blank">TikTok</a>
+      </div>
+
+      <div class="footer-bottom">
+        <span><a href="podmienky.html">Obchodné podmienky</a> | <a href="gdpr.html">GDPR</a></span>
+        <span>Vytvoril: Viktor Boguský</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.main-nav');
+    const navItems = document.querySelectorAll('.nav-item');
+
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      nav.classList.toggle('active');
+    });
+
+    navItems.forEach(item => {
+      const btn = item.querySelector('.nav-btn');
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navItems.forEach(i => {
+          if(i !== item) i.classList.remove('active');
+        });
+        item.classList.toggle('active');
+      });
+    });
+
+    document.addEventListener('click', () => {
+      nav.classList.remove('active');
+      navItems.forEach(item => item.classList.remove('active'));
+    });
+
+    const revealItems = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+    revealItems.forEach(item => observer.observe(item));
+
+    const stage = document.querySelector('.scroll-stage');
+    const videoCards = [
+      document.getElementById('videoCard1'),
+      document.getElementById('videoCard2'),
+      document.getElementById('videoCard3'),
+      document.getElementById('videoCard4')
+    ];
+
+    function clamp(num, min, max){
+      return Math.min(Math.max(num, min), max);
+    }
+
+    function updateStage(){
+      if(window.innerWidth <= 768 || !stage) return;
+
+      const rect = stage.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      const progress = clamp((-rect.top) / total, 0, 1);
+
+      const states = [
+        {
+          x: -32 + progress * 16,
+          y: -8 + progress * 4,
+          z: -120 + progress * 80,
+          ry: -36 + progress * 62,
+          rx: 10 - progress * 8,
+          scale: .88 + progress * .20,
+          opacity: .55 + progress * .45
+        },
+        {
+          x: 26 - progress * 10,
+          y: -18 + progress * 26,
+          z: 40 - progress * 130,
+          ry: 24 - progress * 56,
+          rx: -7 + progress * 8,
+          scale: .98 + Math.sin(progress * Math.PI) * .10,
+          opacity: .7 + progress * .25
+        },
+        {
+          x: -6 + progress * 4,
+          y: 26 - progress * 16,
+          z: -60 + progress * 140,
+          ry: 10 + progress * 26,
+          rx: 6 - progress * 12,
+          scale: .84 + progress * .22,
+          opacity: .5 + progress * .5
+        },
+        {
+          x: 34 - progress * 18,
+          y: 14 - progress * 26,
+          z: -20 + progress * 90,
+          ry: 38 - progress * 74,
+          rx: 8 - progress * 6,
+          scale: .78 + progress * .24,
+          opacity: .42 + progress * .5
+        }
+      ];
+
+      videoCards.forEach((card, index) => {
+        const s = states[index];
+        if(!card) return;
+        card.style.transform = `translate3d(${s.x}vw, ${s.y}vh, ${s.z}px) rotateY(${s.ry}deg) rotateX(${s.rx}deg) scale(${s.scale})`;
+        card.style.opacity = s.opacity;
+        card.style.filter = `brightness(${0.82 + progress * .22}) saturate(${0.92 + progress * .18})`;
+      });
+    }
+
+    updateStage();
+    window.addEventListener('scroll', updateStage, { passive:true });
+    window.addEventListener('resize', updateStage);
+
+    document.addEventListener('mousemove', (e) => {
+      const mx = `${(e.clientX / window.innerWidth) * 100}%`;
+      const my = `${(e.clientY / window.innerHeight) * 100}%`;
+      document.documentElement.style.setProperty('--mx', mx);
+      document.documentElement.style.setProperty('--my', my);
+    });
+  </script>
+</body>
+</html>
