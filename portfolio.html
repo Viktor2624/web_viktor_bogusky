@@ -297,17 +297,7 @@
     }
 
     .glass-card{
-      position:absolute;
-      inset:92px 46px 128px 128px;
-      border-radius:34px;
-      border:1px solid rgba(255,255,255,.12);
-      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
-      backdrop-filter:blur(16px);
-      box-shadow:var(--shadow);
-      transform:rotateX(8deg) rotateY(-14deg);
-      opacity:.28;
-      pointer-events:none;
-      overflow:hidden;
+      display:none;
     }
 
     .glass-card::before{
@@ -363,27 +353,16 @@
 
     .mini-panel,
     .side-quote{
-      position:absolute;
-      border:1px solid rgba(255,255,255,.12);
-      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
-      backdrop-filter:blur(18px);
-      box-shadow:var(--shadow);
-      overflow:hidden;
-      z-index:2;
-    }
-
-    .mini-panel{
-      width:250px;
-      min-height:155px;
-      padding:20px;
+      top:220px;
+      right:0;
+      width:272px;
+      min-height:175px;
+      padding:22px;
       border-radius:24px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      color:rgba(255,255,255,.9);
-      font-size:13px;
-      letter-spacing:1px;
-      text-transform:uppercase;
+      font-size:14px;
+      line-height:1.65;
+      color:var(--muted);
+      transform:rotateY(-4deg) rotateZ(-1deg);
       transition:transform .2s linear;
     }
 
@@ -395,8 +374,8 @@
       margin:8px 0 10px;
     }
 
-    .panel-1{ top:30px; right:-22px; transform:rotateZ(8deg); }
-    .panel-2{ bottom:72px; right:24px; transform:rotateZ(-7deg); }
+    .panel-1{ top:34px; right:12px; transform:rotateZ(7deg); }
+    .panel-2{ bottom:48px; right:52px; transform:rotateZ(-6deg); }
 
     .side-quote{
       top:186px;
@@ -799,12 +778,7 @@
 
       <div class="hero-side reveal">
         <div class="floating-scene">
-          <div class="glass-card" id="glassCard">
-            <div class="glass-inner-video">
-              <video autoplay muted loop playsinline>
-                <source src="uvod_video.mp4" type="video/mp4" />
-              </video>
-            </div>
+          
             <div class="glass-ui">
               <div>
                 <div class="glass-tag">Cinematic Edit</div>
@@ -849,47 +823,47 @@
 
       <div class="portfolio-grid">
         <article class="video-card large reveal">
-          <div class="video-shell"><iframe src="https://www.youtube.com/embed/3zES1AlxCd4" allowfullscreen></iframe></div>
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/3zES1AlxCd4?rel=0" title="Video projekt 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
           <div class="video-meta"><strong>Video projekt</strong><span>Featured</span></div>
         </article>
 
         <article class="video-card large reveal">
-          <div class="video-shell"><iframe src="https://www.youtube.com/embed/V8z1SuHkfCk" allowfullscreen></iframe></div>
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/V8z1SuHkfCk?rel=0" title="Video projekt 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
           <div class="video-meta"><strong>Video projekt</strong><span>Featured</span></div>
         </article>
 
         <article class="video-card reveal">
-          <div class="video-shell"><iframe src="https://www.youtube.com/embed/OFbEqTHUjWs" allowfullscreen></iframe></div>
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/OFbEqTHUjWs?rel=0" title="Video projekt 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
           <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
         </article>
 
         <article class="video-card reveal">
-          <div class="video-shell"><iframe src="https://www.youtube.com/embed/gsAweub-Gak" allowfullscreen></iframe></div>
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/gsAweub-Gak?rel=0" title="Video projekt 4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
           <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
         </article>
 
         <article class="video-card reveal">
-          <div class="video-shell"><iframe src="https://www.youtube.com/embed/LnRKT-GFs0k" allowfullscreen></iframe></div>
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/LnRKT-GFs0k?rel=0" title="Video projekt 5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
           <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
         </article>
 
         <article class="video-card reveal">
-          <div class="video-shell"><iframe src="https://www.youtube.com/embed/eMUl9JdsNG0" allowfullscreen></iframe></div>
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/eMUl9JdsNG0?rel=0" title="Video projekt 6" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
           <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
         </article>
 
         <article class="video-card reveal">
-          <div class="video-shell"><iframe src="https://www.youtube.com/embed/9Z8BojDP5no" allowfullscreen></iframe></div>
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/9Z8BojDP5no?rel=0" title="Video projekt 7" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
           <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
         </article>
 
         <article class="video-card reveal">
-          <div class="video-shell"><iframe src="https://www.youtube.com/embed/NDVJBNPrBe0" allowfullscreen></iframe></div>
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/NDVJBNPrBe0?rel=0" title="Video projekt 8" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
           <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
         </article>
 
         <article class="video-card reveal">
-          <div class="video-shell"><iframe src="https://www.youtube.com/embed/4qI7UFOcfo4" allowfullscreen></iframe></div>
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/4qI7UFOcfo4?rel=0" title="Video projekt 9" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
           <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
         </article>
       </div>
@@ -998,31 +972,26 @@
     }, { threshold: 0.15 });
     revealItems.forEach(item => observer.observe(item));
 
-    const glassCard = document.getElementById('glassCard');
     const panelOne = document.getElementById('panelOne');
     const panelTwo = document.getElementById('panelTwo');
     const sideQuote = document.getElementById('sideQuote');
 
     function applyFloating(x = 0, y = 0){
       if(window.innerWidth <= 768){
-        if(glassCard) glassCard.style.transform = 'none';
         if(panelOne) panelOne.style.transform = 'none';
         if(panelTwo) panelTwo.style.transform = 'none';
         if(sideQuote) sideQuote.style.transform = 'none';
         return;
       }
 
-      if(glassCard){
-        glassCard.style.transform = `rotateX(${8 - y * 5}deg) rotateY(${-14 + x * 9}deg) translate3d(${x * 10}px, ${y * -7}px, 0)`;
-      }
       if(panelOne){
-        panelOne.style.transform = `rotateZ(8deg) translate3d(${x * 12}px, ${y * -10}px, 0)`;
+        panelOne.style.transform = `rotateZ(7deg) translate3d(${x * 10}px, ${y * -8}px, 0)`;
       }
       if(panelTwo){
-        panelTwo.style.transform = `rotateZ(-7deg) translate3d(${x * -10}px, ${y * 12}px, 0)`;
+        panelTwo.style.transform = `rotateZ(-6deg) translate3d(${x * -8}px, ${y * 10}px, 0)`;
       }
       if(sideQuote){
-        sideQuote.style.transform = `rotateY(-8deg) rotateZ(-2deg) translate3d(${x * 8}px, ${y * 6}px, 0)`;
+        sideQuote.style.transform = `rotateY(-4deg) rotateZ(-1deg) translate3d(${x * 6}px, ${y * 5}px, 0)`;
       }
     }
 
