@@ -211,16 +211,15 @@
       width:min(100% - 32px, var(--max));
       margin:0 auto;
       display:grid;
-      grid-template-columns:1fr;
+      grid-template-columns:1fr 1fr;
       gap:28px;
       align-items:center;
       padding:48px 0 52px;
-      text-align:center;
+    
     }
 
     .hero-copy{
-      max-width:960px;
-      margin:0 auto;
+      max-width:600px;
     }
 
     .hero h1{
@@ -243,7 +242,7 @@
     .hero-actions{
       margin-top:30px;
       display:flex;
-      justify-content:center;
+      justify-content:flex-start;
       flex-wrap:wrap;
       gap:14px;
     }
@@ -267,13 +266,7 @@
     .btn-secondary{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.10);backdrop-filter:blur(10px);}
     .btn-secondary:hover{background:rgba(255,255,255,.1);transform:translateY(-2px);}
 
-    .hero-note{
-      margin-top:22px;
-      font-size:12px;
-      letter-spacing:2px;
-      text-transform:uppercase;
-      color:rgba(255,255,255,.5);
-    }
+    .hero-note{display:none;}
 
     .scroll-stage{
       position:relative;
@@ -295,8 +288,11 @@
       position:absolute;
       inset:0;
       display:flex;
-      align-items:center;
-      justify-content:center;
+      align-items:flex-start;
+      justify-content:flex-end;
+      padding-right:6%;
+      perspective:1800px;
+      transform-style:preserve-3d;
       perspective:1800px;
       transform-style:preserve-3d;
     }
@@ -355,7 +351,8 @@
 
     .floating-video{
       position:absolute;
-      width:min(34vw, 420px);
+      right:0;
+      width:min(28vw, 360px);
       aspect-ratio:16/9;
       border-radius:28px;
       overflow:hidden;
@@ -363,8 +360,7 @@
       background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
       box-shadow:var(--shadow);
       transform-style:preserve-3d;
-      will-change:transform, opacity, filter;
-      transition:border-color .25s ease, box-shadow .25s ease;
+      will-change:transform, opacity;
     }
 
     .floating-video:hover{
@@ -688,6 +684,7 @@
 
     <div class="hero-inner">
       <div class="hero-copy reveal">
+        <h2 style="font-size:18px;letter-spacing:3px;margin-bottom:10px;opacity:.7;">Viktor Boguský</h2>
         <h1>Kamera &amp; <span class="muted">postprodukcia</span></h1>
         <p>
           Scrolluj a prechádzaj cez video showcase ako cez filmový priestor. Videa sa pri scrollovaní otáčajú, presúvajú a menia hĺbku, aby celá stránka pôsobila viac ako zážitok než klasické portfólio.
@@ -878,40 +875,40 @@
 
       const states = [
         {
-          x: -32 + progress * 16,
-          y: -8 + progress * 4,
-          z: -120 + progress * 80,
-          ry: -36 + progress * 62,
-          rx: 10 - progress * 8,
-          scale: .88 + progress * .20,
-          opacity: .55 + progress * .45
+          x: 0,
+          y: 60 - progress * 120,
+          z: -50,
+          ry: -20,
+          rx: 6,
+          scale: .9,
+          opacity: 1
         },
         {
-          x: 26 - progress * 10,
-          y: -18 + progress * 26,
-          z: 40 - progress * 130,
-          ry: 24 - progress * 56,
-          rx: -7 + progress * 8,
-          scale: .98 + Math.sin(progress * Math.PI) * .10,
-          opacity: .7 + progress * .25
+          x: 0,
+          y: 120 - progress * 120,
+          z: -100,
+          ry: 20,
+          rx: -6,
+          scale: .85,
+          opacity: .9
         },
         {
-          x: -6 + progress * 4,
-          y: 26 - progress * 16,
-          z: -60 + progress * 140,
-          ry: 10 + progress * 26,
-          rx: 6 - progress * 12,
-          scale: .84 + progress * .22,
-          opacity: .5 + progress * .5
+          x: 0,
+          y: 180 - progress * 120,
+          z: -150,
+          ry: -15,
+          rx: 4,
+          scale: .8,
+          opacity: .8
         },
         {
-          x: 34 - progress * 18,
-          y: 14 - progress * 26,
-          z: -20 + progress * 90,
-          ry: 38 - progress * 74,
-          rx: 8 - progress * 6,
-          scale: .78 + progress * .24,
-          opacity: .42 + progress * .5
+          x: 0,
+          y: 240 - progress * 120,
+          z: -200,
+          ry: 25,
+          rx: -4,
+          scale: .75,
+          opacity: .7
         }
       ];
 
@@ -936,4 +933,6 @@
     });
   </script>
 </body>
+</html>
+
 </html>
