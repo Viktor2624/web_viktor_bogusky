@@ -7,15 +7,16 @@
   <link rel="icon" type="image/png" href="Viktor-removebg-preview.png" />
   <style>
     :root{
-      --bg:#040404;
+      --bg:#050505;
       --text:#ffffff;
       --muted:rgba(255,255,255,.72);
-      --line:rgba(255,255,255,.11);
-      --panel:rgba(255,255,255,.07);
+      --line:rgba(255,255,255,.10);
+      --panel:rgba(255,255,255,.06);
+      --panel-strong:rgba(255,255,255,.10);
       --shadow:0 30px 80px rgba(0,0,0,.45);
       --radius:28px;
       --header-h:72px;
-      --max:1260px;
+      --max:1240px;
     }
 
     *{margin:0;padding:0;box-sizing:border-box;}
@@ -25,13 +26,12 @@
       font-family:Arial, Helvetica, sans-serif;
       color:var(--text);
       background:
-        radial-gradient(circle at 15% 20%, rgba(70,90,255,.12), transparent 26%),
-        radial-gradient(circle at 85% 18%, rgba(255,255,255,.05), transparent 18%),
-        radial-gradient(circle at 65% 78%, rgba(130,70,255,.10), transparent 24%),
+        radial-gradient(circle at 18% 20%, rgba(85,110,255,.10), transparent 26%),
+        radial-gradient(circle at 80% 15%, rgba(255,255,255,.04), transparent 18%),
+        radial-gradient(circle at 65% 72%, rgba(120,70,255,.08), transparent 24%),
         var(--bg);
       padding-top:var(--header-h);
       overflow-x:hidden;
-      min-height:100vh;
     }
 
     body::before{
@@ -40,12 +40,12 @@
       inset:0;
       pointer-events:none;
       background:
-        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
-      background-size:44px 44px;
-      mask-image:radial-gradient(circle at center, black 30%, transparent 88%);
+        linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+      background-size:48px 48px;
+      mask-image:radial-gradient(circle at center, black 35%, transparent 90%);
       opacity:.16;
-      z-index:-4;
+      z-index:-3;
     }
 
     body::after{
@@ -54,10 +54,11 @@
       inset:0;
       pointer-events:none;
       background:
-        radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(100,120,255,.13), transparent 16%),
-        radial-gradient(circle at calc(var(--mx, 50%) + 10%) calc(var(--my, 50%) - 8%), rgba(180,120,255,.08), transparent 14%);
-      filter:blur(20px);
-      z-index:-3;
+        radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(90,110,255,.16), transparent 18%),
+        radial-gradient(circle at calc(var(--mx, 50%) + 8%) calc(var(--my, 50%) - 6%), rgba(170,110,255,.08), transparent 14%);
+      filter:blur(18px);
+      z-index:-2;
+      transition:transform .15s linear;
     }
 
     a{color:inherit;}
@@ -71,7 +72,7 @@
       position:fixed;
       inset:0 0 auto 0;
       height:var(--header-h);
-      background:rgba(0,0,0,.52);
+      background:rgba(0,0,0,.55);
       backdrop-filter:blur(16px);
       border-bottom:1px solid rgba(255,255,255,.08);
       z-index:1000;
@@ -164,85 +165,115 @@
 
     .hero-video-wrap,
     .hero-overlay,
-    .hero-glow,
-    .camera-grid{
+    .hero-glow{
       position:absolute;
       inset:0;
     }
 
-    .hero-video-wrap{z-index:-5;}
+    .hero-video-wrap{z-index:-4;}
+
     .hero-video-wrap video{
       width:100%;
       height:100%;
       object-fit:cover;
-      transform:scale(1.1);
-      filter:brightness(.28) saturate(1.04);
+      transform:scale(1.08);
+      filter:brightness(.34) saturate(1.05);
     }
 
     .hero-overlay{
-      z-index:-4;
+      z-index:-3;
       background:
-        linear-gradient(to bottom, rgba(0,0,0,.26), rgba(0,0,0,.66)),
-        radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,.22) 42%, rgba(0,0,0,.72) 100%);
+        linear-gradient(to bottom, rgba(0,0,0,.34), rgba(0,0,0,.65)),
+        radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,.25) 46%, rgba(0,0,0,.72) 100%);
     }
 
     .hero-glow{
-      z-index:-3;
-      background:
-        radial-gradient(circle at 72% 28%, rgba(80,100,255,.18), transparent 18%),
-        radial-gradient(circle at 60% 70%, rgba(140,80,255,.12), transparent 22%),
-        radial-gradient(circle at 35% 60%, rgba(255,255,255,.05), transparent 20%);
-      filter:blur(22px);
-      pointer-events:none;
-    }
-
-    .camera-grid{
       z-index:-2;
-      pointer-events:none;
       background:
-        linear-gradient(transparent 0 96%, rgba(255,255,255,.03) 100%),
-        linear-gradient(90deg, transparent 0 96%, rgba(255,255,255,.03) 100%);
-      background-size:110px 110px;
-      mask-image:radial-gradient(circle at center, black 24%, transparent 90%);
-      opacity:.28;
+        radial-gradient(circle at 78% 34%, rgba(85,110,255,.16), transparent 18%),
+        radial-gradient(circle at 58% 68%, rgba(130,60,255,.10), transparent 22%),
+        radial-gradient(circle at 32% 56%, rgba(255,255,255,.04), transparent 18%);
+      filter:blur(18px);
+      pointer-events:none;
+      transition:transform .18s linear;
     }
 
     .hero-inner{
       width:min(100% - 32px, var(--max));
       margin:0 auto;
       display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:28px;
+      grid-template-columns:1.08fr .92fr;
+      gap:34px;
       align-items:center;
-      padding:48px 0 52px;
-    
+      padding:48px 0 46px;
     }
 
     .hero-copy{
-      max-width:600px;
+      max-width:760px;
+      position:relative;
+      transition:transform .18s linear;
+    }
+
+    .hero-copy::after{
+      content:"";
+      position:absolute;
+      right:-20px;
+      bottom:-20px;
+      width:260px;
+      height:260px;
+      background:radial-gradient(circle, rgba(90,110,255,.14), transparent 68%);
+      filter:blur(22px);
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    .hero-name{
+      display:inline-block;
+      margin-bottom:14px;
+      font-size:15px;
+      font-weight:700;
+      letter-spacing:3px;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.68);
+      position:relative;
+      padding-left:20px;
+    }
+
+    .hero-name::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:50%;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      transform:translateY(-50%);
+      background:rgba(255,255,255,.85);
+      box-shadow:0 0 18px rgba(255,255,255,.38);
     }
 
     .hero h1{
-      font-size:clamp(42px, 8vw, 100px);
-      line-height:.9;
+      font-size:clamp(42px, 8vw, 90px);
+      line-height:.92;
       letter-spacing:-2px;
       text-transform:uppercase;
+      max-width:11ch;
+      text-shadow:0 10px 30px rgba(0,0,0,.28);
     }
 
     .hero h1 .muted{color:rgba(255,255,255,.58);}
 
     .hero-copy p{
-      margin:24px auto 0;
-      max-width:760px;
-      font-size:clamp(16px, 2vw, 20px);
-      line-height:1.65;
+      margin-top:24px;
+      max-width:640px;
+      font-size:clamp(16px, 2vw, 19px);
+      line-height:1.62;
       color:var(--muted);
     }
 
     .hero-actions{
       margin-top:30px;
       display:flex;
-      justify-content:flex-start;
       flex-wrap:wrap;
       gap:14px;
     }
@@ -259,173 +290,109 @@
       font-size:14px;
       transition:.28s ease;
       border:1px solid transparent;
+      position:relative;
+      overflow:hidden;
     }
+
+    .btn::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(120deg, transparent 20%, rgba(255,255,255,.22), transparent 80%);
+      transform:translateX(-140%);
+      transition:transform .7s ease;
+    }
+
+    .btn:hover::after{transform:translateX(140%);}
 
     .btn-primary{background:#fff;color:#000;}
     .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,255,255,.16);}
-    .btn-secondary{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.10);backdrop-filter:blur(10px);}
-    .btn-secondary:hover{background:rgba(255,255,255,.1);transform:translateY(-2px);}
 
-    .hero-note{display:none;}
-
-    .scroll-stage{
-      position:relative;
-      height:420vh;
-      margin-top:-2vh;
+    .btn-secondary{
+      background:rgba(255,255,255,.06);
+      border-color:rgba(255,255,255,.10);
+      backdrop-filter:blur(10px);
     }
 
-    .stage-sticky{
-      position:sticky;
-      top:var(--header-h);
-      height:calc(100vh - var(--header-h));
-      overflow:hidden;
+    .btn-secondary:hover{background:rgba(255,255,255,.1);transform:translateY(-2px);}
+
+    .hero-side{
+      position:relative;
+      height:600px;
       display:flex;
       align-items:center;
       justify-content:center;
     }
 
-    .film-track{
+    .floating-scene{
+      position:relative;
+      width:min(100%, 560px);
+      height:100%;
+    }
+
+    .review-card{
+      position:absolute;
+      width:250px;
+      min-height:160px;
+      padding:20px;
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.12);
+      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+      backdrop-filter:blur(18px);
+      box-shadow:var(--shadow);
+      color:rgba(255,255,255,.9);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      z-index:2;
+      transition:transform .2s linear, border-color .25s ease, box-shadow .25s ease;
+      overflow:hidden;
+    }
+
+    .review-card::before{
+      content:"";
       position:absolute;
       inset:0;
-      display:flex;
-      align-items:flex-start;
-      justify-content:flex-end;
-      padding-right:6%;
-      perspective:1800px;
-      transform-style:preserve-3d;
-      perspective:1800px;
-      transform-style:preserve-3d;
-    }
-
-    .film-bg-ring,
-    .film-bg-ring::before,
-    .film-bg-ring::after{
-      position:absolute;
-      border-radius:50%;
-      border:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(130deg, rgba(255,255,255,.14), transparent 28%, transparent 72%, rgba(120,100,255,.10));
       pointer-events:none;
     }
 
-    .film-bg-ring{
-      width:60vw;
-      height:60vw;
-      max-width:780px;
-      max-height:780px;
-      opacity:.42;
+    .review-card:hover{
+      border-color:rgba(255,255,255,.2);
+      box-shadow:0 36px 90px rgba(0,0,0,.52);
     }
 
-    .film-bg-ring::before,
-    .film-bg-ring::after{
-      content:"";
-      inset:12%;
-    }
-
-    .film-bg-ring::after{
-      inset:24%;
-    }
-
-    .lens-core{
-      position:absolute;
-      width:320px;
-      height:320px;
-      border-radius:50%;
-      border:1px solid rgba(255,255,255,.12);
-      background:
-        radial-gradient(circle at 35% 35%, rgba(255,255,255,.18), rgba(255,255,255,.02) 30%, rgba(0,0,0,.2) 65%),
-        radial-gradient(circle at 65% 70%, rgba(70,90,255,.14), transparent 28%),
-        rgba(255,255,255,.03);
-      backdrop-filter:blur(14px);
-      box-shadow:0 0 60px rgba(70,90,255,.10), inset 0 0 35px rgba(255,255,255,.05);
-    }
-
-    .lens-core::before,
-    .lens-core::after{
-      content:"";
-      position:absolute;
-      inset:18px;
-      border-radius:50%;
-      border:1px solid rgba(255,255,255,.08);
-    }
-
-    .lens-core::after{ inset:52px; }
-
-    .floating-video{
-      position:absolute;
-      right:0;
-      width:min(28vw, 360px);
-      aspect-ratio:16/9;
-      border-radius:28px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.12);
-      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      box-shadow:var(--shadow);
-      transform-style:preserve-3d;
-      will-change:transform, opacity;
-    }
-
-    .floating-video:hover{
-      border-color:rgba(255,255,255,.18);
-      box-shadow:0 36px 100px rgba(0,0,0,.55);
-    }
-
-    .floating-video iframe{
-      width:100%;
-      height:100%;
-      border:0;
-      display:block;
-    }
-
-    .video-overlay{
-      position:absolute;
-      inset:auto 14px 14px 14px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      pointer-events:none;
-    }
-
-    .video-chip{
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(0,0,0,.34);
-      backdrop-filter:blur(10px);
-      font-size:11px;
+    .review-card .label{
+      font-size:12px;
       letter-spacing:1.2px;
       text-transform:uppercase;
-      color:rgba(255,255,255,.82);
+      color:rgba(255,255,255,.76);
+      margin-bottom:10px;
+      position:relative;
+      z-index:1;
     }
 
-    .stage-copy{
-      position:absolute;
-      left:6%;
-      bottom:10%;
-      max-width:360px;
-      z-index:3;
-      pointer-events:none;
+    .review-card strong{
+      font-size:21px;
+      line-height:1.22;
+      letter-spacing:0;
+      font-weight:700;
+      margin-bottom:10px;
+      position:relative;
+      z-index:1;
     }
 
-    .stage-copy h2{
-      font-size:clamp(28px, 4vw, 54px);
-      line-height:.95;
-      letter-spacing:-1px;
-      text-transform:uppercase;
-      margin-bottom:14px;
-    }
-
-    .stage-copy p{
+    .review-card p{
+      font-size:14px;
+      line-height:1.55;
       color:var(--muted);
-      line-height:1.65;
+      position:relative;
+      z-index:1;
     }
 
-    .stage-copy .small{
-      margin-top:18px;
-      font-size:12px;
-      letter-spacing:2px;
-      text-transform:uppercase;
-      color:rgba(255,255,255,.44);
-    }
+    .review-1{top:58px;right:36px;transform:rotate(7deg);}
+    .review-2{top:232px;right:118px;transform:rotate(-2deg);}
+    .review-3{top:408px;right:18px;transform:rotate(-6deg);}
 
     .section{padding:110px 0;}
 
@@ -448,6 +415,79 @@
       max-width:440px;
       color:var(--muted);
       line-height:1.65;
+    }
+
+    .portfolio{padding-top:46px;}
+
+    .portfolio-grid{
+      display:grid;
+      grid-template-columns:repeat(12, 1fr);
+      gap:22px;
+    }
+
+    .video-card{
+      grid-column:span 4;
+      border-radius:28px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background:#000;
+      box-shadow:var(--shadow);
+      transition:transform .35s ease, border-color .35s ease, box-shadow .35s ease, filter .35s ease;
+      position:relative;
+    }
+
+    .video-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(130deg, rgba(255,255,255,.12), transparent 24%, transparent 76%, rgba(120,100,255,.08));
+      pointer-events:none;
+      z-index:2;
+      opacity:.6;
+    }
+
+    .video-card:hover{
+      transform:translateY(-6px) scale(1.01);
+      border-color:rgba(255,255,255,.18);
+      box-shadow:0 30px 90px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.04) inset;
+      filter:brightness(1.05);
+    }
+
+    .video-card.large{grid-column:span 6;}
+
+    .video-shell{
+      position:relative;
+      width:100%;
+      padding-top:56.25%;
+      background:#000;
+      overflow:hidden;
+    }
+
+    .video-shell iframe{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      border:0;
+    }
+
+    .video-meta{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding:16px 18px;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+    }
+
+    .video-meta strong{font-size:15px;}
+
+    .video-meta span{
+      font-size:12px;
+      color:rgba(255,255,255,.6);
+      text-transform:uppercase;
+      letter-spacing:1.2px;
+      white-space:nowrap;
     }
 
     .cta-grid{
@@ -496,6 +536,13 @@
       background:rgba(255,255,255,.04);
       border:1px solid rgba(255,255,255,.08);
       text-decoration:none;
+      transition:transform .25s ease, border-color .25s ease, background .25s ease;
+    }
+
+    .contact-item:hover{
+      transform:translateY(-3px);
+      border-color:rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
     }
 
     .contact-item span{
@@ -570,10 +617,13 @@
       transform:translateY(0);
     }
 
-    @media (max-width:1100px){
-      .floating-video{ width:min(42vw, 360px); }
-      .stage-copy{ left:4%; max-width:300px; }
-      .cta-grid{ grid-template-columns:1fr; }
+    @media (max-width:1080px){
+      .hero-inner,
+      .cta-grid{grid-template-columns:1fr;}
+      .hero-side{height:560px;}
+      .section-title{flex-direction:column;align-items:flex-start;}
+      .video-card,
+      .video-card.large{grid-column:span 6;}
     }
 
     @media (max-width:768px){
@@ -613,37 +663,28 @@
       }
 
       .hero{min-height:auto;}
-      .hero-inner{padding:34px 0 40px;}
+      .hero-inner{padding:34px 0 72px;}
       .hero h1{max-width:none;}
-      .hero-note{display:none;}
+      .hero-side{height:auto;}
+      .hero-copy{transform:none !important;}
 
-      .scroll-stage{ height:auto; margin-top:0; }
-      .stage-sticky{
-        position:relative;
-        top:auto;
-        height:auto;
-        padding:40px 0 20px;
-      }
-
-      .film-track{
-        position:relative;
+      .floating-scene{
         display:grid;
         gap:16px;
-        perspective:none;
+        height:auto;
       }
 
-      .film-bg-ring,
-      .lens-core,
-      .stage-copy{display:none;}
-
-      .floating-video{
+      .review-card{
         position:relative;
+        top:auto;
+        right:auto;
         width:100%;
         transform:none !important;
-        left:auto !important;
-        top:auto !important;
       }
 
+      .portfolio-grid{grid-template-columns:1fr;}
+      .video-card,
+      .video-card.large{grid-column:auto;}
       .footer-top,
       .footer-bottom{align-items:center;}
     }
@@ -680,85 +721,108 @@
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-glow"></div>
-    <div class="camera-grid"></div>
 
     <div class="hero-inner">
       <div class="hero-copy reveal">
-        <h2 style="font-size:18px;letter-spacing:3px;margin-bottom:10px;opacity:.7;">Viktor Boguský</h2>
+        <div class="hero-name">Viktor Boguský</div>
         <h1>Kamera &amp; <span class="muted">postprodukcia</span></h1>
         <p>
-          Scrolluj a prechádzaj cez video showcase ako cez filmový priestor. Videa sa pri scrollovaní otáčajú, presúvajú a menia hĺbku, aby celá stránka pôsobila viac ako zážitok než klasické portfólio.
+          Portfólio vybraných video projektov, kde je dôraz na atmosféru, emóciu, rytmus strihu a výsledný cinematic dojem.
+          Jednoducho ukážka mojej práce v oblasti kamery a postprodukcie.
         </p>
         <div class="hero-actions">
           <a href="objednavka.html" class="btn btn-primary">Rezervovať termín</a>
-          <a href="#showcase" class="btn btn-secondary">Pozrieť showcase</a>
+          <a href="#portfolio" class="btn btn-secondary">Pozrieť portfólio</a>
         </div>
-        <div class="hero-note">Scroll driven video experience</div>
+      </div>
+
+      <div class="hero-side reveal">
+        <div class="floating-scene">
+          <div class="review-card review-1" id="reviewOne">
+            <span class="label">Referencia</span>
+            <strong>„Sem daj svoju dlhšiu referenciu, pokojne aj vetu alebo dve.”</strong>
+            <p>Skvelý prístup a výsledok</p>
+          </div>
+
+          <div class="review-card review-2" id="reviewTwo">
+            <span class="label">Referencia</span>
+            <strong>„Profesionálny prístup, krásne spracovanie a video, ku ktorému sa stále radi vraciame.”</strong>
+            <p>Toto je ideálny typ dlhšej referencie.</p>
+          </div>
+
+          <div class="review-card review-3" id="reviewThree">
+            <span class="label">Referencia</span>
+            <strong>„Ďalšia referencia – môže byť dlhšia, aby to pôsobilo reálne.”</strong>
+            <p>Rýchla komunikácia a kvalita</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="scroll-stage" id="showcase">
-    <div class="stage-sticky">
-      <div class="film-track" id="filmTrack">
-        <div class="film-bg-ring"></div>
-        <div class="lens-core"></div>
+  <section class="section portfolio" id="portfolio">
+    <div class="container">
+      <div class="section-title reveal">
+        <h2>Portfólio</h2>
+        <p>Tu si môžeš nechať svoje videá presne ako ich máš teraz. Ja som len upravil spôsob, ako sú vizuálne podané.</p>
+      </div>
 
-        <article class="floating-video" id="videoCard1">
-          <iframe src="https://www.youtube.com/embed/3zES1AlxCd4?rel=0" title="Video projekt 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          <div class="video-overlay">
-            <span class="video-chip">Showcase 01</span>
-            <span class="video-chip">Cinematic</span>
-          </div>
+      <div class="portfolio-grid">
+        <article class="video-card large reveal">
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/3zES1AlxCd4?rel=0" title="Video projekt 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+          <div class="video-meta"><strong>Video projekt</strong><span>Featured</span></div>
         </article>
 
-        <article class="floating-video" id="videoCard2">
-          <iframe src="https://www.youtube.com/embed/V8z1SuHkfCk?rel=0" title="Video projekt 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          <div class="video-overlay">
-            <span class="video-chip">Showcase 02</span>
-            <span class="video-chip">Motion</span>
-          </div>
+        <article class="video-card large reveal">
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/V8z1SuHkfCk?rel=0" title="Video projekt 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+          <div class="video-meta"><strong>Video projekt</strong><span>Featured</span></div>
         </article>
 
-        <article class="floating-video" id="videoCard3">
-          <iframe src="https://www.youtube.com/embed/OFbEqTHUjWs?rel=0" title="Video projekt 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          <div class="video-overlay">
-            <span class="video-chip">Showcase 03</span>
-            <span class="video-chip">Edit</span>
-          </div>
+        <article class="video-card reveal">
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/OFbEqTHUjWs?rel=0" title="Video projekt 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
         </article>
 
-        <article class="floating-video" id="videoCard4">
-          <iframe src="https://www.youtube.com/embed/gsAweub-Gak?rel=0" title="Video projekt 4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-          <div class="video-overlay">
-            <span class="video-chip">Showcase 04</span>
-            <span class="video-chip">Story</span>
-          </div>
+        <article class="video-card reveal">
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/gsAweub-Gak?rel=0" title="Video projekt 4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
         </article>
 
-        <div class="stage-copy">
-          <h2>Video stránka, nie obyčajný grid</h2>
-          <p>
-            Čím ďalej ide človek scrollom, tým viac sa video karty otáčajú zo strany na stranu, prelietavajú priestorom a menia perspektívu. Pozadie zároveň reaguje na pohyb myši ako svetlo objektívu.
-          </p>
-          <div class="small">kamera • edit • motion • depth</div>
-        </div>
+        <article class="video-card reveal">
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/LnRKT-GFs0k?rel=0" title="Video projekt 5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+        </article>
+
+        <article class="video-card reveal">
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/eMUl9JdsNG0?rel=0" title="Video projekt 6" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+        </article>
+
+        <article class="video-card reveal">
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/9Z8BojDP5no?rel=0" title="Video projekt 7" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+        </article>
+
+        <article class="video-card reveal">
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/NDVJBNPrBe0?rel=0" title="Video projekt 8" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+        </article>
+
+        <article class="video-card reveal">
+          <div class="video-shell"><iframe src="https://www.youtube.com/embed/4qI7UFOcfo4?rel=0" title="Video projekt 9" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+        </article>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
-      <div class="section-title reveal">
-        <h2>Rezervácia & kontakt</h2>
-        <p>Na konci som nechal praktickú časť jednoduchšiu, aby bol wow efekt hore a dole už len jasný kontakt a rezervácia.</p>
-      </div>
-
       <div class="cta-grid">
         <div class="cta-card reveal">
           <h3>Rezervácia</h3>
           <p>Ak ťa moja tvorba zaujala a chceš si rezervovať termín, stačí prejsť na objednávku alebo ma kontaktovať priamo.</p>
-          <div class="hero-actions" style="justify-content:flex-start;">
+          <div class="hero-actions">
             <a href="objednavka.html" class="btn btn-primary">Prejsť na rezerváciu</a>
             <a href="kontakt.html" class="btn btn-secondary">Kontakt</a>
           </div>
@@ -766,7 +830,7 @@
 
         <div class="contact-card reveal">
           <h3>Kontakt</h3>
-          <p>Detaily a odkazy som nechal tvoje, iba sú zabalené do rovnakého vizuálneho štýlu.</p>
+          <p>Detaily a odkazy som nechal tvoje, len som ich zabalil do vizuálne krajšej sekcie.</p>
           <div class="contact-list">
             <a class="contact-item" href="mailto:kontakt@viktorbogusky.sk">
               <div>
@@ -854,85 +918,40 @@
     }, { threshold: 0.15 });
     revealItems.forEach(item => observer.observe(item));
 
-    const stage = document.querySelector('.scroll-stage');
-    const videoCards = [
-      document.getElementById('videoCard1'),
-      document.getElementById('videoCard2'),
-      document.getElementById('videoCard3'),
-      document.getElementById('videoCard4')
-    ];
+    const reviewOne = document.getElementById('reviewOne');
+    const reviewTwo = document.getElementById('reviewTwo');
+    const reviewThree = document.getElementById('reviewThree');
+    const heroCopy = document.querySelector('.hero-copy');
+    const heroGlow = document.querySelector('.hero-glow');
 
-    function clamp(num, min, max){
-      return Math.min(Math.max(num, min), max);
+    function applyFloating(x = 0, y = 0){
+      if(window.innerWidth <= 768){
+        if(reviewOne) reviewOne.style.transform = 'none';
+        if(reviewTwo) reviewTwo.style.transform = 'none';
+        if(reviewThree) reviewThree.style.transform = 'none';
+        if(heroCopy) heroCopy.style.transform = 'none';
+        if(heroGlow) heroGlow.style.transform = 'none';
+        return;
+      }
+
+      if(reviewOne) reviewOne.style.transform = `rotate(7deg) translate3d(${x * 10}px, ${y * -8}px, 0)`;
+      if(reviewTwo) reviewTwo.style.transform = `rotate(-2deg) translate3d(${x * 6}px, ${y * 4}px, 0)`;
+      if(reviewThree) reviewThree.style.transform = `rotate(-6deg) translate3d(${x * -8}px, ${y * 8}px, 0)`;
+      if(heroCopy) heroCopy.style.transform = `translate3d(${x * 8}px, ${y * -6}px, 0)`;
+      if(heroGlow) heroGlow.style.transform = `translate3d(${x * 16}px, ${y * 14}px, 0)`;
     }
 
-    function updateStage(){
-      if(window.innerWidth <= 768 || !stage) return;
+    applyFloating(0,0);
 
-      const rect = stage.getBoundingClientRect();
-      const total = rect.height - window.innerHeight;
-      const progress = clamp((-rect.top) / total, 0, 1);
-
-      const states = [
-        {
-          x: 0,
-          y: 60 - progress * 120,
-          z: -50,
-          ry: -20,
-          rx: 6,
-          scale: .9,
-          opacity: 1
-        },
-        {
-          x: 0,
-          y: 120 - progress * 120,
-          z: -100,
-          ry: 20,
-          rx: -6,
-          scale: .85,
-          opacity: .9
-        },
-        {
-          x: 0,
-          y: 180 - progress * 120,
-          z: -150,
-          ry: -15,
-          rx: 4,
-          scale: .8,
-          opacity: .8
-        },
-        {
-          x: 0,
-          y: 240 - progress * 120,
-          z: -200,
-          ry: 25,
-          rx: -4,
-          scale: .75,
-          opacity: .7
-        }
-      ];
-
-      videoCards.forEach((card, index) => {
-        const s = states[index];
-        if(!card) return;
-        card.style.transform = `translate3d(${s.x}vw, ${s.y}vh, ${s.z}px) rotateY(${s.ry}deg) rotateX(${s.rx}deg) scale(${s.scale})`;
-        card.style.opacity = s.opacity;
-        card.style.filter = `brightness(${0.82 + progress * .22}) saturate(${0.92 + progress * .18})`;
-      });
-    }
-
-    updateStage();
-    window.addEventListener('scroll', updateStage, { passive:true });
-    window.addEventListener('resize', updateStage);
-
-    document.addEventListener('mousemove', (e) => {
-      const mx = `${(e.clientX / window.innerWidth) * 100}%`;
-      const my = `${(e.clientY / window.innerHeight) * 100}%`;
-      document.documentElement.style.setProperty('--mx', mx);
-      document.documentElement.style.setProperty('--my', my);
+    window.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5);
+      const y = (e.clientY / window.innerHeight - 0.5);
+      document.documentElement.style.setProperty('--mx', `${(e.clientX / window.innerWidth) * 100}%`);
+      document.documentElement.style.setProperty('--my', `${(e.clientY / window.innerHeight) * 100}%`);
+      applyFloating(x, y);
     });
+
+    window.addEventListener('resize', () => applyFloating(0,0));
   </script>
 </body>
-</html>
-
 </html>
