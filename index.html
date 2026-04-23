@@ -221,10 +221,10 @@ header{
   width:min(100% - 32px, var(--max));
   margin:0 auto;
   display:grid;
-  grid-template-columns:1.05fr .95fr;
+  grid-template-columns:1.08fr .92fr;
   gap:34px;
   align-items:center;
-  padding:48px 0 56px;
+  padding:48px 0 46px;
 }
 
 .hero-copy{
@@ -272,11 +272,11 @@ header{
 }
 
 .hero h1{
-  font-size:clamp(46px, 8vw, 102px);
-  line-height:.9;
+  font-size:clamp(42px, 8vw, 90px);
+  line-height:.92;
   letter-spacing:-2px;
   text-transform:uppercase;
-  max-width:10.5ch;
+  max-width:11ch;
   text-shadow:0 10px 30px rgba(0,0,0,.28);
 }
 
@@ -284,9 +284,9 @@ header{
 
 .hero-copy p{
   margin-top:24px;
-  max-width:700px;
+  max-width:640px;
   font-size:clamp(16px, 2vw, 19px);
-  line-height:1.65;
+  line-height:1.62;
   color:var(--muted);
 }
 
@@ -357,15 +357,23 @@ header{
   justify-content:flex-end;
 }
 
+.hero-side{
+  position:relative;
+  height:520px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
 .hero-panel{
-  width:100%;
-  max-width:560px;
-  padding:40px;
+  width:min(100%, 460px);
+  min-height:380px;
+  padding:28px;
   border-radius:32px;
-  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
   border:1px solid rgba(255,255,255,.12);
-  backdrop-filter:blur(20px);
-  box-shadow:0 40px 100px rgba(0,0,0,.6);
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
   position:relative;
   overflow:hidden;
 }
@@ -380,34 +388,27 @@ header{
 
 .hero-badge{
   display:inline-flex;
-  padding:8px 14px;
+  padding:8px 12px;
   border-radius:999px;
-  border:1px solid rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.14);
   background:rgba(0,0,0,.24);
   font-size:12px;
-  letter-spacing:1px;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
   margin-bottom:16px;
-  position:relative;
-  z-index:1;
 }
 
 .hero-panel h3{
-  font-size:clamp(34px, 4.4vw, 62px);
-  line-height:1.04;
-  margin-bottom:20px;
-  text-transform:uppercase;
+  font-size:34px;
+  margin-bottom:14px;
   letter-spacing:-1px;
-  position:relative;
-  z-index:1;
+  text-transform:uppercase;
 }
 
 .hero-panel p{
   color:var(--muted);
   line-height:1.7;
-  margin-bottom:24px;
-  font-size:18px;
-  position:relative;
-  z-index:1;
+  margin-bottom:18px;
 }
 
 .hero-list{
@@ -418,11 +419,10 @@ header{
 }
 
 .hero-list div{
-  padding:16px 18px;
+  padding:14px 16px;
+  border:1px solid rgba(255,255,255,.08);
   border-radius:18px;
   background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08);
-  font-size:16px;
 }
 
 .section{
