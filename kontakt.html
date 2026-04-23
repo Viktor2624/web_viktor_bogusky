@@ -3,126 +3,145 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Viktor Boguský | Kamera & Postprodukcia</title>
+<title>Viktor Boguský | Kontakt</title>
 <link rel="icon" type="image/png" href="Viktor-removebg-preview.png">
 
 <style>
+:root{
+  --bg:#050505;
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.72);
+  --line:rgba(255,255,255,.10);
+  --panel:rgba(255,255,255,.06);
+  --shadow:0 30px 80px rgba(0,0,0,.45);
+  --radius:28px;
+  --header-h:72px;
+  --max:1240px;
+}
+
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family: Arial, Helvetica, sans-serif;
-}
-  .hero-cta {
-  margin-top:25px;
-  padding:12px 28px;
-  background:#fff;
-  color:#000;
-  text-decoration:none;
-  font-weight:bold;
-  border-radius:30px;
-  transition:0.3s ease;
-  font-size:14px;
+  font-family:Arial, Helvetica, sans-serif;
 }
 
-.hero-cta:hover{
-  background:#ddd;
-}
+html{scroll-behavior:smooth;}
 
 body{
-  background:#000;
-  color:#fff;
-  padding-top:60px; /* offset pre fixed header */
+  background:
+    radial-gradient(circle at 18% 20%, rgba(85,110,255,.10), transparent 26%),
+    radial-gradient(circle at 80% 15%, rgba(255,255,255,.04), transparent 18%),
+    radial-gradient(circle at 65% 72%, rgba(120,70,255,.08), transparent 24%),
+    var(--bg);
+  color:var(--text);
+  padding-top:var(--header-h);
+  overflow-x:hidden;
 }
 
-/* ================= HEADER ================= */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(circle at center, black 35%, transparent 90%);
+  opacity:.16;
+  z-index:-3;
+}
+
+a{color:inherit;}
+
+.container{
+  width:min(100% - 32px, var(--max));
+  margin:0 auto;
+}
+
 header{
   position:fixed;
-  top:0;
-  width:100%;
-  background:rgba(0,0,0,0.85);
-  backdrop-filter: blur(8px);
+  inset:0 0 auto 0;
+  height:var(--header-h);
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.08);
   z-index:1000;
 }
 
 .header-inner{
-  max-width:1200px;
-  margin:auto;
-  padding:12px 20px;
+  width:min(100% - 32px, var(--max));
+  height:100%;
+  margin:0 auto;
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:20px;
 }
 
 .logo{
   color:#fff;
   text-decoration:none;
-  font-size:18px;
+  font-size:16px;
   letter-spacing:2px;
-  font-weight:600;
+  font-weight:700;
+  white-space:nowrap;
 }
 
-/* ================= NAVIGATION ================= */
-.main-nav {
-  display: flex;
-  align-items: center;
-  gap: 28px;
+.main-nav{
+  display:flex;
+  align-items:center;
+  gap:28px;
 }
 
 .main-nav a,
-.nav-btn {
-  background: none;
-  border: none;
+.nav-btn{
+  background:none;
+  border:none;
   color:#fff;
   text-decoration:none;
   font-size:14px;
   cursor:pointer;
-  opacity:0.85;
+  opacity:.86;
   padding:8px 0;
-  font-family: inherit;
+  font-family:inherit;
+  transition:.25s ease;
 }
 
 .main-nav a:hover,
-.nav-btn:hover {
+.nav-btn:hover{
   opacity:1;
+  transform:translateY(-1px);
 }
 
-/* NAV ITEM */
-.nav-item {
-  position: relative;
-}
+.nav-item{position:relative;}
 
-/* DROPDOWN */
-.dropdown {
-  position: absolute;
-  top:100%;
+.dropdown{
+  position:absolute;
+  top:calc(100% + 12px);
   left:0;
-  background:#111;
+  background:rgba(10,10,12,.96);
   display:none;
-  flex-direction: column;
-  min-width:190px;
-  padding:10px 0;
-  border-radius:6px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.5);
+  flex-direction:column;
+  min-width:220px;
+  padding:10px;
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  border:1px solid rgba(255,255,255,.08);
   z-index:2000;
 }
 
-.dropdown a {
-  padding:8px 16px;
+.dropdown a{
+  padding:10px 12px;
   font-size:13px;
   white-space:nowrap;
+  border-radius:10px;
 }
 
-.dropdown a:hover {
-  background:#1c1c1c;
-}
+.dropdown a:hover{background:rgba(255,255,255,.06);}
+.nav-item.active .dropdown{display:flex;}
 
-/* SHOW DROPDOWN */
-.nav-item.active .dropdown {
-  display:flex;
-}
-
-/* ================= HAMBURGER ================= */
 .menu-toggle{
   display:none;
   background:none;
@@ -132,224 +151,457 @@ header{
   cursor:pointer;
 }
 
-/* ================= MOBILE ================= */
-@media(max-width:768px){
-  .menu-toggle{
-    display:block;
-  }
-
-  .main-nav{
-    position:absolute;
-    top:56px;
-    left:0;
-    width:100%;
-    flex-direction:column;
-    align-items:center;
-    display:none;
-    background: rgba(0,0,0,0.95);
-    z-index:999;
-    gap:0;
-  }
-
-  .main-nav.active{
-    display:flex;
-  }
-
-  .main-nav a,
-  .nav-btn{
-    padding:12px 0;
-    width:100%;
-    text-align:center;
-    font-size:15px;
-  }
-
-  .nav-item .dropdown{
-    position: static;
-    box-shadow:none;
-    border-radius:0;
-    width:100%;
-  }
-}
-
-/* ================= HERO ================= */
 .hero{
   position:relative;
-  height:520px;
+  min-height:calc(100vh - var(--header-h));
+  display:flex;
+  align-items:center;
   overflow:hidden;
+  isolation:isolate;
+}
+
+.hero video,
+.hero-overlay,
+.hero-glow{
+  position:absolute;
+  inset:0;
 }
 
 .hero video{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  min-width:100%;
-  min-height:100%;
+  width:100%;
+  height:100%;
   object-fit:cover;
+  transform:scale(1.08);
+  filter:brightness(.32) saturate(1.04);
+  z-index:-4;
 }
 
 .hero-overlay{
+  z-index:-3;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.34), rgba(0,0,0,.65)),
+    radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,.25) 46%, rgba(0,0,0,.72) 100%);
+}
+
+.hero-glow{
+  z-index:-2;
+  background:
+    radial-gradient(circle at 78% 34%, rgba(85,110,255,.16), transparent 18%),
+    radial-gradient(circle at 58% 68%, rgba(130,60,255,.10), transparent 22%),
+    radial-gradient(circle at 24% 58%, rgba(255,255,255,.04), transparent 18%);
+  filter:blur(18px);
+  pointer-events:none;
+}
+
+.hero-inner{
+  width:min(100% - 32px, var(--max));
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  gap:34px;
+  align-items:center;
+  padding:48px 0 46px;
+}
+
+.hero-copy{
+  max-width:760px;
+  position:relative;
+}
+
+.hero-copy::after{
+  content:"";
+  position:absolute;
+  right:-20px;
+  bottom:-20px;
+  width:260px;
+  height:260px;
+  background:radial-gradient(circle, rgba(90,110,255,.14), transparent 68%);
+  filter:blur(22px);
+  pointer-events:none;
+  z-index:-1;
+}
+
+.hero-name{
+  display:inline-block;
+  margin-bottom:14px;
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.68);
+  position:relative;
+  padding-left:20px;
+}
+
+.hero-name::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:50%;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  transform:translateY(-50%);
+  background:rgba(255,255,255,.85);
+  box-shadow:0 0 18px rgba(255,255,255,.38);
+}
+
+.hero h1{
+  font-size:clamp(42px, 8vw, 90px);
+  line-height:.92;
+  letter-spacing:-2px;
+  text-transform:uppercase;
+  max-width:11ch;
+  text-shadow:0 10px 30px rgba(0,0,0,.28);
+}
+
+.hero h1 .muted{color:rgba(255,255,255,.58);}
+
+.hero-copy p{
+  margin-top:24px;
+  max-width:640px;
+  font-size:clamp(16px, 2vw, 19px);
+  line-height:1.62;
+  color:var(--muted);
+}
+
+.hero-actions{
+  margin-top:30px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  padding:0 24px;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:700;
+  font-size:14px;
+  transition:.28s ease;
+  border:1px solid transparent;
+  position:relative;
+  overflow:hidden;
+}
+
+.btn::after{
+  content:"";
   position:absolute;
   inset:0;
-  background:rgba(0,0,0,0.5);
+  background:linear-gradient(120deg, transparent 20%, rgba(255,255,255,.22), transparent 80%);
+  transform:translateX(-140%);
+  transition:transform .7s ease;
 }
 
-.hero-text{
+.btn:hover::after{transform:translateX(140%);}
+
+.btn-primary{background:#fff;color:#000;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,255,255,.16);}
+
+.btn-secondary{
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.10);
+  backdrop-filter:blur(10px);
+}
+
+.btn-secondary:hover{background:rgba(255,255,255,.1);transform:translateY(-2px);}
+
+.hero-side{
   position:relative;
-  height:100%;
+  height:520px;
   display:flex;
-  flex-direction:column;
-  justify-content:center;
   align-items:center;
-  text-align:center;
+  justify-content:center;
 }
 
-.hero-text h2{
-  font-size:48px;
-  letter-spacing:3px;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+.hero-panel{
+  width:min(100%, 460px);
+  min-height:380px;
+  padding:28px;
+  border-radius:32px;
+  border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
 }
 
-.hero-text p{
-  font-size:18px;
-  opacity:0.85;
-  margin-top:10px;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+.hero-panel::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(130deg, rgba(255,255,255,.14), transparent 30%, transparent 70%, rgba(120,100,255,.10));
+  pointer-events:none;
 }
 
-@media(max-width:768px){
-  .hero{
-    height:420px;
-  }
-  .hero-text h2{
-    font-size:32px;
-  }
+.hero-badge{
+  display:inline-flex;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.24);
+  font-size:12px;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  margin-bottom:16px;
 }
 
-/* ================= CONTACT SECTION ================= */
+.hero-panel h3{
+  font-size:34px;
+  margin-bottom:14px;
+  letter-spacing:-1px;
+  text-transform:uppercase;
+}
+
+.hero-panel p{
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:18px;
+}
+
+.hero-list{
+  display:grid;
+  gap:12px;
+}
+
+.hero-list div{
+  padding:14px 16px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;
+  background:rgba(255,255,255,.04);
+}
+
 .contact-section{
-  max-width:1200px;
-  margin:80px auto;
-  padding:0 20px;
+  width:min(100% - 32px, var(--max));
+  margin:0 auto;
+  padding:40px 0 110px;
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:40px;
+  gap:28px;
 }
 
 .contact-form,
 .contact-info{
-  text-align: center;
-  background:#111;
-  padding:30px;
-  border-radius:14px;
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  padding:32px;
+  border-radius:28px;
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(18px);
+  position:relative;
+  overflow:hidden;
+}
+
+.contact-form::before,
+.contact-info::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(130deg, rgba(255,255,255,.14), transparent 28%, transparent 72%, rgba(120,100,255,.10));
+  pointer-events:none;
 }
 
 .contact-form h2,
 .contact-info h2{
-  text-align: center;
   margin-bottom:20px;
-  font-size:24px;
+  font-size:30px;
+  letter-spacing:-.5px;
+  text-transform:uppercase;
+  position:relative;
+  z-index:1;
+}
+
+.contact-form form{
+  position:relative;
+  z-index:1;
 }
 
 .contact-form input,
 .contact-form textarea{
   width:100%;
-  padding:12px;
+  padding:14px;
   margin-top:10px;
   margin-bottom:15px;
-  border:none;
-  border-radius:8px;
-  background:#1c1c1c;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;
+  background:#090909;
   color:#fff;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus{
+  outline:none;
+  border-color:rgba(255,255,255,.28);
+  box-shadow:0 0 0 3px rgba(255,255,255,.06);
 }
 
 .contact-form textarea{
   min-height:150px;
-  resize: vertical;
+  resize:vertical;
 }
 
 .contact-form button{
-  padding:14px;
+  padding:15px 24px;
   border:none;
-  border-radius:30px;
+  border-radius:999px;
   font-weight:700;
   cursor:pointer;
   background:#fff;
   color:#000;
   font-size:16px;
-  transition:0.3s;
+  transition:.3s;
 }
 
 .contact-form button:hover{
   background:#ddd;
+  transform:translateY(-2px);
 }
 
-/* ================= FOOTER ================= */
+.contact-info-content{
+  position:relative;
+  z-index:1;
+  display:grid;
+  gap:14px;
+}
+
+.contact-info-row{
+  padding:14px 16px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;
+  background:rgba(255,255,255,.04);
+  line-height:1.7;
+  color:var(--muted);
+}
+
+.contact-info-row strong{
+  display:block;
+  color:#fff;
+  margin-bottom:4px;
+}
+
+.contact-info-row a{
+  color:#fff;
+  text-decoration:underline;
+}
+
 .footer{
-  background:#000;
-  padding:50px 20px 20px 20px;
+  padding:38px 0 28px;
+  border-top:1px solid rgba(255,255,255,.08);
+  margin-top:20px;
+}
+
+.footer-wrap{
+  width:min(100% - 32px, var(--max));
+  margin:auto;
 }
 
 .footer-top{
-  max-width:900px;
-  margin:auto;
   display:flex;
-  justify-content:space-between;
+  justify-content:center;
   align-items:center;
+  gap:26px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
   text-align:center;
 }
 
 .footer-contact p{
-  opacity:0.8;
+  color:var(--muted);
+  line-height:1.7;
+}
+
+.footer-socials{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
 }
 
 .footer-socials a{
-  margin-left:20px;
-  color:#fff;
   text-decoration:none;
-  opacity:0.7;
+  opacity:.72;
+  transition:.25s ease;
 }
 
-.footer-socials a:hover{
-  opacity:1;
-}
+.footer-socials a:hover{opacity:1;transform:translateY(-1px);}
 
 .footer-bottom{
-  margin-top:30px;
-  text-align:center;
-  font-size:13px;
-  opacity:0.6;
   display:flex;
   flex-direction:column;
-  gap:6px;
+  align-items:center;
+  gap:8px;
+  text-align:center;
+  font-size:13px;
+  color:rgba(255,255,255,.56);
 }
 
-.footer-bottom a{
-  color:#fff;
-  text-decoration:none;
-  opacity:0.6;
+.footer-bottom a{text-decoration:none;color:inherit;}
+
+.reveal{
+  opacity:0;
+  transform:translateY(34px);
+  transition:opacity .8s ease, transform .8s ease;
 }
 
-.footer-bottom a:hover{
+.reveal.visible{
   opacity:1;
+  transform:translateY(0);
 }
 
-@media(max-width:900px){
-  .contact-section{
-    grid-template-columns:1fr;
-  }
+@media(max-width:1080px){
+  .hero-inner,
+  .contact-section{grid-template-columns:1fr;}
+  .hero-side{height:auto;}
 }
 
 @media(max-width:768px){
-  .footer-top{
-    flex-direction:column;
-    gap:20px;
-  }
-  .footer-socials a{
-    margin:0 10px;
-  }
-}
+  :root{--header-h:64px;--radius:22px;}
 
+  .menu-toggle{display:block;}
+
+  .main-nav{
+    position:absolute;
+    top:100%;
+    left:0;
+    width:100%;
+    flex-direction:column;
+    align-items:stretch;
+    display:none;
+    background:rgba(5,5,5,.96);
+    z-index:999;
+    gap:0;
+    padding:14px 16px 18px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+
+  .main-nav.active{display:flex;}
+
+  .main-nav a,
+  .nav-btn{
+    padding:14px 6px;
+    width:100%;
+    text-align:left;
+    font-size:15px;
+  }
+
+  .nav-item .dropdown{
+    position:static;
+    box-shadow:none;
+    border-radius:14px;
+    width:100%;
+    min-width:100%;
+    margin:0 0 8px 0;
+  }
+
+  .hero-inner{padding:34px 0 56px;}
+  .hero h1{max-width:none;}
+}
 </style>
 </head>
 
@@ -361,29 +613,18 @@ header{
     <button class="menu-toggle" aria-label="Menu">☰</button>
 
     <nav class="main-nav">
-      <a href="index.html">Domov</a>
-
+      <a href="cennik.html">Cenník</a>
+      <a href="duo.html">DUO BALÍKY</a>
+      <a href="referencie.html">Referencie</a>
+      <a href="portfolio.html">Portfólio</a>
+      <a href="objednavka.html">Rezervácia</a>
       <div class="nav-item">
         <button class="nav-btn">Služby ▾</button>
         <div class="dropdown">
           <a href="sluzby.html">Prehľad služieb</a>
-          <a href="cennik.html">Cenník</a>
-          <a href="odporucanie.html">Zľavy</a>
         </div>
       </div>
-
-      <div class="nav-item">
-        <button class="nav-btn">Portfólio ▾</button>
-        <div class="dropdown">
-          <a href="portfolio.html">Video projekty</a>
-          <a href="referencie.html">Referencie</a>
-        </div>
-      </div>
-
-      <a href="omne.html">O mne</a>
       <a href="kontakt.html">Kontakt</a>
-      <a href="objednavka.html">Rezervovať termín</a>
-      <a href="duo.html">DUO BALÍKY</a>
     </nav>
   </div>
 </header>
@@ -393,15 +634,40 @@ header{
     <source src="uvod_video.mp4" type="video/mp4">
   </video>
   <div class="hero-overlay"></div>
-  <div class="hero-text">
-    <h2>Kamera & Postprodukcia</h2>
-    <p>Stužkové, svadby, eventy, klipy...</p>
-    <a href="objednavka.html" class="hero-cta">Rezervovať termín</a>
+  <div class="hero-glow"></div>
+
+  <div class="hero-inner">
+    <div class="hero-copy reveal">
+      <div class="hero-name">Viktor Boguský</div>
+      <h1>Kontakt <span class="muted">a údaje</span></h1>
+      <p>
+        Ak máš otázku, chceš cenovú ponuku alebo sa dohodnúť na spolupráci, napíš mi správu cez formulár alebo použi kontaktné údaje vedľa. Odpoviem čo najskôr.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact-form" class="btn btn-primary">Napísať správu</a>
+        <a href="objednavka.html" class="btn btn-secondary">Rezervovať termín</a>
+      </div>
+    </div>
+
+    <div class="hero-side reveal">
+      <div class="hero-panel">
+        <div class="hero-badge">Kontakt</div>
+        <h3>Spojenie aj firemné údaje</h3>
+        <p>
+          Na tejto stránke nájdeš kontaktný formulár aj všetky dôležité údaje pre komunikáciu a spoluprácu. Ideálne miesto, ak potrebuješ rýchlo niečo vyriešiť alebo sa informovať.
+        </p>
+        <div class="hero-list">
+          <div>Možnosť poslať priamu správu cez formulár</div>
+          <div>E-mail, telefón a identifikačné údaje na jednom mieste</div>
+          <div>Zladený vizuál s ostatnými stránkami webu</div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <section class="contact-section">
-  <div class="contact-form">
+  <div class="contact-form reveal" id="contact-form">
     <h2>Kontaktujte ma</h2>
     <form action="https://formsubmit.co/kontakt@viktorbogusky.sk" method="POST">
       <input type="text" name="meno" placeholder="Meno a priezvisko*" required>
@@ -412,32 +678,56 @@ header{
     </form>
   </div>
 
-  <div class="contact-info">
+  <div class="contact-info reveal">
     <h2>Kontaktné údaje</h2>
-    <p>📧 Email: <a href="mailto:kontakt@viktorbogusky.sk" style="color:#fff;text-decoration:underline">kontakt@viktorbogusky.sk</a></p>
-    <p>📞 Telefón: <a href="tel:+421948933109" style="color:#fff;text-decoration:underline">+421 948 933 109</a></p>
-    <p>🏢 Kamera & Postprodukcia – Viktor Boguský</p>
-    <p>IČO: 57405786 | DIČ: 1130702320</p>
-    <p>Miesto podnikania: Juh 1064/47, 093 01 Vranov n/T</p>
-    <p>Zápis: Zapísaný v ŽR SR, Okresný úrad Vranov n/T</p>
+    <div class="contact-info-content">
+      <div class="contact-info-row">
+        <strong>E-mail</strong>
+        <a href="mailto:kontakt@viktorbogusky.sk">kontakt@viktorbogusky.sk</a>
+      </div>
+      <div class="contact-info-row">
+        <strong>Telefón</strong>
+        <a href="tel:+421948933109">+421 948 933 109</a>
+      </div>
+      <div class="contact-info-row">
+        <strong>Názov</strong>
+        Kamera &amp; Postprodukcia – Viktor Boguský
+      </div>
+      <div class="contact-info-row">
+        <strong>IČO / DIČ</strong>
+        IČO: 57405786 | DIČ: 1130702320
+      </div>
+      <div class="contact-info-row">
+        <strong>Miesto podnikania</strong>
+        Juh 1064/47, 093 01 Vranov n/T
+      </div>
+      <div class="contact-info-row">
+        <strong>Zápis</strong>
+        Zapísaný v ŽR SR, Okresný úrad Vranov n/T
+      </div>
+    </div>
   </div>
 </section>
 
 <footer class="footer">
-  <div class="footer-top">
-    <div class="footer-contact">
-      <p>kontakt@viktorbogusky.sk</p>
-      <p>+421 948 933 109</p>
+  <div class="footer-wrap">
+    <div class="footer-top">
+      <div class="footer-contact">
+        <p>kontakt@viktorbogusky.sk</p>
+      </div>
+      <div class="footer-contact">
+        <p>+421 948 933 109</p>
+      </div>
     </div>
     <div class="footer-socials">
       <a href="https://www.instagram.com/vittquoo/" target="_blank">Instagram</a>
       <a href="https://www.facebook.com/profile.php?id=100079203706823" target="_blank">Facebook</a>
       <a href="https://www.tiktok.com/@viktorbogusky" target="_blank">TikTok</a>
     </div>
-  </div>
-  <div class="footer-bottom">
-    <span>Vytvoril: Viktor Boguský</span>
-    <span><a href="gdpr.html">GDPR</a> | <a href="podmienky.html">Obchodné podmienky</a></span>
+    <div class="footer-bottom">
+      <span><a href="gdpr.html">GDPR</a> | <a href="podmienky.html">Obchodné podmienky</a></span>
+      <span>Vytvoril: Viktor Boguský</span>
+    </div>
   </div>
 </footer>
 
@@ -455,7 +745,7 @@ navItems.forEach(item => {
   const btn = item.querySelector('.nav-btn');
 
   btn.addEventListener('click', (e) => {
-    e.stopPropagation(); 
+    e.stopPropagation();
     navItems.forEach(i => {
       if(i !== item) i.classList.remove('active');
     });
@@ -467,6 +757,16 @@ document.addEventListener('click', () => {
   nav.classList.remove('active');
   navItems.forEach(item => item.classList.remove('active'));
 });
+
+const revealItems = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+revealItems.forEach(item => observer.observe(item));
 </script>
 
 </body>
