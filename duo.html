@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viktor Boguský | DUO Balíky</title>
+<link rel="icon" type="image/png" href="Viktor-removebg-preview.png">
+
+<style>
+:root{
+  --bg:#050505;
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.72);
+  --line:rgba(255,255,255,.10);
+  --panel:rgba(255,255,255,.06);
+  --shadow:0 30px 80px rgba(0,0,0,.45);
+  --radius:28px;
+  --header-h:72px;
+  --max:1240px;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:
+    radial-gradient(circle at 18% 20%, rgba(85,110,255,.10), transparent 26%),
+    radial-gradient(circle at 80% 15%, rgba(255,255,255,.04), transparent 18%),
+    radial-gradient(circle at 65% 72%, rgba(120,70,255,.08), transparent 24%),
+    var(--bg);
+  color:var(--text);
+  padding-top:var(--header-h);
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(circle at center, black 35%, transparent 90%);
+  opacity:.16;
+  z-index:-3;
+}
+
+a{color:inherit;}
+ul{list-style:none;padding:0;}
+
+.container{
+  width:min(100% - 32px, var(--max));
+  margin:0 auto;
+}
+
+header{
+  position:fixed;
+  inset:0 0 auto 0;
+  height:var(--header-h);
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  z-index:1000;
+}
+
+.header-inner{
+  width:min(100% - 32px, var(--max));
+  height:100%;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.logo{
+  color:#fff;
+  text-decoration:none;
+  font-size:16px;
+  letter-spacing:2px;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+.main-nav{
+  display:flex;
+  align-items:center;
+  gap:28px;
+}
+
+.main-nav a,
+.nav-btn{
+  background:none;
+  border:none;
+  color:#fff;
+  text-decoration:none;
+  font-size:14px;
+  cursor:pointer;
+  opacity:.86;
+  padding:8px 0;
+  font-family:inherit;
+  transition:.25s ease;
+}
+
+.main-nav a:hover,
+.nav-btn:hover{
+  opacity:1;
+  transform:translateY(-1px);
+}
+
+.nav-item{position:relative;}
+
+.dropdown{
+  position:absolute;
+  top:calc(100% + 12px);
+  left:0;
+  background:rgba(10,10,12,.96);
+  display:none;
+  flex-direction:column;
+  min-width:220px;
+  padding:10px;
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  border:1px solid rgba(255,255,255,.08);
+  z-index:2000;
+}
+
+.dropdown a{
+  padding:10px 12px;
+  font-size:13px;
+  white-space:nowrap;
+  border-radius:10px;
+}
+
+.dropdown a:hover{background:rgba(255,255,255,.06);}
+.nav-item.active .dropdown{display:flex;}
+
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:24px;
+  cursor:pointer;
+}
+
+.hero{
+  position:relative;
+  min-height:calc(100vh - var(--header-h));
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  isolation:isolate;
+}
+
+.hero video,
+.hero-overlay,
+.hero-glow{
+  position:absolute;
+  inset:0;
+}
+
+.hero video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:scale(1.08);
+  filter:brightness(.32) saturate(1.04);
+  z-index:-4;
+}
+
+.hero-overlay{
+  z-index:-3;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.34), rgba(0,0,0,.65)),
+    radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,.25) 46%, rgba(0,0,0,.72) 100%);
+}
+
+.hero-glow{
+  z-index:-2;
+  background:
+    radial-gradient(circle at 78% 34%, rgba(85,110,255,.16), transparent 18%),
+    radial-gradient(circle at 58% 68%, rgba(130,60,255,.10), transparent 22%),
+    radial-gradient(circle at 24% 58%, rgba(255,255,255,.04), transparent 18%);
+  filter:blur(18px);
+  pointer-events:none;
+}
+
+.hero-inner{
+  width:min(100% - 32px, var(--max));
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  gap:34px;
+  align-items:center;
+  padding:48px 0 46px;
+}
+
+.hero-copy{
+  max-width:760px;
+  position:relative;
+}
+
+.hero-copy::after{
+  content:"";
+  position:absolute;
+  right:-20px;
+  bottom:-20px;
+  width:260px;
+  height:260px;
+  background:radial-gradient(circle, rgba(90,110,255,.14), transparent 68%);
+  filter:blur(22px);
+  pointer-events:none;
+  z-index:-1;
+}
+
+.hero-name{
+  display:inline-block;
+  margin-bottom:14px;
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.68);
+  position:relative;
+  padding-left:20px;
+}
+
+.hero-name::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:50%;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  transform:translateY(-50%);
+  background:rgba(255,255,255,.85);
+  box-shadow:0 0 18px rgba(255,255,255,.38);
+}
+
+.hero h1{
+  font-size:clamp(42px, 8vw, 90px);
+  line-height:.92;
+  letter-spacing:-2px;
+  text-transform:uppercase;
+  max-width:11ch;
+  text-shadow:0 10px 30px rgba(0,0,0,.28);
+}
+
+.hero h1 .muted{color:rgba(255,255,255,.58);}
+
+.hero-copy p{
+  margin-top:24px;
+  max-width:640px;
+  font-size:clamp(16px, 2vw, 19px);
+  line-height:1.62;
+  color:var(--muted);
+}
+
+.hero-actions{
+  margin-top:30px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  padding:0 24px;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:700;
+  font-size:14px;
+  transition:.28s ease;
+  border:1px solid transparent;
+  position:relative;
+  overflow:hidden;
+}
+
+.btn::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg, transparent 20%, rgba(255,255,255,.22), transparent 80%);
+  transform:translateX(-140%);
+  transition:transform .7s ease;
+}
+
+.btn:hover::after{transform:translateX(140%);}
+
+.btn-primary{background:#fff;color:#000;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,255,255,.16);}
+
+.btn-secondary{
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.10);
+  backdrop-filter:blur(10px);
+}
+
+.btn-secondary:hover{background:rgba(255,255,255,.1);transform:translateY(-2px);}
+
+.hero-side{
+  position:relative;
+  height:520px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hero-panel{
+  width:min(100%, 460px);
+  min-height:380px;
+  padding:28px;
+  border-radius:32px;
+  border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-panel::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(130deg, rgba(255,255,255,.14), transparent 30%, transparent 70%, rgba(120,100,255,.10));
+  pointer-events:none;
+}
+
+.hero-badge{
+  display:inline-flex;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.24);
+  font-size:12px;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  margin-bottom:16px;
+}
+
+.hero-panel h3{
+  font-size:34px;
+  margin-bottom:14px;
+  letter-spacing:-1px;
+  text-transform:uppercase;
+}
+
+.hero-panel p{
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:18px;
+}
+
+.hero-list{
+  display:grid;
+  gap:12px;
+}
+
+.hero-list div{
+  padding:14px 16px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;
+  background:rgba(255,255,255,.04);
+}
+
+.section{padding:110px 0;}
+
+.duo-intro{
+  padding:40px 0 20px;
+}
+
+.duo-intro-content{
+  max-width:860px;
+  margin:auto;
+  text-align:center;
+}
+
+.duo-intro h2{
+  font-size:clamp(30px, 5vw, 54px);
+  line-height:1;
+  letter-spacing:-1px;
+  margin-bottom:18px;
+  text-transform:uppercase;
+}
+
+.duo-lead{
+  font-size:20px;
+  margin-bottom:18px;
+  opacity:.92;
+}
+
+.duo-intro p{
+  opacity:.78;
+  margin-bottom:14px;
+  line-height:1.7;
+}
+
+.duo-section{
+  width:min(100% - 32px, var(--max));
+  margin:auto;
+  padding:20px 0 110px;
+}
+
+.duo-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:28px;
+  margin-top:36px;
+}
+
+.duo-card{
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  border:1px solid rgba(255,255,255,.10);
+  padding:30px;
+  border-radius:28px;
+  transition:.35s ease;
+  backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+
+.duo-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(130deg, rgba(255,255,255,.14), transparent 28%, transparent 72%, rgba(120,100,255,.10));
+  pointer-events:none;
+}
+
+.duo-card:hover{
+  transform:translateY(-10px) scale(1.02);
+  border-color:rgba(255,255,255,.18);
+}
+
+.duo-card.best{
+  border:1px solid rgba(255,255,255,.25);
+  box-shadow:0 36px 90px rgba(0,0,0,.55);
+}
+
+.duo-tag{
+  display:inline-flex;
+  padding:7px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.24);
+  font-size:11px;
+  letter-spacing:1.1px;
+  text-transform:uppercase;
+  margin-bottom:14px;
+}
+
+.duo-card h3{
+  font-size:28px;
+  margin-bottom:8px;
+}
+
+.duo-price{
+  font-size:42px;
+  margin:12px 0 18px;
+  font-weight:700;
+}
+
+.duo-card ul{
+  display:grid;
+  gap:12px;
+}
+
+.duo-card li{
+  padding:12px 14px;
+  border-radius:16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  color:var(--muted);
+}
+
+.duo-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:22px;
+  padding:12px 24px;
+  border:1px solid rgba(255,255,255,.16);
+  color:#fff;
+  text-decoration:none;
+  border-radius:999px;
+  background:rgba(255,255,255,.06);
+  transition:.28s ease;
+  cursor:pointer;
+}
+
+.duo-btn:hover{
+  background:#fff;
+  color:#000;
+  transform:translateY(-2px);
+}
+
+.builder{
+  margin-top:100px;
+}
+
+.builder h2{
+  margin-bottom:24px;
+  font-size:clamp(28px, 4vw, 46px);
+  text-transform:uppercase;
+  letter-spacing:-1px;
+}
+
+.builder-box,
+.form-section{
+  max-width:760px;
+  margin:auto;
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  padding:30px;
+  border-radius:28px;
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(18px);
+}
+
+.builder-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  padding:14px 0;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  color:var(--muted);
+}
+
+.builder-item:last-child{border-bottom:none;}
+
+.builder-item input[type="checkbox"]{
+  width:18px;
+  height:18px;
+}
+
+.builder-item input[type="number"],
+.builder-item input[type="text"],
+.builder-item select,
+.form-section input{
+  background:#090909;
+  border:1px solid rgba(255,255,255,.12);
+  color:#fff;
+  border-radius:12px;
+  padding:10px 12px;
+}
+
+.builder-item select,
+.builder-item input[type="text"],
+.builder-item input[type="number"]{
+  min-width:160px;
+}
+
+.builder-total{
+  margin-top:24px;
+  font-size:30px;
+  font-weight:700;
+}
+
+.form-section{
+  display:none;
+  margin:50px auto 0;
+}
+
+.form-section h3{
+  margin-bottom:18px;
+  font-size:28px;
+  text-transform:uppercase;
+  letter-spacing:-.5px;
+}
+
+.form-section form{
+  display:grid;
+  gap:10px;
+}
+
+.form-section input{
+  width:100%;
+}
+
+.footer{
+  padding:38px 0 28px;
+  border-top:1px solid rgba(255,255,255,.08);
+  margin-top:20px;
+}
+
+.footer-wrap{
+  width:min(100% - 32px, var(--max));
+  margin:auto;
+}
+
+.footer-top{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:26px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+  text-align:center;
+}
+
+.footer-contact p{
+  color:var(--muted);
+  line-height:1.7;
+}
+
+.footer-socials{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+
+.footer-socials a{
+  text-decoration:none;
+  opacity:.72;
+  transition:.25s ease;
+}
+
+.footer-socials a:hover{opacity:1;transform:translateY(-1px);}
+
+.footer-bottom{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  text-align:center;
+  font-size:13px;
+  color:rgba(255,255,255,.56);
+}
+
+.footer-bottom a{text-decoration:none;color:inherit;}
+
+.reveal{
+  opacity:0;
+  transform:translateY(34px);
+  transition:opacity .8s ease, transform .8s ease;
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+@media(max-width:1080px){
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-side{height:auto;}
+}
+
+@media(max-width:768px){
+  :root{--header-h:64px;--radius:22px;}
+
+  .menu-toggle{display:block;}
+
+  .main-nav{
+    position:absolute;
+    top:100%;
+    left:0;
+    width:100%;
+    flex-direction:column;
+    align-items:stretch;
+    display:none;
+    background:rgba(5,5,5,.96);
+    z-index:999;
+    gap:0;
+    padding:14px 16px 18px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+
+  .main-nav.active{display:flex;}
+
+  .main-nav a,
+  .nav-btn{
+    padding:14px 6px;
+    width:100%;
+    text-align:left;
+    font-size:15px;
+  }
+
+  .nav-item .dropdown{
+    position:static;
+    box-shadow:none;
+    border-radius:14px;
+    width:100%;
+    min-width:100%;
+    margin:0 0 8px 0;
+  }
+
+  .hero-inner{padding:34px 0 56px;}
+  .hero h1{max-width:none;}
+  .builder-item{flex-direction:column;align-items:flex-start;}
+  .builder-item select,
+  .builder-item input[type="text"],
+  .builder-item input[type="number"]{width:100%;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">Viktor Boguský</a>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+
+    <nav class="main-nav">
+      <a href="cennik.html">Cenník</a>
+      <a href="duo.html">DUO BALÍKY</a>
+      <a href="referencie.html">Referencie</a>
+      <a href="portfolio.html">Portfólio</a>
+      <a href="objednavka.html">Rezervácia</a>
+      <div class="nav-item">
+        <button class="nav-btn">Služby ▾</button>
+        <div class="dropdown">
+          <a href="sluzby.html">Prehľad služieb</a>
+        </div>
+      </div>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <video autoplay muted loop playsinline>
+    <source src="uvod_video.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-inner">
+    <div class="hero-copy reveal">
+      <div class="hero-name">Viktor Boguský</div>
+      <h1>DUO <span class="muted">balíky</span></h1>
+      <p>
+        Kameraman + fotografka v jednom balíku. Zachytenie atmosféry, emócií aj všetkých dôležitých momentov tak, aby ste mali kompletnú spomienku vo foto aj vo videu.
+      </p>
+      <div class="hero-actions">
+        <a href="#duo-packages" class="btn btn-primary">Pozrieť balíky</a>
+        <a href="#custom-builder" class="btn btn-secondary">Vyskladať custom balík</a>
+      </div>
+    </div>
+
+    <div class="hero-side reveal">
+      <div class="hero-panel">
+        <div class="hero-badge">Foto + Video</div>
+        <h3>Jedna spolupráca, kompletný výsledok</h3>
+        <p>
+          Hotové DUO balíky sú ideálne pre stužkové, kde chcete mať istotu, že získate kvalitný klip, fotografie aj pohodlný priebeh bez riešenia viacerých dodávateľov zvlášť.
+        </p>
+        <div class="hero-list">
+          <div>Vyberieš si hotový balík alebo si ho vyskladáš sám</div>
+          <div>Možnosť klipu, záznamu, pozvánky, galérie a USB</div>
+          <div>Jednoduchá rezervácia cez formulár nižšie</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section duo-intro reveal">
+  <div class="container duo-intro-content">
+    <h2>DUO balík: Kameraman + Fotografka</h2>
+    <p class="duo-lead">
+      Zachyťte svoju stužkovú kompletne: emócie, momenty aj atmosféru.
+    </p>
+    <p>
+      Spojenie profesionálnej fotografky a kameramana znamená, že vám neunikne ani jeden moment. Získate kvalitné fotky aj video, ktoré si budete pozerať ešte roky.
+    </p>
+    <p>
+      Vyberte si hotový balík alebo si vyskladajte vlastný presne podľa vašich predstáv.
+    </p>
+  </div>
+</section>
+
+<section class="duo-section" id="duo-packages">
+  <div class="duo-grid">
+
+    <div class="duo-card reveal">
+      <div class="duo-tag">Základ</div>
+      <h3>Duo Start</h3>
+      <div class="duo-price">350€</div>
+      <ul>
+        <li>5–10 min klip</li>
+        <li>Pozvánka / úvodné video</li>
+        <li>Natáčanie určitých častí podľa dohody</li>
+        <li>150–250 fotiek</li>
+        <li>Odovzdanie v USB</li>
+      </ul>
+      <button class="duo-btn" onclick="selectPackage('Duo Start - 350€')">Rezervovať</button>
+    </div>
+
+    <div class="duo-card reveal">
+      <div class="duo-tag">Najčastejšie</div>
+      <h3>Duo Memory</h3>
+      <div class="duo-price">550€</div>
+      <ul>
+        <li>Záznam v plnej dĺžke</li>
+        <li>Pozvánka alebo klip</li>
+        <li>250–400 fotiek</li>
+        <li>Online galéria</li>
+        <li>Odovzdanie v USB</li>
+      </ul>
+      <button class="duo-btn" onclick="selectPackage('Duo Memory - 550€')">Rezervovať</button>
+    </div>
+
+    <div class="duo-card best reveal">
+      <div class="duo-tag">Premium</div>
+      <h3>Duo Premium</h3>
+      <div class="duo-price">700€</div>
+      <ul>
+        <li>Klip + záznam v plnej dĺžke</li>
+        <li>Pozvánka / úvodné video</li>
+        <li>400–600 fotiek</li>
+        <li>Online galéria</li>
+        <li>Odovzdanie v USB</li>
+      </ul>
+      <button class="duo-btn" onclick="selectPackage('Duo Premium - 700€')">Rezervovať</button>
+    </div>
+
+  </div>
+
+  <div class="builder reveal" id="custom-builder">
+    <h2>Custom DUO balík</h2>
+
+    <div class="builder-box">
+      <div class="builder-item">Klip <input type="checkbox" data-price="150"></div>
+      <div class="builder-item">Záznam v plnej dlžke <input type="checkbox" data-price="200"></div>
+      <div class="builder-item">Úvodné video / pozvánka <input type="checkbox" data-price="80"></div>
+
+      <div class="builder-item">
+        <span>Fotky:</span>
+        <select id="photos">
+          <option value="150">150–250 (150€)</option>
+          <option value="250">250–400 (250€)</option>
+          <option value="350">400–600 (350€)</option>
+        </select>
+      </div>
+
+      <div class="builder-item">
+        <span>Online galéria</span>
+        <input type="checkbox" data-price="30">
+      </div>
+
+      <div class="builder-item">
+        <span>USB v krabičke (1 zdarma, každé ďalšie 20€/ks)</span>
+        <input type="number" id="usbBox" value="1" min="1">
+      </div>
+
+      <div class="builder-item">
+        <span>USB bez krabičky (10€/ks)</span>
+        <input type="number" id="usb" value="0" min="0">
+      </div>
+
+      <div class="builder-item">
+        <span>Zľavový kód</span>
+        <input type="text" id="discount">
+      </div>
+
+      <div class="builder-total">
+        Cena: <span id="total">0</span> €
+      </div>
+
+      <button class="duo-btn" onclick="selectCustom()">Rezervovať custom balík</button>
+    </div>
+  </div>
+
+  <div class="form-section reveal" id="form">
+    <h3>Vyplň údaje</h3>
+
+    <form action="https://formspree.io/f/xjknzwew" method="POST">
+      <input type="hidden" name="balik" id="selectedPackage">
+      <input type="hidden" name="custom_detaily" id="customDetails">
+      <input type="hidden" name="custom_cena" id="customPrice">
+
+      <input placeholder="Meno a priezvisko" name="meno" required>
+      <input placeholder="Email" name="email" required>
+      <input placeholder="Telefón" name="telefon" required>
+      <input placeholder="Dátum akcie" name="datum">
+      <input placeholder="Škola" name="skola">
+      <input placeholder="Miesto konania" name="miesto">
+      <input placeholder="Trieda" name="trieda">
+      <input placeholder="Adresa" name="adresa">
+      <input placeholder="Mesto" name="mesto">
+      <input placeholder="PSČ" name="psc">
+      <input type="text" name="zlava" placeholder="Zľavový kód">
+
+      <button type="submit" class="duo-btn">Odoslať rezerváciu</button>
+    </form>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-wrap">
+    <div class="footer-top">
+      <div class="footer-contact"><p>kontakt@viktorbogusky.sk</p></div>
+      <div class="footer-contact"><p>+421 948 933 109</p></div>
+    </div>
+
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/vittquoo/" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com/profile.php?id=100079203706823" target="_blank">Facebook</a>
+      <a href="https://www.tiktok.com/@viktorbogusky" target="_blank">TikTok</a>
+    </div>
+
+    <div class="footer-bottom">
+      <span><a href="podmienky.html">Obchodné podmienky</a> | <a href="gdpr.html">GDPR</a></span>
+      <span>Vytvoril: Viktor Boguský</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const toggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('.main-nav');
+const navItems = document.querySelectorAll('.nav-item');
+
+toggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  nav.classList.toggle('active');
+});
+
+navItems.forEach(item => {
+  const btn = item.querySelector('.nav-btn');
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navItems.forEach(i => {
+      if(i !== item) i.classList.remove('active');
+    });
+    item.classList.toggle('active');
+  });
+});
+
+document.addEventListener('click', () => {
+  nav.classList.remove('active');
+  navItems.forEach(item => item.classList.remove('active'));
+});
+
+const revealItems = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+revealItems.forEach(item => observer.observe(item));
+
+const inputs = document.querySelectorAll('.builder input[type="checkbox"]');
+const totalEl = document.getElementById('total');
+
+function calculate(){
+  let total = 0;
+
+  inputs.forEach(i => {
+    if(i.checked) total += Number(i.dataset.price);
+  });
+
+  total += Number(document.getElementById('photos').value);
+
+  let usbBox = Number(document.getElementById('usbBox').value || 0);
+  let usb = Number(document.getElementById('usb').value || 0);
+
+  if(usbBox > 1) total += (usbBox - 1) * 20;
+  total += usb * 10;
+
+  let code = document.getElementById('discount').value.trim();
+  if(code === 'STUZKOVASKUSKA10') total = total * 0.9;
+  if(code === 'NEWDUO50') total = total - 50;
+
+  totalEl.textContent = Math.max(0, Math.round(total));
+}
+
+document.querySelectorAll('.builder input, #photos').forEach(el => {
+  el.addEventListener('change', calculate);
+  el.addEventListener('input', calculate);
+});
+
+calculate();
+
+function selectPackage(name){
+  document.getElementById('selectedPackage').value = name;
+  document.getElementById('form').style.display = 'block';
+  document.getElementById('form').classList.add('visible');
+  window.scrollTo({top:document.getElementById('form').offsetTop - 80, behavior:'smooth'});
+}
+
+function selectCustom(){
+  let details = [];
+
+  document.querySelectorAll('.builder input[type="checkbox"]').forEach(i => {
+    if(i.checked){
+      let text = i.parentElement.textContent.trim();
+      details.push(text);
+    }
+  });
+
+  let photosText = document.getElementById('photos').selectedOptions[0].text;
+  details.push('Fotky: ' + photosText);
+
+  let usbBox = document.getElementById('usbBox').value;
+  let usb = document.getElementById('usb').value;
+  details.push('USB v krabičke: ' + usbBox);
+  details.push('USB bez krabičky: ' + usb);
+
+  let code = document.getElementById('discount').value;
+  if(code) details.push('Zľavový kód: ' + code);
+
+  let price = document.getElementById('total').textContent;
+
+  document.getElementById('selectedPackage').value = 'Custom DUO';
+  document.getElementById('customDetails').value = details.join(' | ');
+  document.getElementById('customPrice').value = price + '€';
+  document.getElementById('form').style.display = 'block';
+  document.getElementById('form').classList.add('visible');
+
+  window.scrollTo({
+    top:document.getElementById('form').offsetTop - 80,
+    behavior:'smooth'
+  });
+}
+</script>
+
+</body>
+</html>
