@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viktor Boguský | GDPR</title>
+<link rel="icon" type="image/png" href="Viktor-removebg-preview.png">
+
+<style>
+:root{
+  --bg:#050505;
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.72);
+  --line:rgba(255,255,255,.10);
+  --panel:rgba(255,255,255,.06);
+  --shadow:0 30px 80px rgba(0,0,0,.45);
+  --radius:28px;
+  --header-h:72px;
+  --max:1240px;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:
+    radial-gradient(circle at 18% 20%, rgba(85,110,255,.10), transparent 26%),
+    radial-gradient(circle at 80% 15%, rgba(255,255,255,.04), transparent 18%),
+    radial-gradient(circle at 65% 72%, rgba(120,70,255,.08), transparent 24%),
+    var(--bg);
+  color:var(--text);
+  padding-top:var(--header-h);
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(circle at center, black 35%, transparent 90%);
+  opacity:.16;
+  z-index:-3;
+}
+
+a{color:inherit;}
+ul{list-style:none;padding:0;}
+
+.container{
+  width:min(100% - 32px, var(--max));
+  margin:0 auto;
+}
+
+/* HEADER */
+header{
+  position:fixed;
+  inset:0 0 auto 0;
+  height:var(--header-h);
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  z-index:1000;
+}
+
+.header-inner{
+  width:min(100% - 32px, var(--max));
+  height:100%;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.logo{
+  color:#fff;
+  text-decoration:none;
+  font-size:16px;
+  letter-spacing:2px;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+.main-nav{
+  display:flex;
+  align-items:center;
+  gap:28px;
+}
+
+.main-nav a,
+.nav-btn{
+  background:none;
+  border:none;
+  color:#fff;
+  text-decoration:none;
+  font-size:14px;
+  cursor:pointer;
+  opacity:.86;
+  padding:8px 0;
+  font-family:inherit;
+  transition:.25s ease;
+}
+
+.main-nav a:hover,
+.nav-btn:hover{
+  opacity:1;
+  transform:translateY(-1px);
+}
+
+.nav-item{position:relative;}
+
+.dropdown{
+  position:absolute;
+  top:calc(100% + 12px);
+  left:0;
+  background:rgba(10,10,12,.96);
+  display:none;
+  flex-direction:column;
+  min-width:220px;
+  padding:10px;
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  border:1px solid rgba(255,255,255,.08);
+  z-index:2000;
+}
+
+.dropdown a{
+  padding:10px 12px;
+  font-size:13px;
+  white-space:nowrap;
+  border-radius:10px;
+}
+
+.dropdown a:hover{background:rgba(255,255,255,.06);}
+.nav-item.active .dropdown{display:flex;}
+
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:24px;
+  cursor:pointer;
+}
+
+/* HERO */
+.hero{
+  position:relative;
+  min-height:calc(100vh - var(--header-h));
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  isolation:isolate;
+}
+
+.hero video,
+.hero-overlay,
+.hero-glow{
+  position:absolute;
+  inset:0;
+}
+
+.hero video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:scale(1.08);
+  filter:brightness(.32) saturate(1.04);
+  z-index:-4;
+}
+
+.hero-overlay{
+  z-index:-3;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.34), rgba(0,0,0,.65)),
+    radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,.25) 46%, rgba(0,0,0,.72) 100%);
+}
+
+.hero-glow{
+  z-index:-2;
+  background:
+    radial-gradient(circle at 78% 34%, rgba(85,110,255,.16), transparent 18%),
+    radial-gradient(circle at 58% 68%, rgba(130,60,255,.10), transparent 22%),
+    radial-gradient(circle at 24% 58%, rgba(255,255,255,.04), transparent 18%);
+  filter:blur(18px);
+  pointer-events:none;
+}
+
+.hero-inner{
+  width:min(100% - 32px, var(--max));
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  gap:34px;
+  align-items:center;
+  padding:48px 0 46px;
+}
+
+.hero-copy{
+  max-width:760px;
+  position:relative;
+}
+
+.hero-copy::after{
+  content:"";
+  position:absolute;
+  right:-20px;
+  bottom:-20px;
+  width:260px;
+  height:260px;
+  background:radial-gradient(circle, rgba(90,110,255,.14), transparent 68%);
+  filter:blur(22px);
+  pointer-events:none;
+  z-index:-1;
+}
+
+.hero-name{
+  display:inline-block;
+  margin-bottom:14px;
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.68);
+  position:relative;
+  padding-left:20px;
+}
+
+.hero-name::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:50%;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  transform:translateY(-50%);
+  background:rgba(255,255,255,.85);
+  box-shadow:0 0 18px rgba(255,255,255,.38);
+}
+
+.hero h1{
+  font-size:clamp(42px, 8vw, 90px);
+  line-height:.92;
+  letter-spacing:-2px;
+  text-transform:uppercase;
+  max-width:11ch;
+  text-shadow:0 10px 30px rgba(0,0,0,.28);
+}
+
+.hero h1 .muted{
+  color:rgba(255,255,255,.58);
+}
+
+.hero-copy p{
+  margin-top:24px;
+  max-width:640px;
+  font-size:clamp(16px, 2vw, 19px);
+  line-height:1.62;
+  color:var(--muted);
+}
+
+.hero-actions{
+  margin-top:30px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  padding:0 24px;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:700;
+  font-size:14px;
+  transition:.28s ease;
+  border:1px solid transparent;
+  position:relative;
+  overflow:hidden;
+}
+
+.btn::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg, transparent 20%, rgba(255,255,255,.22), transparent 80%);
+  transform:translateX(-140%);
+  transition:transform .7s ease;
+}
+
+.btn:hover::after{transform:translateX(140%);}
+
+.btn-primary{
+  background:#fff;
+  color:#000;
+}
+
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 30px rgba(255,255,255,.16);
+}
+
+.btn-secondary{
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.10);
+  backdrop-filter:blur(10px);
+}
+
+.btn-secondary:hover{
+  background:rgba(255,255,255,.1);
+  transform:translateY(-2px);
+}
+
+.hero-side{
+  position:relative;
+  height:520px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hero-panel{
+  width:min(100%, 460px);
+  min-height:380px;
+  padding:28px;
+  border-radius:32px;
+  border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-panel::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(130deg, rgba(255,255,255,.14), transparent 30%, transparent 70%, rgba(120,100,255,.10));
+  pointer-events:none;
+}
+
+.hero-badge{
+  display:inline-flex;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.24);
+  font-size:12px;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  margin-bottom:16px;
+}
+
+.hero-panel h3{
+  font-size:34px;
+  margin-bottom:14px;
+  letter-spacing:-1px;
+  text-transform:uppercase;
+}
+
+.hero-panel p{
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:18px;
+}
+
+.hero-list{
+  display:grid;
+  gap:12px;
+}
+
+.hero-list div{
+  padding:14px 16px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;
+  background:rgba(255,255,255,.04);
+}
+
+/* GDPR CONTENT */
+.gdpr{
+  width:min(100% - 32px, 980px);
+  margin:auto;
+  padding:70px 0 110px;
+}
+
+.gdpr-title{
+  font-size:clamp(30px, 5vw, 54px);
+  margin:0 0 28px;
+  text-align:left;
+  letter-spacing:-1px;
+  text-transform:uppercase;
+}
+
+.gdpr-lead{
+  color:var(--muted);
+  line-height:1.7;
+  max-width:760px;
+  margin-bottom:34px;
+}
+
+.gdpr-card{
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  border:1px solid rgba(255,255,255,.10);
+  padding:36px;
+  border-radius:28px;
+  backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+
+.gdpr-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(130deg, rgba(255,255,255,.14), transparent 28%, transparent 72%, rgba(120,100,255,.10));
+  pointer-events:none;
+}
+
+.gdpr-block{
+  position:relative;
+  z-index:1;
+  padding:26px 0;
+  border-bottom:1px solid rgba(255,255,255,.09);
+}
+
+.gdpr-block:first-child{padding-top:0;}
+.gdpr-block:last-child{padding-bottom:0;border-bottom:none;}
+
+.gdpr-block h3{
+  font-size:22px;
+  margin-bottom:12px;
+  letter-spacing:-.5px;
+  text-transform:uppercase;
+}
+
+.gdpr-block p{
+  color:var(--muted);
+  line-height:1.75;
+  font-size:15.5px;
+}
+
+.gdpr-block strong{
+  color:#fff;
+}
+
+.gdpr-list{
+  display:grid;
+  gap:10px;
+  margin:14px 0;
+}
+
+.gdpr-list li{
+  padding:13px 14px;
+  border-radius:16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  color:var(--muted);
+  line-height:1.55;
+}
+
+.gdpr a{
+  color:#fff;
+  text-decoration:underline;
+  text-underline-offset:4px;
+}
+
+.gdpr-contact{
+  margin-top:40px;
+  text-align:center;
+  padding:34px;
+  border-radius:28px;
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(18px);
+}
+
+.gdpr-contact h3{
+  font-size:32px;
+  margin-bottom:14px;
+  text-transform:uppercase;
+  letter-spacing:-1px;
+}
+
+.gdpr-contact p{
+  font-size:16px;
+  margin-bottom:24px;
+  line-height:1.7;
+  color:var(--muted);
+}
+
+/* FOOTER */
+.footer{
+  padding:38px 0 28px;
+  border-top:1px solid rgba(255,255,255,.08);
+  margin-top:20px;
+}
+
+.footer-wrap{
+  width:min(100% - 32px, var(--max));
+  margin:auto;
+}
+
+.footer-top{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:26px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+  text-align:center;
+}
+
+.footer-contact p{
+  color:var(--muted);
+  line-height:1.7;
+}
+
+.footer-socials{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+
+.footer-socials a{
+  text-decoration:none;
+  opacity:.72;
+  transition:.25s ease;
+}
+
+.footer-socials a:hover{
+  opacity:1;
+  transform:translateY(-1px);
+}
+
+.footer-bottom{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  text-align:center;
+  font-size:13px;
+  color:rgba(255,255,255,.56);
+}
+
+.footer-bottom a{text-decoration:none;color:inherit;}
+
+.reveal{
+  opacity:0;
+  transform:translateY(34px);
+  transition:opacity .8s ease, transform .8s ease;
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* MOBILE */
+@media(max-width:1080px){
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-side{height:auto;}
+}
+
+@media(max-width:768px){
+  :root{--header-h:64px;--radius:22px;}
+
+  .menu-toggle{display:block;}
+
+  .main-nav{
+    position:absolute;
+    top:100%;
+    left:0;
+    width:100%;
+    flex-direction:column;
+    align-items:stretch;
+    display:none;
+    background:rgba(5,5,5,.96);
+    z-index:999;
+    gap:0;
+    padding:14px 16px 18px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+
+  .main-nav.active{display:flex;}
+
+  .main-nav a,
+  .nav-btn{
+    padding:14px 6px;
+    width:100%;
+    text-align:left;
+    font-size:15px;
+  }
+
+  .nav-item .dropdown{
+    position:static;
+    box-shadow:none;
+    border-radius:14px;
+    width:100%;
+    min-width:100%;
+    margin:0 0 8px 0;
+  }
+
+  .hero-inner{padding:34px 0 56px;}
+  .hero h1{max-width:none;}
+  .gdpr{padding:50px 0 90px;}
+  .gdpr-card{padding:26px;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">Viktor Boguský</a>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+
+    <nav class="main-nav">
+      <a href="cennik.html">Cenník</a>
+      <a href="duo.html">DUO BALÍKY</a>
+      <a href="referencie.html">Referencie</a>
+      <a href="portfolio.html">Portfólio</a>
+      <a href="objednavka.html">Rezervácia</a>
+      <div class="nav-item">
+        <button class="nav-btn">Služby ▾</button>
+        <div class="dropdown">
+          <a href="sluzby.html">Prehľad služieb</a>
+        </div>
+      </div>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <video autoplay muted loop playsinline>
+    <source src="uvod_video.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-inner">
+    <div class="hero-copy reveal">
+      <div class="hero-name">Viktor Boguský</div>
+      <h1>Ochrana <span class="muted">údajov</span></h1>
+      <p>
+        Informácie o spracovaní osobných údajov podľa GDPR pri používaní webovej stránky a služieb v oblasti kamerovania, natáčania a postprodukcie.
+      </p>
+      <div class="hero-actions">
+        <a href="#gdpr" class="btn btn-primary">Pozrieť GDPR</a>
+        <a href="kontakt.html" class="btn btn-secondary">Kontaktovať</a>
+      </div>
+    </div>
+
+    <div class="hero-side reveal">
+      <div class="hero-panel">
+        <div class="hero-badge">GDPR</div>
+        <h3>Transparentné spracovanie údajov</h3>
+        <p>
+          Tu nájdeš informácie o tom, aké osobné údaje sa spracúvajú, na aký účel, ako dlho sa uchovávajú a aké máš práva.
+        </p>
+        <div class="hero-list">
+          <div>Spracúvané údaje a účely spracovania</div>
+          <div>Práva dotknutej osoby podľa GDPR</div>
+          <div>Cookies, kontakt a zmeny zásad</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gdpr" id="gdpr">
+  <h2 class="gdpr-title reveal">Ochrana osobných údajov</h2>
+  <p class="gdpr-lead reveal">
+    Táto stránka obsahuje informácie o spracovaní osobných údajov podľa nariadenia Európskeho parlamentu a Rady EÚ 2016/679 – GDPR.
+  </p>
+
+  <div class="gdpr-card reveal">
+
+    <div class="gdpr-block">
+      <h3>Úvod</h3>
+      <p>
+        Táto stránka obsahuje informácie o spracovaní osobných údajov podľa nariadenia Európskeho parlamentu a Rady EÚ 2016/679 – GDPR. Poskytovateľom osobných údajov je Viktor Boguský. Používaním služieb klient alebo návštevník webovej stránky potvrdzuje, že bol oboznámený s týmito zásadami a súhlasí s nimi v rozsahu potrebnom na poskytovanie služieb a komunikáciu.
+      </p>
+    </div>
+
+    <div class="gdpr-block">
+      <h3>Spracúvané údaje</h3>
+      <p>Poskytovateľ spracúva nasledujúce osobné údaje:</p>
+      <ul class="gdpr-list">
+        <li>Meno, priezvisko a kontaktné údaje, najmä e-mail a telefónne číslo.</li>
+        <li>Údaje poskytnuté v rámci objednávky služieb, napríklad adresy, termíny a špecifikácia videí.</li>
+        <li>Údaje získané z webovej stránky prostredníctvom kontaktného formulára alebo newsletteru, ak je k dispozícii.</li>
+        <li>Technické údaje o zariadení a prehliadači návštevníka, napríklad logy, cookies a IP adresa.</li>
+      </ul>
+    </div>
+
+    <div class="gdpr-block">
+      <h3>Účel spracovania</h3>
+      <p>Osobné údaje sú spracovávané výlučne na tieto účely:</p>
+      <ul class="gdpr-list">
+        <li>Poskytovanie objednaných služieb, napríklad natáčanie, postprodukcia a dodanie materiálu.</li>
+        <li>Komunikácia s klientom a vypracovanie cenovej ponuky.</li>
+        <li>Administrácia fakturácie a účtovníctva.</li>
+        <li>Zlepšenie služieb a marketingové účely, iba v prípade súhlasu klienta.</li>
+        <li>Splnenie zákonných povinností poskytovateľa.</li>
+      </ul>
+    </div>
+
+    <div class="gdpr-block">
+      <h3>Právny základ spracovania</h3>
+      <p>Spracovanie osobných údajov sa vykonáva na základe:</p>
+      <ul class="gdpr-list">
+        <li>Súhlasu klienta.</li>
+        <li>Plnenia zmluvy alebo prijatých opatrení pred uzavretím zmluvy.</li>
+        <li>Oprávneného záujmu poskytovateľa pri zabezpečení poskytovania služieb a vedení obchodnej agendy.</li>
+        <li>Splnenia zákonných povinností poskytovateľa.</li>
+      </ul>
+    </div>
+
+    <div class="gdpr-block">
+      <h3>Ukladanie a ochrana údajov</h3>
+      <p>
+        Poskytovateľ sa zaväzuje uchovávať osobné údaje len po dobu nevyhnutnú na splnenie účelu spracovania alebo podľa zákonných požiadaviek. Osobné údaje sú chránené vhodnými technickými a organizačnými opatreniami proti zneužitiu, strate, neoprávnenému prístupu alebo zverejneniu.
+      </p>
+    </div>
+
+    <div class="gdpr-block">
+      <h3>Práva dotknutej osoby</h3>
+      <p>Každá fyzická osoba, ktorej osobné údaje sú spracovávané, má právo na:</p>
+      <ul class="gdpr-list">
+        <li>Prístup k svojim osobným údajom.</li>
+        <li>Opravu nesprávnych alebo neúplných údajov.</li>
+        <li>Vymazanie údajov, teda právo byť zabudnutý, v prípadoch stanovených GDPR.</li>
+        <li>Obmedzenie spracovania.</li>
+        <li>Právo namietať proti spracovaniu.</li>
+        <li>Právo na prenosnosť údajov.</li>
+        <li>Podať sťažnosť dozornému orgánu, ktorým je Úrad na ochranu osobných údajov SR.</li>
+      </ul>
+    </div>
+
+    <div class="gdpr-block">
+      <h3>Poskytovanie údajov tretím stranám</h3>
+      <p>Osobné údaje sa neposkytujú tretím stranám, okrem:</p>
+      <ul class="gdpr-list">
+        <li>Externých spracovateľov údajov, ktorí zabezpečujú služby administrácie, IT, cloudového úložiska alebo účtovníctva.</li>
+        <li>Prípadov, kde je to potrebné podľa zákona alebo rozhodnutia súdu.</li>
+      </ul>
+    </div>
+
+    <div class="gdpr-block">
+      <h3>Cookies a technológie sledovania</h3>
+      <p>
+        Webová stránka používa cookies a podobné technológie na optimalizáciu používateľského zážitku, analýzu návštevnosti a zabezpečenie funkčnosti stránky. Použitie cookies podlieha súhlasu používateľa, ktorý je možné vyjadriť kliknutím na tlačidlo „Akceptovať cookies“. Nepovinné cookies, napríklad analytické alebo marketingové, sa aktivujú až po súhlase návštevníka.
+      </p>
+    </div>
+
+    <div class="gdpr-block">
+      <h3>Kontakt a otázky</h3>
+      <p>
+        V prípade otázok ohľadom spracovania osobných údajov, uplatnenia práv alebo podania sťažnosti je možné kontaktovať poskytovateľa na e-mail:
+        <a href="mailto:kontakt@viktorbogusky.sk">kontakt@viktorbogusky.sk</a>
+        alebo telefonicky: +421 948 933 109.
+      </p>
+    </div>
+
+    <div class="gdpr-block">
+      <h3>Zmeny v zásadách ochrany osobných údajov</h3>
+      <p>
+        Poskytovateľ si vyhradzuje právo meniť tieto zásady. Aktuálna verzia bude vždy dostupná na webovej stránke. Každá zmena nadobúda účinnosť dňom zverejnenia.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="gdpr-contact reveal">
+    <h3>Máš otázku ku GDPR?</h3>
+    <p>
+      Ak potrebuješ vysvetlenie alebo chceš uplatniť svoje práva, kontaktuj ma e-mailom alebo cez kontaktnú stránku.
+    </p>
+    <a href="kontakt.html" class="btn btn-primary">Kontaktovať</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-wrap">
+    <div class="footer-top">
+      <div class="footer-contact">
+        <p>kontakt@viktorbogusky.sk</p>
+      </div>
+      <div class="footer-contact">
+        <p>+421 948 933 109</p>
+      </div>
+    </div>
+
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/vittquoo/" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com/profile.php?id=100079203706823" target="_blank">Facebook</a>
+      <a href="https://www.tiktok.com/@viktorbogusky" target="_blank">TikTok</a>
+    </div>
+
+    <div class="footer-bottom">
+      <span><a href="podmienky.html">Obchodné podmienky</a> | <a href="gdpr.html">GDPR</a></span>
+      <span>Vytvoril: Viktor Boguský</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const toggle = document.querySelector('.menu-toggle');
+const navItems = document.querySelectorAll('.nav-item');
+const nav = document.querySelector('.main-nav');
+
+toggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  nav.classList.toggle('active');
+});
+
+navItems.forEach(item => {
+  const btn = item.querySelector('.nav-btn');
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation(); 
+    navItems.forEach(i => {
+      if(i !== item) i.classList.remove('active');
+    });
+    item.classList.toggle('active');
+  });
+});
+
+document.addEventListener('click', () => {
+  nav.classList.remove('active');
+  navItems.forEach(item => item.classList.remove('active'));
+});
+
+const revealItems = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+
+revealItems.forEach(item => observer.observe(item));
+</script>
+
+</body>
+</html>
