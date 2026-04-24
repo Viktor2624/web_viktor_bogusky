@@ -11,7 +11,10 @@
   --bg:#050505;
   --text:#ffffff;
   --muted:rgba(255,255,255,.72);
+  --line:rgba(255,255,255,.10);
+  --panel:rgba(255,255,255,.06);
   --shadow:0 30px 80px rgba(0,0,0,.45);
+  --radius:28px;
   --header-h:72px;
   --max:1240px;
 }
@@ -36,9 +39,29 @@ body{
   overflow-x:hidden;
 }
 
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(circle at center, black 35%, transparent 90%);
+  opacity:.16;
+  z-index:-3;
+}
+
 a{color:inherit;}
 ul{list-style:none;padding:0;}
 
+.container{
+  width:min(100% - 32px, var(--max));
+  margin:0 auto;
+}
+
+/* HEADER */
 header{
   position:fixed;
   inset:0 0 auto 0;
@@ -133,7 +156,7 @@ header{
 /* HERO */
 .hero{
   position:relative;
-  min-height:520px;
+  min-height:calc(100vh - var(--header-h));
   display:flex;
   align-items:center;
   overflow:hidden;
@@ -152,15 +175,15 @@ header{
   height:100%;
   object-fit:cover;
   transform:scale(1.08);
-  filter:brightness(.30) saturate(1.04);
+  filter:brightness(.32) saturate(1.04);
   z-index:-4;
 }
 
 .hero-overlay{
   z-index:-3;
   background:
-    linear-gradient(to bottom, rgba(0,0,0,.34), rgba(0,0,0,.72)),
-    radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,.28) 46%, rgba(0,0,0,.76) 100%);
+    linear-gradient(to bottom, rgba(0,0,0,.34), rgba(0,0,0,.65)),
+    radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,.25) 46%, rgba(0,0,0,.72) 100%);
 }
 
 .hero-glow{
@@ -176,11 +199,29 @@ header{
 .hero-inner{
   width:min(100% - 32px, var(--max));
   margin:0 auto;
-  padding:80px 0;
   display:grid;
-  grid-template-columns:1fr .7fr;
-  gap:44px;
+  grid-template-columns:1.08fr .92fr;
+  gap:34px;
   align-items:center;
+  padding:48px 0 46px;
+}
+
+.hero-copy{
+  max-width:760px;
+  position:relative;
+}
+
+.hero-copy::after{
+  content:"";
+  position:absolute;
+  right:-20px;
+  bottom:-20px;
+  width:260px;
+  height:260px;
+  background:radial-gradient(circle, rgba(90,110,255,.14), transparent 68%);
+  filter:blur(22px);
+  pointer-events:none;
+  z-index:-1;
 }
 
 .hero-name{
@@ -209,171 +250,29 @@ header{
 }
 
 .hero h1{
-  font-size:clamp(42px, 7vw, 86px);
+  font-size:clamp(42px, 8vw, 90px);
   line-height:.92;
   letter-spacing:-2px;
   text-transform:uppercase;
+  max-width:11ch;
+  text-shadow:0 10px 30px rgba(0,0,0,.28);
 }
 
-.hero h1 span{
-  color:rgba(255,255,255,.58);
-}
+.hero h1 .muted{color:rgba(255,255,255,.58);}
 
 .hero-copy p{
   margin-top:24px;
-  max-width:680px;
+  max-width:640px;
   font-size:clamp(16px, 2vw, 19px);
-  line-height:1.65;
+  line-height:1.62;
   color:var(--muted);
 }
 
-.hero-panel{
-  padding:28px;
-  border-radius:32px;
-  border:1px solid rgba(255,255,255,.12);
-  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
-  backdrop-filter:blur(18px);
-  box-shadow:var(--shadow);
-}
-
-.hero-badge{
-  display:inline-flex;
-  padding:8px 12px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(0,0,0,.24);
-  font-size:12px;
-  letter-spacing:1.2px;
-  text-transform:uppercase;
-  margin-bottom:16px;
-}
-
-.hero-panel h3{
-  font-size:28px;
-  margin-bottom:14px;
-  text-transform:uppercase;
-  letter-spacing:-1px;
-}
-
-.hero-panel p{
-  color:var(--muted);
-  line-height:1.7;
-}
-
-/* TERMS */
-.terms{
-  width:min(100% - 32px, 980px);
-  margin:0 auto;
-  padding:110px 0;
-}
-
-.terms-intro{
-  text-align:center;
-  margin-bottom:38px;
-}
-
-.terms-intro h2{
-  font-size:clamp(30px, 5vw, 54px);
-  text-transform:uppercase;
-  letter-spacing:-1px;
-  margin-bottom:14px;
-}
-
-.terms-intro p{
-  color:var(--muted);
-  line-height:1.7;
-  max-width:700px;
-  margin:auto;
-}
-
-.terms-card{
-  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:28px;
-  box-shadow:var(--shadow);
-  backdrop-filter:blur(18px);
-  padding:36px;
-  position:relative;
-  overflow:hidden;
-}
-
-.terms-card::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(130deg, rgba(255,255,255,.14), transparent 28%, transparent 72%, rgba(120,100,255,.10));
-  pointer-events:none;
-}
-
-.term-block{
-  position:relative;
-  z-index:1;
-  padding:24px 0;
-  border-bottom:1px solid rgba(255,255,255,.09);
-}
-
-.term-block:first-child{
-  padding-top:0;
-}
-
-.term-block:last-child{
-  border-bottom:none;
-  padding-bottom:0;
-}
-
-.term-block h3{
-  font-size:22px;
-  margin-bottom:12px;
-  letter-spacing:-.4px;
-  text-transform:uppercase;
-}
-
-.term-block p{
-  color:var(--muted);
-  line-height:1.75;
-  font-size:15.5px;
-}
-
-.term-block strong{
-  color:#fff;
-}
-
-.term-list{
-  margin-top:10px;
-  display:grid;
-  gap:10px;
-}
-
-.term-list li{
-  padding:13px 14px;
-  border-radius:16px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08);
-  color:var(--muted);
-  line-height:1.55;
-}
-
-.cta-panel{
-  margin-top:34px;
-  padding:34px;
-  border-radius:28px;
-  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
-  border:1px solid rgba(255,255,255,.10);
-  box-shadow:var(--shadow);
-  backdrop-filter:blur(18px);
-  text-align:center;
-}
-
-.cta-panel h3{
-  font-size:28px;
-  margin-bottom:12px;
-  text-transform:uppercase;
-}
-
-.cta-panel p{
-  color:var(--muted);
-  line-height:1.7;
-  margin-bottom:22px;
+.hero-actions{
+  margin-top:30px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
 }
 
 .btn{
@@ -392,18 +291,200 @@ header{
   overflow:hidden;
 }
 
-.btn-primary{
-  background:#fff;
-  color:#000;
+.btn::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg, transparent 20%, rgba(255,255,255,.22), transparent 80%);
+  transform:translateX(-140%);
+  transition:transform .7s ease;
 }
+
+.btn:hover::after{transform:translateX(140%);}
+
+.btn-primary{background:#fff;color:#000;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,255,255,.16);}
 
 .btn-secondary{
   background:rgba(255,255,255,.06);
   border-color:rgba(255,255,255,.10);
+  backdrop-filter:blur(10px);
 }
 
-.btn:hover{
-  transform:translateY(-2px);
+.btn-secondary:hover{background:rgba(255,255,255,.1);transform:translateY(-2px);}
+
+.hero-side{
+  position:relative;
+  height:520px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hero-panel{
+  width:min(100%, 460px);
+  min-height:380px;
+  padding:28px;
+  border-radius:32px;
+  border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-panel::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(130deg, rgba(255,255,255,.14), transparent 30%, transparent 70%, rgba(120,100,255,.10));
+  pointer-events:none;
+}
+
+.hero-badge{
+  display:inline-flex;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.24);
+  font-size:12px;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  margin-bottom:16px;
+}
+
+.hero-panel h3{
+  font-size:34px;
+  margin-bottom:14px;
+  letter-spacing:-1px;
+  text-transform:uppercase;
+}
+
+.hero-panel p{
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:18px;
+}
+
+.hero-list{
+  display:grid;
+  gap:12px;
+}
+
+.hero-list div{
+  padding:14px 16px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;
+  background:rgba(255,255,255,.04);
+}
+
+/* TERMS */
+.terms{
+  width:min(100% - 32px, 980px);
+  margin:auto;
+  padding:70px 0 110px;
+}
+
+.terms-title{
+  font-size:clamp(30px, 5vw, 54px);
+  margin:0 0 28px;
+  text-align:left;
+  letter-spacing:-1px;
+  text-transform:uppercase;
+}
+
+.terms-lead{
+  color:var(--muted);
+  line-height:1.7;
+  max-width:760px;
+  margin-bottom:34px;
+}
+
+.terms-card{
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  border:1px solid rgba(255,255,255,.10);
+  padding:36px;
+  border-radius:28px;
+  backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+
+.terms-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(130deg, rgba(255,255,255,.14), transparent 28%, transparent 72%, rgba(120,100,255,.10));
+  pointer-events:none;
+}
+
+.term-block{
+  position:relative;
+  z-index:1;
+  padding:26px 0;
+  border-bottom:1px solid rgba(255,255,255,.09);
+}
+
+.term-block:first-child{padding-top:0;}
+.term-block:last-child{padding-bottom:0;border-bottom:none;}
+
+.term-block h3{
+  font-size:22px;
+  margin-bottom:12px;
+  letter-spacing:-.5px;
+  text-transform:uppercase;
+}
+
+.term-block p{
+  color:var(--muted);
+  line-height:1.75;
+  font-size:15.5px;
+}
+
+.term-block strong{
+  color:#fff;
+}
+
+.term-list{
+  display:grid;
+  gap:10px;
+  margin:14px 0;
+}
+
+.term-list li{
+  padding:13px 14px;
+  border-radius:16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  color:var(--muted);
+  line-height:1.55;
+}
+
+.terms-contact{
+  margin-top:40px;
+  text-align:center;
+  padding:34px;
+  border-radius:28px;
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(18px);
+}
+
+.terms-contact h3{
+  font-size:32px;
+  margin-bottom:14px;
+  text-transform:uppercase;
+  letter-spacing:-1px;
+}
+
+.terms-contact p{
+  font-size:16px;
+  margin-bottom:24px;
+  line-height:1.7;
+  color:var(--muted);
 }
 
 /* FOOTER */
@@ -447,10 +528,7 @@ header{
   transition:.25s ease;
 }
 
-.footer-socials a:hover{
-  opacity:1;
-  transform:translateY(-1px);
-}
+.footer-socials a:hover{opacity:1;transform:translateY(-1px);}
 
 .footer-bottom{
   display:flex;
@@ -475,15 +553,13 @@ header{
   transform:translateY(0);
 }
 
-/* MOBILE */
 @media(max-width:1080px){
-  .hero-inner{
-    grid-template-columns:1fr;
-  }
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-side{height:auto;}
 }
 
 @media(max-width:768px){
-  :root{--header-h:64px;}
+  :root{--header-h:64px;--radius:22px;}
 
   .menu-toggle{display:block;}
 
@@ -502,9 +578,7 @@ header{
     border-bottom:1px solid rgba(255,255,255,.08);
   }
 
-  .main-nav.active{
-    display:flex;
-  }
+  .main-nav.active{display:flex;}
 
   .main-nav a,
   .nav-btn{
@@ -514,7 +588,7 @@ header{
     font-size:15px;
   }
 
-  .dropdown{
+  .nav-item .dropdown{
     position:static;
     box-shadow:none;
     border-radius:14px;
@@ -523,21 +597,10 @@ header{
     margin:0 0 8px 0;
   }
 
-  .hero{
-    min-height:auto;
-  }
-
-  .hero-inner{
-    padding:54px 0;
-  }
-
-  .terms{
-    padding:70px 0;
-  }
-
-  .terms-card{
-    padding:26px;
-  }
+  .hero-inner{padding:34px 0 56px;}
+  .hero h1{max-width:none;}
+  .terms{padding:50px 0 90px;}
+  .terms-card{padding:26px;}
 }
 </style>
 </head>
@@ -576,29 +639,38 @@ header{
   <div class="hero-inner">
     <div class="hero-copy reveal">
       <div class="hero-name">Viktor Boguský</div>
-      <h1>Obchodné <span>podmienky</span></h1>
+      <h1>Obchodné <span class="muted">podmienky</span></h1>
       <p>
-        Prehľad podmienok poskytovania služieb v oblasti kamerovania, natáčania a postprodukcie videí.
+        Prehľad pravidiel spolupráce pri poskytovaní služieb v oblasti kamerovania, natáčania a postprodukcie videí.
       </p>
+      <div class="hero-actions">
+        <a href="#terms" class="btn btn-primary">Pozrieť podmienky</a>
+        <a href="kontakt.html" class="btn btn-secondary">Kontaktovať</a>
+      </div>
     </div>
 
-    <div class="hero-panel reveal">
-      <div class="hero-badge">Dokumenty</div>
-      <h3>Transparentné podmienky spolupráce</h3>
-      <p>
-        Tu nájdeš informácie o rozsahu služieb, platbách, reklamáciách, právach k materiálu, odstúpení od objednávky a spracovaní osobných údajov.
-      </p>
+    <div class="hero-side reveal">
+      <div class="hero-panel">
+        <div class="hero-badge">Podmienky spolupráce</div>
+        <h3>Všetko dôležité na jednom mieste</h3>
+        <p>
+          Nájdeš tu informácie o rozsahu služieb, platbách, odstúpení od objednávky, reklamáciách, právach k materiálu a GDPR.
+        </p>
+        <div class="hero-list">
+          <div>Platby a rezervačný poplatok</div>
+          <div>Reklamácie a dodanie materiálu</div>
+          <div>Autorské práva, GDPR a zrušenie objednávky</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="terms">
-  <div class="terms-intro reveal">
-    <h2>Obchodné podmienky</h2>
-    <p>
-      Tieto obchodné podmienky upravujú spoluprácu medzi poskytovateľom služieb a klientom.
-    </p>
-  </div>
+<section class="terms" id="terms">
+  <h2 class="terms-title reveal">Obchodné podmienky</h2>
+  <p class="terms-lead reveal">
+    Tieto obchodné podmienky upravujú poskytovanie služieb v oblasti kamerovania, natáčania a postprodukcie videí poskytovaných Viktorom Boguským.
+  </p>
 
   <div class="terms-card reveal">
 
@@ -612,7 +684,7 @@ header{
     <div class="term-block">
       <h3>Rozsah služieb</h3>
       <p>
-        Poskytovateľ poskytuje služby zahŕňajúce profesionálne kamerovanie a natáčanie rôznych typov akcií, ako sú svadby, stužkové, eventy, hudobné klipy a promo videá. Súčasťou služieb môže byť aj dodávka spracovaného materiálu vrátane strihu, farebnej korekcie, úpravy zvuku a postprodukčných efektov.
+        Poskytovateľ poskytuje služby zahŕňajúce profesionálne kamerovanie a natáčanie rôznych typov akcií, ako sú svadby, stužkové, eventy, hudobné klipy a promo videá, a dodávku spracovaného materiálu vrátane strihu, farebnej korekcie, úpravy zvuku a postprodukčných efektov.
       </p>
       <p>
         Konkrétny rozsah služieb, dĺžka snímania, počet hodín a formát dodania materiálu sa stanovuje individuálne pri každej objednávke.
@@ -648,14 +720,14 @@ header{
     <div class="term-block">
       <h3>Reklamačný poriadok</h3>
       <p>
-        Klient má právo reklamovať kvalitu poskytnutých služieb vrátane obrazu, zvuku alebo nedodržania termínov. Reklamácia sa podáva písomne, e-mailom alebo telefonicky a musí obsahovať popis problému. Poskytovateľ posúdi reklamáciu a navrhne opravu alebo kompenzáciu.
+        Klient má právo reklamovať kvalitu poskytnutých služieb, vrátane obrazu, zvuku alebo nedodržania termínov. Reklamácia sa podáva písomne, e-mailom alebo telefonicky a musí obsahovať popis problému. Poskytovateľ posúdi reklamáciu a navrhne opravu alebo kompenzáciu.
       </p>
     </div>
 
     <div class="term-block">
       <h3>Práva duševného vlastníctva</h3>
       <p>
-        Všetky práva k natočenému materiálu vrátane autorských práv zostávajú majetkom poskytovateľa až do úplného zaplatenia služby. Po úhrade prechádzajú práva na klienta v rozsahu dohodnutom v objednávke.
+        Všetky práva k natočenému materiálu, vrátane autorských práv, zostávajú majetkom poskytovateľa až do úplného zaplatenia služby. Po úhrade prechádzajú práva na klienta v rozsahu dohodnutom v objednávke.
       </p>
       <p>
         Poskytovateľ si vyhradzuje právo používať materiál na propagáciu a portfólio, pokiaľ nie je výslovne vylúčené.
@@ -681,12 +753,10 @@ header{
 
     <div class="term-block">
       <h3>Odstúpenie od zmluvy</h3>
-      <p>
-        Klient môže od objednávky odstúpiť najneskôr 30 dní pred dohodnutým termínom.
-      </p>
+      <p>Klient môže od objednávky odstúpiť najneskôr 30 dní pred dohodnutým termínom.</p>
       <ul class="term-list">
         <li>V prípade úhrady rezervačného poplatku vo výške 50 % z ceny služby je tento poplatok nevratný pri zrušení akcie zo strany klienta.</li>
-        <li>Ak klient uhradí celú sumu vopred a dôjde k zrušeniu objednávky najneskôr 30 dní pred termínom, má nárok na vrátenie 50 % z celkovej uhradenej sumy.</li>
+        <li>V prípade, že klient uhradí celú sumu vopred a dôjde k zrušeniu objednávky najneskôr 30 dní pred termínom, má nárok na vrátenie 50 % z celkovej uhradenej sumy.</li>
         <li>Pri zrušení objednávky menej ako 30 dní pred dohodnutým termínom nemá klient nárok na vrátenie uhradenej sumy.</li>
         <li>V prípade nepredvídateľných udalostí, napríklad choroby alebo vyššej moci, je možné termín presunúť na základe vzájomnej dohody oboch strán.</li>
       </ul>
@@ -704,10 +774,10 @@ header{
 
   </div>
 
-  <div class="cta-panel reveal">
-    <h3>Máš otázku k podmienkam?</h3>
+  <div class="terms-contact reveal">
+    <h3>Máš otázku?</h3>
     <p>
-      Ak niečomu nerozumieš alebo potrebuješ niečo upresniť pred rezerváciou, pokojne ma kontaktuj.
+      Ak potrebuješ niečo upresniť pred rezerváciou, pokojne ma kontaktuj.
     </p>
     <a href="kontakt.html" class="btn btn-primary">Kontaktovať</a>
   </div>
@@ -716,8 +786,12 @@ header{
 <footer class="footer">
   <div class="footer-wrap">
     <div class="footer-top">
-      <div class="footer-contact"><p>kontakt@viktorbogusky.sk</p></div>
-      <div class="footer-contact"><p>+421 948 933 109</p></div>
+      <div class="footer-contact">
+        <p>kontakt@viktorbogusky.sk</p>
+      </div>
+      <div class="footer-contact">
+        <p>+421 948 933 109</p>
+      </div>
     </div>
 
     <div class="footer-socials">
@@ -767,7 +841,6 @@ const observer = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.12 });
-
 revealItems.forEach(item => observer.observe(item));
 </script>
 
