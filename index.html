@@ -11,8 +11,6 @@
   --bg:#050505;
   --text:#ffffff;
   --muted:rgba(255,255,255,.72);
-  --line:rgba(255,255,255,.10);
-  --panel:rgba(255,255,255,.06);
   --shadow:0 30px 80px rgba(0,0,0,.45);
   --radius:28px;
   --header-h:72px;
@@ -39,32 +37,6 @@ body{
   overflow-x:hidden;
 }
 
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  background:
-    linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
-  background-size:48px 48px;
-  mask-image:radial-gradient(circle at center, black 35%, transparent 90%);
-  opacity:.16;
-  z-index:-4;
-}
-
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  background:
-    radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(90,110,255,.14), transparent 16%),
-    radial-gradient(circle at calc(var(--mx, 50%) + 10%) calc(var(--my, 50%) - 6%), rgba(170,110,255,.07), transparent 14%);
-  filter:blur(20px);
-  z-index:-3;
-}
-
 a{color:inherit;}
 ul{list-style:none;padding:0;}
 
@@ -73,6 +45,7 @@ ul{list-style:none;padding:0;}
   margin:0 auto;
 }
 
+/* HEADER */
 header{
   position:fixed;
   inset:0 0 auto 0;
@@ -164,6 +137,7 @@ header{
   cursor:pointer;
 }
 
+/* HERO */
 .hero{
   position:relative;
   min-height:calc(100vh - var(--header-h));
@@ -175,8 +149,7 @@ header{
 
 .hero video,
 .hero-overlay,
-.hero-glow,
-.hero-grid{
+.hero-glow{
   position:absolute;
   inset:0;
 }
@@ -207,17 +180,6 @@ header{
   pointer-events:none;
 }
 
-.hero-grid{
-  z-index:-2;
-  pointer-events:none;
-  background:
-    linear-gradient(transparent 0 96%, rgba(255,255,255,.025) 100%),
-    linear-gradient(90deg, transparent 0 96%, rgba(255,255,255,.025) 100%);
-  background-size:90px 90px;
-  mask-image:radial-gradient(circle at center, black 28%, transparent 88%);
-}
-
-/* OPRAVENÉ: väčšia medzera medzi textom a panelom, aby panel neliezol do POSTPRODUKCIA */
 .hero-inner{
   width:min(100% - 32px, var(--max));
   margin:0 auto;
@@ -231,21 +193,7 @@ header{
 .hero-copy{
   max-width:640px;
   position:relative;
-  transition:transform .18s linear;
   z-index:2;
-}
-
-.hero-copy::after{
-  content:"";
-  position:absolute;
-  right:-20px;
-  bottom:-20px;
-  width:260px;
-  height:260px;
-  background:radial-gradient(circle, rgba(90,110,255,.14), transparent 68%);
-  filter:blur(22px);
-  pointer-events:none;
-  z-index:-1;
 }
 
 .hero-name{
@@ -274,15 +222,18 @@ header{
 }
 
 .hero h1{
-  font-size:clamp(40px, 6.2vw, 76px);
-  line-height:.95;
+  font-size:clamp(42px, 7vw, 84px);
+  line-height:.94;
   letter-spacing:-2px;
   text-transform:uppercase;
-  max-width:9.1ch;
   text-shadow:0 10px 30px rgba(0,0,0,.28);
 }
 
-.hero h1 .muted{color:rgba(255,255,255,.58);}
+.hero h1 .muted{
+  color:rgba(255,255,255,.58);
+  display:inline-block;
+  margin-top:6px;
+}
 
 .hero-copy p{
   margin-top:24px;
@@ -335,7 +286,10 @@ header{
   backdrop-filter:blur(10px);
 }
 
-.btn-secondary:hover{background:rgba(255,255,255,.1);transform:translateY(-2px);}
+.btn-secondary:hover{
+  background:rgba(255,255,255,.1);
+  transform:translateY(-2px);
+}
 
 .hero-stats{
   margin-top:26px;
@@ -353,7 +307,6 @@ header{
   font-size:13px;
 }
 
-/* OPRAVENÉ: iba jedna definícia .hero-side */
 .hero-side{
   position:relative;
   height:520px;
@@ -422,6 +375,7 @@ header{
   background:rgba(255,255,255,.04);
 }
 
+/* SECTIONS */
 .section{
   width:min(100% - 32px, var(--max));
   margin:0 auto;
@@ -558,13 +512,12 @@ header{
 
 .video-card{
   grid-column:span 6;
-  transition:transform .35s ease, border-color .35s ease, box-shadow .35s ease, filter .35s ease;
+  transition:.35s ease;
 }
 
 .video-card:hover{
   transform:translateY(-6px) scale(1.01);
   border-color:rgba(255,255,255,.18);
-  box-shadow:0 30px 90px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.04) inset;
   filter:brightness(1.05);
 }
 
@@ -594,6 +547,7 @@ header{
 }
 
 .video-meta strong{font-size:15px;}
+
 .video-meta span{
   font-size:12px;
   color:rgba(255,255,255,.6);
@@ -615,6 +569,7 @@ header{
   flex-wrap:wrap;
 }
 
+/* FOOTER */
 .footer{
   padding:38px 0 28px;
   border-top:1px solid rgba(255,255,255,.08);
@@ -655,7 +610,10 @@ header{
   transition:.25s ease;
 }
 
-.footer-socials a:hover{opacity:1;transform:translateY(-1px);}
+.footer-socials a:hover{
+  opacity:1;
+  transform:translateY(-1px);
+}
 
 .footer-bottom{
   display:flex;
@@ -680,6 +638,7 @@ header{
   transform:translateY(0);
 }
 
+/* RESPONSIVE */
 @media(max-width:1080px){
   .hero-inner,
   .about-grid,
@@ -698,7 +657,7 @@ header{
 }
 
 @media(max-width:768px){
-  :root{--header-h:64px;--radius:22px;}
+  :root{--header-h:64px;}
 
   .menu-toggle{display:block;}
 
@@ -736,12 +695,27 @@ header{
     margin:0 0 8px 0;
   }
 
-  .hero-inner{padding:34px 0 56px;gap:30px;}
-  .hero h1{max-width:none;font-size:clamp(40px, 13vw, 74px);}
-  .hero-panel{padding:28px;}
-  .section-title{flex-direction:column;align-items:flex-start;}
-  .videos-grid{grid-template-columns:1fr;}
-  .videos-grid .video-card{grid-column:auto;}
+  .hero-inner{
+    padding:34px 0 56px;
+    gap:30px;
+  }
+
+  .hero h1{
+    font-size:clamp(40px, 13vw, 74px);
+  }
+
+  .section-title{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .videos-grid{
+    grid-template-columns:1fr;
+  }
+
+  .videos-grid .video-card{
+    grid-column:auto;
+  }
 }
 </style>
 </head>
@@ -776,25 +750,28 @@ header{
   </video>
   <div class="hero-overlay"></div>
   <div class="hero-glow"></div>
-  <div class="hero-grid"></div>
 
   <div class="hero-inner">
     <div class="hero-copy reveal">
       <div class="hero-name">Viktor Boguský</div>
-       <h1>
-  Kamera &amp;<br>
-  <span class="muted">postprodukcia</span>
-</h1>
+
+      <h1>
+        Kamera &amp;<br>
+        <span class="muted">postprodukcia</span>
+      </h1>
+
       <p>
         Vizuálne spomienky, ktoré majú atmosféru, rytmus a emóciu. Tvorím video obsah pre stužkové, svadby, eventy, promo videá aj ďalšie projekty tak, aby výsledok nepôsobil obyčajne, ale filmovo a zapamätateľne.
       </p>
+
       <div class="hero-actions">
         <a href="objednavka.html" class="btn btn-primary">Rezervovať termín</a>
         <a href="#about" class="btn btn-secondary">Viac o mne</a>
       </div>
+
       <div class="hero-stats">
         <div class="hero-stat">Stužkové • svadby • eventy • promo</div>
-        <div class="hero-stat">Video a foto služby na jednom mieste</div>
+        <div class="hero-stat">Video + postprodukcia + cinematic feel</div>
       </div>
     </div>
 
@@ -885,22 +862,22 @@ header{
 
   <div class="videos-grid">
     <article class="video-card reveal">
-      <div class="video-shell"><iframe src="https://www.youtube.com/embed/3zES1AlxCd4?rel=0" title="Video projekt 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div class="video-shell"><iframe src="https://www.youtube.com/embed/3zES1AlxCd4?rel=0" title="Video projekt 1" allowfullscreen></iframe></div>
       <div class="video-meta"><strong>Video projekt</strong><span>Featured</span></div>
     </article>
 
     <article class="video-card reveal">
-      <div class="video-shell"><iframe src="https://www.youtube.com/embed/V8z1SuHkfCk?rel=0" title="Video projekt 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div class="video-shell"><iframe src="https://www.youtube.com/embed/V8z1SuHkfCk?rel=0" title="Video projekt 2" allowfullscreen></iframe></div>
       <div class="video-meta"><strong>Video projekt</strong><span>Featured</span></div>
     </article>
 
     <article class="video-card reveal">
-      <div class="video-shell"><iframe src="https://www.youtube.com/embed/LiYAjlk7jZg?rel=0" title="Video projekt 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div class="video-shell"><iframe src="https://www.youtube.com/embed/LiYAjlk7jZg?rel=0" title="Video projekt 3" allowfullscreen></iframe></div>
       <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
     </article>
 
     <article class="video-card reveal">
-      <div class="video-shell"><iframe src="https://www.youtube.com/embed/9Z8BojDP5no?rel=0" title="Video projekt 4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div class="video-shell"><iframe src="https://www.youtube.com/embed/9Z8BojDP5no?rel=0" title="Video projekt 4" allowfullscreen></iframe></div>
       <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
     </article>
   </div>
@@ -922,18 +899,16 @@ header{
 <footer class="footer">
   <div class="footer-wrap">
     <div class="footer-top">
-      <div class="footer-contact">
-        <p>kontakt@viktorbogusky.sk</p>
-      </div>
-      <div class="footer-contact">
-        <p>+421 948 933 109</p>
-      </div>
+      <div class="footer-contact"><p>kontakt@viktorbogusky.sk</p></div>
+      <div class="footer-contact"><p>+421 948 933 109</p></div>
     </div>
+
     <div class="footer-socials">
       <a href="https://www.instagram.com/vittquoo/" target="_blank">Instagram</a>
       <a href="https://www.facebook.com/profile.php?id=100079203706823" target="_blank">Facebook</a>
       <a href="https://www.tiktok.com/@viktorbogusky" target="_blank">TikTok</a>
     </div>
+
     <div class="footer-bottom">
       <span><a href="gdpr.html">GDPR</a> | <a href="podmienky.html">Obchodné podmienky</a></span>
       <span>Vytvoril: Viktor Boguský</span>
