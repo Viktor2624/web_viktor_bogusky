@@ -717,11 +717,64 @@ header{
     grid-column:auto;
   }
 }
+  .intro-loader{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  transition:opacity 1s ease, transform 1.2s ease;
+}
+
+.intro-loader.hide{
+  opacity:0;
+  transform:scale(1.1);
+  pointer-events:none;
+}
+
+.intro-content{
+  text-align:center;
+  animation:introZoom 2.5s ease forwards;
+}
+
+.intro-content h1{
+  font-size:clamp(42px, 8vw, 120px);
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+.intro-content p{
+  margin-top:12px;
+  font-size:clamp(14px, 2vw, 22px);
+  opacity:0.7;
+  letter-spacing:3px;
+}
+
+@keyframes introZoom{
+  0%{
+    transform:scale(1.4);
+    opacity:0;
+  }
+  40%{
+    opacity:1;
+  }
+  100%{
+    transform:scale(1);
+    opacity:1;
+  }
+}
 </style>
 </head>
 
 <body>
-
+<div class="intro-loader" id="introLoader">
+  <div class="intro-content">
+    <h1>Viktor Boguský</h1>
+    <p>Kamera &amp; postprodukcia</p>
+  </div>
+</div>
 <header>
   <div class="header-inner">
     <a href="index.html" class="logo">Viktor Boguský</a>
@@ -972,7 +1025,18 @@ window.addEventListener('mousemove', (e) => {
 });
 
 window.addEventListener('resize', () => applyFloating(0,0));
+  
 </script>
+<script>
+const introLoader = document.getElementById('introLoader');
 
+window.addEventListener('load', () => {
+  window.scrollTo(0,0);
+
+  setTimeout(() => {
+    introLoader.classList.add('hide');
+  }, 2800);
+});
+</script>
 </body>
 </html>
