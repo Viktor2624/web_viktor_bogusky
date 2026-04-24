@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viktor Boguský | Ukážka postprodukcie</title>
+<link rel="icon" type="image/png" href="Viktor-removebg-preview.png">
+
+<style>
+:root{
+  --bg:#050505;
+  --text:#fff;
+  --muted:rgba(255,255,255,.72);
+  --line:rgba(255,255,255,.10);
+  --shadow:0 30px 80px rgba(0,0,0,.45);
+  --header-h:72px;
+  --max:1240px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial, Helvetica, sans-serif;}
+html{scroll-behavior:smooth;}
+
+body{
+  background:
+    radial-gradient(circle at 20% 20%, rgba(85,110,255,.12), transparent 26%),
+    radial-gradient(circle at 80% 15%, rgba(180,120,255,.08), transparent 22%),
+    radial-gradient(circle at 60% 80%, rgba(255,255,255,.04), transparent 20%),
+    var(--bg);
+  color:var(--text);
+  padding-top:var(--header-h);
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle, rgba(255,255,255,.18) 1px, transparent 1px);
+  background-size:70px 70px;
+  opacity:.08;
+  z-index:-4;
+}
+
+a{color:inherit;text-decoration:none;}
+
+.container{
+  width:min(100% - 32px, var(--max));
+  margin:0 auto;
+}
+
+/* HEADER */
+header{
+  position:fixed;
+  inset:0 0 auto 0;
+  height:var(--header-h);
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  z-index:1000;
+}
+
+.header-inner{
+  width:min(100% - 32px, var(--max));
+  height:100%;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.logo{
+  font-size:16px;
+  letter-spacing:2px;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+.main-nav{
+  display:flex;
+  align-items:center;
+  gap:28px;
+}
+
+.main-nav a,
+.nav-btn{
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:14px;
+  cursor:pointer;
+  opacity:.86;
+  padding:8px 0;
+  font-family:inherit;
+  transition:.25s ease;
+}
+
+.main-nav a:hover,
+.nav-btn:hover{opacity:1;transform:translateY(-1px);}
+
+.nav-item{position:relative;}
+
+.dropdown{
+  position:absolute;
+  top:calc(100% + 12px);
+  left:0;
+  display:none;
+  flex-direction:column;
+  min-width:220px;
+  padding:10px;
+  border-radius:16px;
+  background:rgba(10,10,12,.96);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:var(--shadow);
+}
+
+.dropdown a{
+  padding:10px 12px;
+  font-size:13px;
+  border-radius:10px;
+}
+
+.dropdown a:hover{background:rgba(255,255,255,.06);}
+.nav-item.active .dropdown{display:flex;}
+
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:24px;
+  cursor:pointer;
+}
+
+/* HERO */
+.hero{
+  position:relative;
+  min-height:calc(100vh - var(--header-h));
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  isolation:isolate;
+}
+
+.hero video,
+.hero-overlay,
+.hero-glow{
+  position:absolute;
+  inset:0;
+}
+
+.hero video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:scale(1.08);
+  filter:brightness(.24) saturate(1.1);
+  z-index:-5;
+}
+
+.hero-overlay{
+  z-index:-4;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.28), rgba(0,0,0,.78)),
+    radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,.25) 44%, rgba(0,0,0,.76) 100%);
+}
+
+.hero-glow{
+  z-index:-3;
+  background:
+    radial-gradient(circle at 76% 35%, rgba(85,110,255,.20), transparent 20%),
+    radial-gradient(circle at 55% 70%, rgba(130,60,255,.13), transparent 26%);
+  filter:blur(20px);
+}
+
+.hero-inner{
+  width:min(100% - 32px, var(--max));
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:34px;
+  align-items:center;
+  padding:48px 0;
+}
+
+.hero-name{
+  display:inline-block;
+  margin-bottom:14px;
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.68);
+  padding-left:20px;
+  position:relative;
+}
+
+.hero-name::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:50%;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  transform:translateY(-50%);
+  background:#fff;
+  box-shadow:0 0 18px rgba(255,255,255,.38);
+}
+
+.hero h1{
+  font-size:clamp(42px, 8vw, 90px);
+  line-height:.92;
+  letter-spacing:-2px;
+  text-transform:uppercase;
+  max-width:11ch;
+}
+
+.hero h1 .muted{color:rgba(255,255,255,.58);}
+
+.hero-copy p{
+  margin-top:24px;
+  max-width:640px;
+  font-size:clamp(16px, 2vw, 19px);
+  line-height:1.62;
+  color:var(--muted);
+}
+
+.hero-actions{
+  margin-top:30px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  padding:0 24px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:14px;
+  transition:.28s ease;
+  border:1px solid transparent;
+}
+
+.btn-primary{background:#fff;color:#000;}
+.btn-secondary{
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.10);
+  backdrop-filter:blur(10px);
+}
+
+.btn:hover{transform:translateY(-2px);}
+
+.hero-stage{
+  position:relative;
+  height:540px;
+  perspective:1000px;
+}
+
+.orbit-card{
+  position:absolute;
+  width:260px;
+  border-radius:24px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
+  transform-style:preserve-3d;
+}
+
+.orbit-card video,
+.orbit-card .fake-video{
+  width:100%;
+  aspect-ratio:16/9;
+  object-fit:cover;
+  display:block;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.03)),
+    radial-gradient(circle at 30% 30%, rgba(120,130,255,.35), transparent 32%),
+    #080808;
+}
+
+.orbit-card span{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 14px;
+  color:var(--muted);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.card-a{top:20px;right:80px;transform:rotateZ(8deg) rotateY(-12deg);}
+.card-b{top:190px;right:210px;transform:rotateZ(-8deg) rotateY(16deg);}
+.card-c{bottom:28px;right:28px;transform:rotateZ(5deg) rotateY(-10deg);}
+
+/* SCROLL SHOWCASE */
+.scroll-scene{
+  position:relative;
+  min-height:280vh;
+}
+
+.sticky-edit{
+  position:sticky;
+  top:var(--header-h);
+  min-height:calc(100vh - var(--header-h));
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+}
+
+.edit-wrap{
+  width:min(100% - 32px, var(--max));
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:.8fr 1.2fr;
+  gap:34px;
+  align-items:center;
+}
+
+.scene-copy h2{
+  font-size:clamp(34px, 5vw, 64px);
+  line-height:.95;
+  letter-spacing:-1px;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+
+.scene-copy p{
+  color:var(--muted);
+  line-height:1.7;
+  max-width:460px;
+}
+
+.scene-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:24px;
+}
+
+.scene-tags span{
+  padding:9px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.10);
+  color:rgba(255,255,255,.75);
+  font-size:12px;
+}
+
+/* DAVINCI MOCKUP */
+.editor{
+  position:relative;
+  min-height:560px;
+  border-radius:32px;
+  border:1px solid rgba(255,255,255,.12);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.035));
+  backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  transform:rotateX(0deg) rotateY(0deg);
+}
+
+.editor-top{
+  height:54px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  background:rgba(0,0,0,.28);
+}
+
+.dots{display:flex;gap:8px;}
+.dots span{
+  width:10px;height:10px;border-radius:50%;
+  background:rgba(255,255,255,.34);
+}
+
+.editor-title{
+  color:rgba(255,255,255,.65);
+  font-size:12px;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+}
+
+.viewer{
+  position:relative;
+  height:260px;
+  margin:18px;
+  border-radius:24px;
+  overflow:hidden;
+  background:#000;
+  border:1px solid rgba(255,255,255,.10);
+}
+
+.viewer video{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:contrast(1.1) saturate(1.15);
+}
+
+.viewer::after{
+  content:"COLOR GRADE  •  CUT  •  SOUND DESIGN";
+  position:absolute;
+  left:16px;
+  bottom:16px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(0,0,0,.5);
+  border:1px solid rgba(255,255,255,.14);
+  font-size:11px;
+  letter-spacing:1.2px;
+  color:rgba(255,255,255,.78);
+}
+
+.timeline{
+  position:relative;
+  margin:18px;
+  height:190px;
+  border-radius:24px;
+  background:rgba(0,0,0,.28);
+  border:1px solid rgba(255,255,255,.10);
+  overflow:hidden;
+}
+
+.time-ruler{
+  height:34px;
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.time-ruler span{
+  padding:10px;
+  color:rgba(255,255,255,.45);
+  font-size:11px;
+}
+
+.track{
+  position:relative;
+  height:38px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.clip{
+  position:absolute;
+  top:7px;
+  height:24px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(90deg, rgba(120,140,255,.65), rgba(180,120,255,.38));
+}
+
+.clip.audio{
+  background:linear-gradient(90deg, rgba(255,255,255,.24), rgba(120,140,255,.28));
+}
+
+.clip.one{left:4%;width:22%;}
+.clip.two{left:29%;width:18%;}
+.clip.three{left:50%;width:27%;}
+.clip.four{left:79%;width:15%;}
+.clip.five{left:12%;width:34%;}
+.clip.six{left:50%;width:42%;}
+
+.wave{
+  position:absolute;
+  inset:7px 10px;
+  background:
+    repeating-linear-gradient(90deg,
+      rgba(255,255,255,.18) 0 3px,
+      transparent 3px 9px);
+  mask-image:linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
+  opacity:.8;
+}
+
+.playhead{
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:12%;
+  width:2px;
+  background:#fff;
+  box-shadow:0 0 20px rgba(255,255,255,.6);
+  z-index:5;
+}
+
+.playhead::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:18px;
+  height:18px;
+  background:#fff;
+  clip-path:polygon(50% 100%,0 0,100% 0);
+}
+
+/* floating assets */
+.float-asset{
+  position:absolute;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(14px);
+  box-shadow:var(--shadow);
+  padding:14px;
+  color:rgba(255,255,255,.78);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  pointer-events:none;
+}
+
+.asset-1{top:16%;left:5%;}
+.asset-2{top:28%;right:6%;}
+.asset-3{bottom:13%;left:7%;}
+.asset-4{bottom:18%;right:10%;}
+
+/* PROCESS */
+.process{
+  width:min(100% - 32px, var(--max));
+  margin:0 auto;
+  padding:110px 0;
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:24px;
+  margin-bottom:34px;
+}
+
+.section-title h2{
+  font-size:clamp(30px, 5vw, 54px);
+  text-transform:uppercase;
+  line-height:1;
+  letter-spacing:-1px;
+}
+
+.section-title p{
+  max-width:460px;
+  color:var(--muted);
+  line-height:1.65;
+}
+
+.process-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:22px;
+}
+
+.process-card{
+  padding:26px;
+  border-radius:28px;
+  border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
+  transition:.3s ease;
+}
+
+.process-card:hover{transform:translateY(-8px);}
+
+.process-card span{
+  display:inline-flex;
+  margin-bottom:18px;
+  color:rgba(255,255,255,.5);
+  font-weight:700;
+  letter-spacing:2px;
+}
+
+.process-card h3{
+  font-size:22px;
+  margin-bottom:12px;
+  text-transform:uppercase;
+}
+
+.process-card p{
+  color:var(--muted);
+  line-height:1.7;
+}
+
+/* CTA */
+.cta{
+  width:min(100% - 32px, var(--max));
+  margin:0 auto 100px;
+  padding:36px;
+  border-radius:32px;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
+}
+
+.cta h2{
+  font-size:clamp(30px, 5vw, 54px);
+  text-transform:uppercase;
+  margin-bottom:14px;
+}
+
+.cta p{
+  color:var(--muted);
+  line-height:1.7;
+  max-width:700px;
+  margin:0 auto 24px;
+}
+
+/* FOOTER */
+.footer{
+  padding:38px 0 28px;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+
+.footer-top{
+  display:flex;
+  justify-content:center;
+  gap:26px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+  color:var(--muted);
+}
+
+.footer-socials{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+
+.footer-socials a{opacity:.72;}
+.footer-socials a:hover{opacity:1;}
+
+.footer-bottom{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  text-align:center;
+  font-size:13px;
+  color:rgba(255,255,255,.56);
+}
+
+.reveal{
+  opacity:0;
+  transform:translateY(34px);
+  transition:opacity .8s ease, transform .8s ease;
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+@media(max-width:1080px){
+  .hero-inner,
+  .edit-wrap{
+    grid-template-columns:1fr;
+  }
+
+  .hero-stage{height:520px;}
+  .process-grid{grid-template-columns:repeat(2,1fr);}
+}
+
+@media(max-width:768px){
+  :root{--header-h:64px;}
+
+  .menu-toggle{display:block;}
+
+  .main-nav{
+    position:absolute;
+    top:100%;
+    left:0;
+    width:100%;
+    flex-direction:column;
+    align-items:stretch;
+    display:none;
+    background:rgba(5,5,5,.96);
+    gap:0;
+    padding:14px 16px 18px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+
+  .main-nav.active{display:flex;}
+
+  .main-nav a,
+  .nav-btn{
+    padding:14px 6px;
+    width:100%;
+    text-align:left;
+    font-size:15px;
+  }
+
+  .dropdown{
+    position:static;
+    box-shadow:none;
+    border-radius:14px;
+    width:100%;
+    min-width:100%;
+    margin:0 0 8px 0;
+  }
+
+  .hero-inner{padding:34px 0 56px;}
+  .hero h1{max-width:none;}
+
+  .orbit-card{
+    position:relative;
+    width:100%;
+    top:auto!important;
+    right:auto!important;
+    bottom:auto!important;
+    margin-bottom:16px;
+    transform:none!important;
+  }
+
+  .hero-stage{
+    height:auto;
+  }
+
+  .sticky-edit{
+    position:relative;
+    top:auto;
+    padding:80px 0;
+  }
+
+  .scroll-scene{
+    min-height:auto;
+  }
+
+  .edit-wrap{
+    gap:28px;
+  }
+
+  .float-asset{display:none;}
+  .process-grid{grid-template-columns:1fr;}
+  .section-title{flex-direction:column;align-items:flex-start;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">Viktor Boguský</a>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+
+    <nav class="main-nav">
+      <a href="cennik.html">Cenník</a>
+      <a href="duo.html">DUO BALÍKY</a>
+      <a href="referencie.html">Referencie</a>
+      <a href="portfolio.html">Portfólio</a>
+      <a href="faq.html">FAQ</a>
+      <a href="ukazka.html">Ukážka</a>
+      <a href="objednavka.html">Rezervácia</a>
+      <div class="nav-item">
+        <button class="nav-btn">Služby ▾</button>
+        <div class="dropdown">
+          <a href="sluzby.html">Prehľad služieb</a>
+        </div>
+      </div>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <video autoplay muted loop playsinline>
+    <source src="uvod_video.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-inner">
+    <div class="hero-copy reveal">
+      <div class="hero-name">Viktor Boguský</div>
+      <h1>Postprodukcia <span class="muted">v pohybe</span></h1>
+      <p>
+        Vizuálna ukážka toho, ako môže pôsobiť video stránka inšpirovaná strihom, timeline, color gradingom a pohybom záberov v priestore.
+      </p>
+      <div class="hero-actions">
+        <a href="#timeline" class="btn btn-primary">Spustiť ukážku</a>
+        <a href="portfolio.html" class="btn btn-secondary">Pozrieť portfólio</a>
+      </div>
+    </div>
+
+    <div class="hero-stage reveal">
+      <div class="orbit-card card-a">
+        <video autoplay muted loop playsinline>
+          <source src="uvod_video.mp4" type="video/mp4">
+        </video>
+        <span><b>Clip 01</b> Raw footage</span>
+      </div>
+
+      <div class="orbit-card card-b">
+        <div class="fake-video"></div>
+        <span><b>Color</b> Grade pass</span>
+      </div>
+
+      <div class="orbit-card card-c">
+        <video autoplay muted loop playsinline>
+          <source src="uvod_video.mp4" type="video/mp4">
+        </video>
+        <span><b>Export</b> Final cut</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="scroll-scene" id="timeline">
+  <div class="sticky-edit">
+    <div class="edit-wrap">
+      <div class="scene-copy reveal">
+        <h2>Scrolluj a sleduj strih</h2>
+        <p>
+          Pri posúvaní stránky sa pohybuje playhead, timeline, videá aj celé strihové prostredie. Je to čisto naprogramovaný vizuálny efekt bez reálneho DaVinci Resolve.
+        </p>
+        <div class="scene-tags">
+          <span>Timeline</span>
+          <span>Cut</span>
+          <span>Color grading</span>
+          <span>Sound design</span>
+        </div>
+      </div>
+
+      <div class="editor reveal" id="editor">
+        <div class="editor-top">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <div class="editor-title">Viktor Boguský / Cinematic timeline</div>
+          <div class="editor-title">00:00:24:16</div>
+        </div>
+
+        <div class="viewer">
+          <video autoplay muted loop playsinline>
+            <source src="uvod_video.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <div class="timeline">
+          <div class="time-ruler">
+            <span>00:00</span><span>00:05</span><span>00:10</span><span>00:15</span>
+            <span>00:20</span><span>00:25</span><span>00:30</span><span>00:35</span>
+          </div>
+
+          <div class="playhead" id="playhead"></div>
+
+          <div class="track">
+            <div class="clip one"></div>
+            <div class="clip two"></div>
+            <div class="clip three"></div>
+            <div class="clip four"></div>
+          </div>
+
+          <div class="track">
+            <div class="clip five"></div>
+            <div class="clip six"></div>
+          </div>
+
+          <div class="track">
+            <div class="clip audio one"></div>
+            <div class="clip audio three"></div>
+          </div>
+
+          <div class="track">
+            <div class="wave"></div>
+          </div>
+        </div>
+
+        <div class="float-asset asset-1" id="asset1">Color wheels</div>
+        <div class="float-asset asset-2" id="asset2">Audio clean</div>
+        <div class="float-asset asset-3" id="asset3">Motion blur</div>
+        <div class="float-asset asset-4" id="asset4">Final export</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process">
+  <div class="section-title reveal">
+    <h2>Čo sa deje za videom</h2>
+    <p>Jednoduchý pohľad na proces, ktorý stojí za finálnym videom.</p>
+  </div>
+
+  <div class="process-grid">
+    <div class="process-card reveal">
+      <span>01</span>
+      <h3>Výber záberov</h3>
+      <p>Z natočeného materiálu sa vyberajú momenty, ktoré nesú emóciu a príbeh.</p>
+    </div>
+
+    <div class="process-card reveal">
+      <span>02</span>
+      <h3>Strih</h3>
+      <p>Zábery sa ukladajú do rytmu hudby, atmosféry a prirodzeného priebehu.</p>
+    </div>
+
+    <div class="process-card reveal">
+      <span>03</span>
+      <h3>Farby a zvuk</h3>
+      <p>Color grading, úprava zvuku a doladenie detailov vytvárajú finálny dojem.</p>
+    </div>
+
+    <div class="process-card reveal">
+      <span>04</span>
+      <h3>Export</h3>
+      <p>Video sa pripraví v správnom formáte na odovzdanie alebo zverejnenie.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta reveal">
+  <h2>Chceš podobný vizuál vo videu?</h2>
+  <p>
+    Ak chceš stužkovú, svadbu, event alebo promo video spracované tak, aby malo atmosféru a moderný strih, ozvi sa mi.
+  </p>
+  <a href="objednavka.html" class="btn btn-primary">Rezervovať termín</a>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div>kontakt@viktorbogusky.sk</div>
+      <div>+421 948 933 109</div>
+    </div>
+
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/vittquoo/" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com/profile.php?id=100079203706823" target="_blank">Facebook</a>
+      <a href="https://www.tiktok.com/@viktorbogusky" target="_blank">TikTok</a>
+    </div>
+
+    <div class="footer-bottom">
+      <span><a href="podmienky.html">Obchodné podmienky</a> | <a href="gdpr.html">GDPR</a></span>
+      <span>Vytvoril: Viktor Boguský</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const toggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('.main-nav');
+const navItems = document.querySelectorAll('.nav-item');
+
+toggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  nav.classList.toggle('active');
+});
+
+navItems.forEach(item => {
+  const btn = item.querySelector('.nav-btn');
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navItems.forEach(i => {
+      if(i !== item) i.classList.remove('active');
+    });
+    item.classList.toggle('active');
+  });
+});
+
+document.addEventListener('click', () => {
+  nav.classList.remove('active');
+  navItems.forEach(item => item.classList.remove('active'));
+});
+
+const revealItems = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+revealItems.forEach(item => observer.observe(item));
+
+const playhead = document.getElementById('playhead');
+const editor = document.getElementById('editor');
+const asset1 = document.getElementById('asset1');
+const asset2 = document.getElementById('asset2');
+const asset3 = document.getElementById('asset3');
+const asset4 = document.getElementById('asset4');
+
+function clamp(value, min, max){
+  return Math.min(Math.max(value, min), max);
+}
+
+function animateScroll(){
+  const scene = document.querySelector('.scroll-scene');
+  if(!scene || !playhead || !editor) return;
+
+  const rect = scene.getBoundingClientRect();
+  const windowH = window.innerHeight;
+  const progress = clamp((-rect.top) / (rect.height - windowH), 0, 1);
+
+  playhead.style.left = `${8 + progress * 84}%`;
+
+  const rotateY = (progress - 0.5) * 18;
+  const rotateX = (0.5 - progress) * 8;
+  editor.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(${Math.sin(progress * Math.PI) * -18}px)`;
+
+  if(asset1) asset1.style.transform = `translate3d(${progress * 80}px, ${progress * -60}px, 0) rotate(${progress * 18}deg)`;
+  if(asset2) asset2.style.transform = `translate3d(${progress * -80}px, ${progress * 70}px, 0) rotate(${progress * -14}deg)`;
+  if(asset3) asset3.style.transform = `translate3d(${progress * 120}px, ${progress * 40}px, 0) rotate(${progress * 12}deg)`;
+  if(asset4) asset4.style.transform = `translate3d(${progress * -110}px, ${progress * -50}px, 0) rotate(${progress * -18}deg)`;
+
+  requestAnimationFrame(animateScroll);
+}
+
+requestAnimationFrame(animateScroll);
+
+const orbitCards = document.querySelectorAll('.orbit-card');
+
+window.addEventListener('mousemove', (e) => {
+  if(window.innerWidth <= 768) return;
+
+  const x = e.clientX / window.innerWidth - .5;
+  const y = e.clientY / window.innerHeight - .5;
+
+  orbitCards.forEach((card, index) => {
+    const power = (index + 1) * 8;
+    card.style.translate = `${x * power}px ${y * -power}px`;
+  });
+});
+</script>
+
+</body>
+</html>
