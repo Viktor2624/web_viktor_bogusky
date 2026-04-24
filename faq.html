@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ | Viktor Boguský</title>
+<link rel="icon" type="image/png" href="Viktor-removebg-preview.png">
+
+<style>
+:root{
+  --bg:#050505;
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.7);
+  --line:rgba(255,255,255,.10);
+  --panel:rgba(255,255,255,.06);
+  --radius:24px;
+  --header-h:72px;
+  --max:1100px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  padding-top:var(--header-h);
+}
+
+/* HEADER */
+header{
+  position:fixed;
+  top:0;
+  width:100%;
+  height:var(--header-h);
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+  z-index:1000;
+}
+
+.header-inner{
+  max-width:var(--max);
+  margin:auto;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 20px;
+}
+
+.logo{
+  font-weight:bold;
+  letter-spacing:2px;
+  text-decoration:none;
+  color:#fff;
+}
+
+.main-nav{
+  display:flex;
+  gap:24px;
+}
+
+.main-nav a{
+  color:#fff;
+  text-decoration:none;
+  font-size:14px;
+  opacity:.8;
+}
+
+.main-nav a:hover{opacity:1;}
+
+/* HERO */
+.hero{
+  text-align:center;
+  padding:100px 20px 60px;
+}
+
+.hero h1{
+  font-size:clamp(36px,6vw,60px);
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+
+.hero p{
+  color:var(--muted);
+}
+
+/* FAQ */
+.faq{
+  max-width:var(--max);
+  margin:auto;
+  padding:20px;
+}
+
+.faq-item{
+  border-bottom:1px solid var(--line);
+}
+
+.faq-question{
+  width:100%;
+  text-align:left;
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:18px;
+  padding:20px 0;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.faq-answer{
+  max-height:0;
+  overflow:hidden;
+  transition:0.4s ease;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.faq-item.active .faq-answer{
+  max-height:300px;
+  padding-bottom:20px;
+}
+
+/* FOOTER */
+.footer{
+  margin-top:80px;
+  padding:40px 20px;
+  border-top:1px solid var(--line);
+  text-align:center;
+}
+
+.footer p{
+  color:var(--muted);
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">Viktor Boguský</a>
+    <nav class="main-nav">
+      <a href="index.html">Domov</a>
+      <a href="cennik.html">Cenník</a>
+      <a href="portfolio.html">Portfólio</a>
+      <a href="faq.html">FAQ</a>
+      <a href="objednavka.html">Rezervácia</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Často kladené otázky</h1>
+  <p>Všetko, čo potrebuješ vedieť pred rezerváciou</p>
+</section>
+
+<section class="faq">
+
+  <div class="faq-item">
+    <button class="faq-question">
+      Ako prebieha rezervácia?
+      <span>+</span>
+    </button>
+    <div class="faq-answer">
+      Po odoslaní objednávky alebo správy sa dohodneme na detailoch (termín, rozsah služby). 
+      Následne sa podpisuje zmluva a uhrádza rezervačný poplatok, čím sa termín záväzne rezervuje.
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question">
+      Ako dlho trvá odovzdanie videa?
+      <span>+</span>
+    </button>
+    <div class="faq-answer">
+      Štandardná doba dodania je do 60 dní od natáčania. 
+      V niektorých prípadoch môže byť video hotové aj skôr.
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question">
+      Sme zmluvne chránení?
+      <span>+</span>
+    </button>
+    <div class="faq-answer">
+      Áno, všetko je riešené cez zmluvu, ktorá chráni obe strany - klienta aj dodávateľa. 
+      Máš tak istotu termínu, rozsahu aj dodania služby.
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question">
+      Čo ak sa akcia zruší?
+      <span>+</span>
+    </button>
+    <div class="faq-answer">
+      Termín je možné presunúť podľa dohody. 
+      Rezervačný poplatok je nevratný, pretože blokuje termín.
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question">
+      Dostaneme aj neupravené zábery?
+      <span>+</span>
+    </button>
+    <div class="faq-answer">
+      Štandardne sa odovzdáva finálne upravené video. 
+      Neupravené zábery je možné poskytnúť po dohode.
+    </div>
+  </div>
+
+</section>
+
+<footer class="footer">
+  <p>© Viktor Boguský</p>
+</footer>
+
+<script>
+const items = document.querySelectorAll('.faq-item');
+
+items.forEach(item=>{
+  const btn = item.querySelector('.faq-question');
+  btn.addEventListener('click', ()=>{
+    item.classList.toggle('active');
+  });
+});
+</script>
+
+</body>
+</html>
