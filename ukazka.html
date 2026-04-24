@@ -9,15 +9,31 @@
 <style>
 :root{
   --bg:#050505;
+  --bg2:#090909;
   --text:#ffffff;
   --muted:rgba(255,255,255,.72);
+  --soft:rgba(255,255,255,.55);
+  --line:rgba(255,255,255,.10);
+  --line2:rgba(255,255,255,.16);
+  --panel:rgba(255,255,255,.07);
+  --panel2:rgba(255,255,255,.11);
   --shadow:0 30px 80px rgba(0,0,0,.45);
+  --shadow2:0 45px 110px rgba(0,0,0,.65);
+  --radius:28px;
   --header-h:72px;
   --max:1240px;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial, Helvetica, sans-serif;}
-html{scroll-behavior:smooth;}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
   background:
@@ -35,21 +51,158 @@ body::before{
   position:fixed;
   inset:0;
   pointer-events:none;
-  background:radial-gradient(circle, rgba(255,255,255,.18) 1px, transparent 1px);
+  background:
+    radial-gradient(circle, rgba(255,255,255,.18) 1px, transparent 1px);
   background-size:70px 70px;
   opacity:.08;
+  z-index:-5;
+}
+
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(90,110,255,.14), transparent 16%),
+    radial-gradient(circle at calc(var(--mx, 50%) + 10%) calc(var(--my, 50%) - 6%), rgba(170,110,255,.07), transparent 14%);
+  filter:blur(22px);
   z-index:-4;
 }
 
-a{color:inherit;text-decoration:none;}
-ul{list-style:none;padding:0;}
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+ul{
+  list-style:none;
+  padding:0;
+}
 
 .container{
   width:min(100% - 32px, var(--max));
   margin:0 auto;
 }
 
-/* HEADER */
+/* ================= INTRO LOADER ================= */
+
+.intro-loader{
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(110,130,255,.16), transparent 30%),
+    #000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  transition:opacity 1s ease, visibility 1s ease;
+}
+
+.intro-loader.hide{
+  opacity:0;
+  visibility:hidden;
+}
+
+.intro-loader::before{
+  content:"";
+  position:absolute;
+  width:420px;
+  height:420px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:
+    inset 0 0 70px rgba(120,140,255,.18),
+    0 0 100px rgba(120,140,255,.12);
+  animation:introLens 3.2s ease forwards;
+}
+
+.intro-loader::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg, transparent 0 49.9%, rgba(255,255,255,.06) 50%, transparent 50.1%),
+    linear-gradient(transparent 0 49.9%, rgba(255,255,255,.06) 50%, transparent 50.1%);
+  opacity:.2;
+  transform:scale(1.2);
+  animation:introGridFade 3.2s ease forwards;
+}
+
+.intro-content{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  transform:scale(1.18);
+  animation:introZoom 3.2s ease forwards;
+}
+
+.intro-content h1{
+  font-size:clamp(46px, 9vw, 120px);
+  text-transform:uppercase;
+  letter-spacing:-3px;
+  line-height:.9;
+}
+
+.intro-content p{
+  margin-top:18px;
+  font-size:clamp(15px, 2vw, 28px);
+  color:rgba(255,255,255,.72);
+  letter-spacing:4px;
+  text-transform:uppercase;
+}
+
+@keyframes introZoom{
+  0%{opacity:0;transform:scale(1.38);}
+  20%{opacity:1;}
+  70%{opacity:1;transform:scale(1);}
+  100%{opacity:0;transform:scale(.76);}
+}
+
+@keyframes introLens{
+  0%{transform:scale(1.4) rotate(0deg);opacity:0;}
+  25%{opacity:1;}
+  100%{transform:scale(.5) rotate(55deg);opacity:0;}
+}
+
+@keyframes introGridFade{
+  0%{opacity:0;transform:scale(1.4);}
+  30%{opacity:.2;}
+  100%{opacity:0;transform:scale(.8);}
+}
+
+.skip-tour{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  z-index:4000;
+  padding:12px 18px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(0,0,0,.58);
+  color:#fff;
+  backdrop-filter:blur(14px);
+  cursor:pointer;
+  opacity:0;
+  pointer-events:none;
+  transition:.3s ease;
+}
+
+.skip-tour.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.skip-tour:hover{
+  background:#fff;
+  color:#000;
+  transform:translateY(-2px);
+}
+
+/* ================= HEADER ================= */
+
 header{
   position:fixed;
   inset:0 0 auto 0;
@@ -71,6 +224,7 @@ header{
 }
 
 .logo{
+  color:#fff;
   font-size:16px;
   letter-spacing:2px;
   font-weight:700;
@@ -102,7 +256,9 @@ header{
   transform:translateY(-1px);
 }
 
-.nav-item{position:relative;}
+.nav-item{
+  position:relative;
+}
 
 .dropdown{
   position:absolute;
@@ -122,10 +278,16 @@ header{
   padding:10px 12px;
   font-size:13px;
   border-radius:10px;
+  white-space:nowrap;
 }
 
-.dropdown a:hover{background:rgba(255,255,255,.06);}
-.nav-item.active .dropdown{display:flex;}
+.dropdown a:hover{
+  background:rgba(255,255,255,.06);
+}
+
+.nav-item.active .dropdown{
+  display:flex;
+}
 
 .menu-toggle{
   display:none;
@@ -136,7 +298,8 @@ header{
   cursor:pointer;
 }
 
-/* HERO */
+/* ================= HERO ================= */
+
 .hero{
   position:relative;
   min-height:calc(100vh - var(--header-h));
@@ -187,6 +350,11 @@ header{
   padding:48px 0;
 }
 
+.hero-copy{
+  position:relative;
+  max-width:760px;
+}
+
 .hero-name{
   display:inline-block;
   margin-bottom:14px;
@@ -220,7 +388,9 @@ header{
   max-width:11ch;
 }
 
-.hero h1 .muted{color:rgba(255,255,255,.58);}
+.hero h1 .muted{
+  color:rgba(255,255,255,.58);
+}
 
 .hero-copy p{
   margin-top:24px;
@@ -261,21 +431,33 @@ header{
   transition:transform .7s ease;
 }
 
-.btn:hover::after{transform:translateX(140%);}
-.btn:hover{transform:translateY(-2px);}
+.btn:hover::after{
+  transform:translateX(140%);
+}
 
-.btn-primary{background:#fff;color:#000;}
+.btn:hover{
+  transform:translateY(-2px);
+}
+
+.btn-primary{
+  background:#fff;
+  color:#000;
+}
+
 .btn-secondary{
   background:rgba(255,255,255,.06);
   border-color:rgba(255,255,255,.10);
   backdrop-filter:blur(10px);
 }
 
-/* HERO ORBIT */
+/* ================= HERO ORBIT / OBJECTIVE ================= */
+
 .orbit-stage{
   position:relative;
   height:560px;
   perspective:1200px;
+  transform-style:preserve-3d;
+  transition:transform .2s linear;
 }
 
 .lens{
@@ -344,7 +526,9 @@ header{
   animation:spin 14s linear infinite;
 }
 
-@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes spin{
+  to{transform:rotate(360deg);}
+}
 
 .orbit-ring{
   position:absolute;
@@ -358,7 +542,9 @@ header{
   animation:slowSpin 28s linear infinite;
 }
 
-@keyframes slowSpin{to{transform:translate(-50%,-50%) rotate(360deg);}}
+@keyframes slowSpin{
+  to{transform:translate(-50%,-50%) rotate(360deg);}
+}
 
 .orbit-card{
   position:absolute;
@@ -370,6 +556,7 @@ header{
   background:linear-gradient(180deg, rgba(255,255,255,.11), rgba(255,255,255,.04));
   backdrop-filter:blur(18px);
   box-shadow:var(--shadow);
+  transition:translate .2s linear;
 }
 
 .orbit-card span{
@@ -402,8 +589,11 @@ header{
 .oc-4{left:38px;bottom:58px;}
 .oc-5{left:0;top:165px;}
 
-/* SCROLL SECTIONS */
-.motion-services{position:relative;}
+/* ================= MOTION SERVICES WRAPPER ================= */
+
+.motion-services{
+  position:relative;
+}
 
 .service-scene{
   position:relative;
@@ -475,7 +665,8 @@ header{
   perspective:1300px;
 }
 
-/* TIMELINE ONLY FOR STUŽKOVÉ */
+/* ================= STUŽKOVÉ TIMELINE ================= */
+
 .video-frame{
   position:absolute;
   inset:50px 30px 120px 30px;
@@ -583,7 +774,6 @@ header{
   clip-path:polygon(50% 100%,0 0,100% 0);
 }
 
-/* COMMON FLOATING */
 .floating-tool{
   position:absolute;
   padding:14px 16px;
@@ -604,80 +794,77 @@ header{
 .tool-3{bottom:26%;left:0;}
 .tool-4{bottom:18%;right:6%;}
 
-/* SVADBA - FOCUS LENS */
-.focus-scene{
+/* ================= SVADBY - STORY FILM STRIP ================= */
+
+.wedding-scene{
   position:absolute;
   inset:30px;
   border-radius:34px;
   border:1px solid rgba(255,255,255,.12);
   background:
-    radial-gradient(circle at center, rgba(255,255,255,.14), transparent 7%),
-    radial-gradient(circle at center, rgba(120,140,255,.18), transparent 34%),
+    radial-gradient(circle at 50% 45%, rgba(255,255,255,.12), transparent 10%),
+    radial-gradient(circle at 50% 45%, rgba(130,150,255,.14), transparent 36%),
     linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.035));
   backdrop-filter:blur(18px);
   box-shadow:var(--shadow);
   overflow:hidden;
 }
 
-.focus-scene::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(90deg, transparent 49.8%, rgba(255,255,255,.12) 50%, transparent 50.2%),
-    linear-gradient(transparent 49.8%, rgba(255,255,255,.12) 50%, transparent 50.2%);
-  opacity:.32;
-}
-
-.focus-ring{
+.wedding-orbit{
   position:absolute;
   left:50%;
   top:50%;
+  width:360px;
+  height:360px;
   transform:translate(-50%,-50%);
   border-radius:50%;
-  border:1px solid rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.12);
 }
 
-.focus-ring.r1{width:130px;height:130px;}
-.focus-ring.r2{width:230px;height:230px;}
-.focus-ring.r3{width:360px;height:360px;}
-
-.focus-point{
+.wedding-center{
   position:absolute;
-  width:92px;
-  height:92px;
+  left:50%;
+  top:50%;
+  width:150px;
+  height:150px;
+  transform:translate(-50%,-50%);
   border-radius:50%;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.16);
+  background:
+    radial-gradient(circle, rgba(255,255,255,.20), transparent 15%),
+    radial-gradient(circle, rgba(120,140,255,.18), transparent 60%),
+    rgba(0,0,0,.55);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 0 65px rgba(120,140,255,.22);
+}
+
+.wedding-card{
+  position:absolute;
+  width:150px;
+  height:96px;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.12);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.03)),
+    radial-gradient(circle at 30% 30%, rgba(120,130,255,.35), transparent 32%),
+    #080808;
+  box-shadow:0 25px 60px rgba(0,0,0,.35);
   display:flex;
-  align-items:center;
-  justify-content:center;
+  align-items:end;
+  padding:12px;
+  color:rgba(255,255,255,.76);
+  text-transform:uppercase;
   font-size:11px;
   letter-spacing:1px;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.75);
-  box-shadow:0 20px 55px rgba(0,0,0,.35);
 }
 
-.fp1{top:18%;left:18%;}
-.fp2{top:22%;right:14%;}
-.fp3{bottom:18%;left:26%;}
-.fp4{bottom:22%;right:18%;}
+.wc-1{left:50%;top:7%;transform:translateX(-50%) rotate(-4deg);}
+.wc-2{right:7%;top:35%;transform:rotate(8deg);}
+.wc-3{right:18%;bottom:10%;transform:rotate(-7deg);}
+.wc-4{left:18%;bottom:10%;transform:rotate(7deg);}
+.wc-5{left:7%;top:35%;transform:rotate(-8deg);}
 
-.focus-center{
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:120px;
-  height:120px;
-  transform:translate(-50%,-50%);
-  border-radius:50%;
-  background:#050505;
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:0 0 55px rgba(120,140,255,.26);
-}
+/* ================= EVENTY - AUDIO ENERGY ================= */
 
-/* EVENTY - BEAT VISUALIZER */
 .beat-scene{
   position:absolute;
   inset:40px 20px;
@@ -689,26 +876,6 @@ header{
   backdrop-filter:blur(18px);
   box-shadow:var(--shadow);
   overflow:hidden;
-}
-
-.beat-bars{
-  position:absolute;
-  left:8%;
-  right:8%;
-  bottom:16%;
-  height:55%;
-  display:flex;
-  align-items:end;
-  gap:12px;
-}
-
-.beat-bar{
-  flex:1;
-  min-height:20px;
-  border-radius:999px 999px 12px 12px;
-  background:linear-gradient(to top, rgba(120,140,255,.45), rgba(255,255,255,.58));
-  box-shadow:0 0 35px rgba(120,140,255,.16);
-  transform-origin:bottom;
 }
 
 .beat-label{
@@ -736,7 +903,28 @@ header{
   background:radial-gradient(circle, rgba(255,255,255,.12), transparent 65%);
 }
 
-/* PROMO - SOCIAL CARDS */
+.beat-bars{
+  position:absolute;
+  left:8%;
+  right:8%;
+  bottom:16%;
+  height:55%;
+  display:flex;
+  align-items:end;
+  gap:12px;
+}
+
+.beat-bar{
+  flex:1;
+  min-height:20px;
+  border-radius:999px 999px 12px 12px;
+  background:linear-gradient(to top, rgba(120,140,255,.45), rgba(255,255,255,.58));
+  box-shadow:0 0 35px rgba(120,140,255,.16);
+  transform-origin:bottom;
+}
+
+/* ================= PROMO - SOCIAL GROWTH ================= */
+
 .social-scene{
   position:absolute;
   inset:28px;
@@ -752,9 +940,12 @@ header{
 
 .phone-card{
   position:absolute;
-  width:170px;
-  height:300px;
-  border-radius:32px;
+  left:50%;
+  top:50%;
+  width:190px;
+  height:340px;
+  transform:translate(-50%,-50%) rotate(-4deg);
+  border-radius:34px;
   border:1px solid rgba(255,255,255,.14);
   background:#050505;
   box-shadow:0 30px 80px rgba(0,0,0,.5);
@@ -784,27 +975,46 @@ header{
     linear-gradient(145deg, rgba(255,255,255,.12), rgba(255,255,255,.03));
 }
 
-.phone-card.p1{left:8%;top:12%;transform:rotate(-8deg);}
-.phone-card.p2{left:38%;top:20%;transform:rotate(4deg);}
-.phone-card.p3{right:8%;top:10%;transform:rotate(10deg);}
-
-.social-tag{
+.phone-screen::after{
+  content:"VIDEO";
   position:absolute;
-  padding:10px 14px;
-  border-radius:999px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.12);
-  color:rgba(255,255,255,.76);
-  font-size:12px;
-  letter-spacing:1px;
-  text-transform:uppercase;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  color:rgba(255,255,255,.62);
+  letter-spacing:3px;
+  font-size:13px;
 }
 
-.st1{left:8%;bottom:14%;}
-.st2{right:12%;bottom:20%;}
-.st3{left:40%;bottom:8%;}
+.growth-card{
+  position:absolute;
+  padding:18px 20px;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(16px);
+  box-shadow:var(--shadow);
+}
 
-/* POSTPRODUKCIA - COLOR WHEELS */
+.growth-card span{
+  display:block;
+  font-size:11px;
+  letter-spacing:1.3px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.58);
+  margin-bottom:8px;
+}
+
+.growth-card strong{
+  font-size:34px;
+}
+
+.likes-growth{left:8%;top:18%;}
+.views-growth{right:8%;top:26%;}
+.followers-growth{left:18%;bottom:16%;}
+
+/* ================= POSTPRODUKCIA - COLOR WHEELS ================= */
+
 .color-scene{
   position:absolute;
   inset:28px;
@@ -870,11 +1080,12 @@ header{
   left:0;
   bottom:0;
   width:100%;
-  height:50%;
+  height:var(--h, 50%);
   background:linear-gradient(to top, rgba(120,140,255,.60), rgba(255,255,255,.25));
 }
 
-/* OVERVIEW */
+/* ================= OVERVIEW ================= */
+
 .overview{
   width:min(100% - 32px, var(--max));
   margin:0 auto;
@@ -932,32 +1143,34 @@ header{
   transform:translateY(-8px) scale(1.01);
 }
 
+.overview-card span,
+.overview-card h3,
+.overview-card p{
+  position:relative;
+  z-index:1;
+}
+
 .overview-card span{
   display:inline-flex;
   margin-bottom:18px;
   color:rgba(255,255,255,.5);
   font-weight:700;
   letter-spacing:2px;
-  position:relative;
-  z-index:1;
 }
 
 .overview-card h3{
   font-size:22px;
   margin-bottom:12px;
   text-transform:uppercase;
-  position:relative;
-  z-index:1;
 }
 
 .overview-card p{
   color:var(--muted);
   line-height:1.7;
-  position:relative;
-  z-index:1;
 }
 
-/* CTA */
+/* ================= CTA ================= */
+
 .cta{
   width:min(100% - 32px, var(--max));
   margin:0 auto 100px;
@@ -983,7 +1196,8 @@ header{
   margin:0 auto 24px;
 }
 
-/* FOOTER */
+/* ================= FOOTER ================= */
+
 .footer{
   padding:38px 0 28px;
   border-top:1px solid rgba(255,255,255,.08);
@@ -1006,8 +1220,14 @@ header{
   margin-bottom:14px;
 }
 
-.footer-socials a{opacity:.72;}
-.footer-socials a:hover{opacity:1;}
+.footer-socials a{
+  opacity:.72;
+  transition:.25s ease;
+}
+
+.footer-socials a:hover{
+  opacity:1;
+}
 
 .footer-bottom{
   display:flex;
@@ -1019,7 +1239,8 @@ header{
   color:rgba(255,255,255,.56);
 }
 
-/* REVEAL */
+/* ================= REVEAL ================= */
+
 .reveal{
   opacity:0;
   transform:translateY(34px);
@@ -1031,7 +1252,8 @@ header{
   transform:translateY(0);
 }
 
-/* MOBILE */
+/* ================= MOBILE ================= */
+
 @media(max-width:1080px){
   .hero-inner,
   .service-wrap{
@@ -1048,9 +1270,13 @@ header{
 }
 
 @media(max-width:768px){
-  :root{--header-h:64px;}
+  :root{
+    --header-h:64px;
+  }
 
-  .menu-toggle{display:block;}
+  .menu-toggle{
+    display:block;
+  }
 
   .main-nav{
     position:absolute;
@@ -1066,7 +1292,9 @@ header{
     border-bottom:1px solid rgba(255,255,255,.08);
   }
 
-  .main-nav.active{display:flex;}
+  .main-nav.active{
+    display:flex;
+  }
 
   .main-nav a,
   .nav-btn{
@@ -1085,8 +1313,13 @@ header{
     margin:0 0 8px 0;
   }
 
-  .hero-inner{padding:34px 0 56px;}
-  .hero h1{max-width:none;}
+  .hero-inner{
+    padding:34px 0 56px;
+  }
+
+  .hero h1{
+    max-width:none;
+  }
 
   .orbit-stage{
     height:auto;
@@ -1126,7 +1359,9 @@ header{
     transform:none!important;
   }
 
-  .floating-tool{display:none;}
+  .floating-tool{
+    display:none;
+  }
 
   .overview-grid{
     grid-template-columns:1fr;
@@ -1138,8 +1373,8 @@ header{
   }
 
   .phone-card{
-    width:130px;
-    height:235px;
+    width:150px;
+    height:280px;
   }
 
   .color-wheel{
@@ -1147,14 +1382,32 @@ header{
     height:120px;
   }
 
-  .grade-panel{
-    grid-template-columns:repeat(5,1fr);
+  .growth-card strong{
+    font-size:26px;
+  }
+
+  .growth-card{
+    padding:14px 16px;
+  }
+
+  .wedding-card{
+    width:128px;
+    height:84px;
   }
 }
 </style>
 </head>
 
 <body>
+
+<div class="intro-loader" id="introLoader">
+  <div class="intro-content">
+    <h1>Viktor Boguský</h1>
+    <p>Kamera &amp; postprodukcia</p>
+  </div>
+</div>
+
+<button class="skip-tour" id="skipTour">Preskočiť prehliadku</button>
 
 <header>
   <div class="header-inner">
@@ -1180,7 +1433,7 @@ header{
   </div>
 </header>
 
-<section class="hero">
+<section class="hero" id="top">
   <video autoplay muted loop playsinline>
     <source src="uvod_video.mp4" type="video/mp4">
   </video>
@@ -1192,7 +1445,7 @@ header{
       <div class="hero-name">Viktor Boguský</div>
       <h1>Služby <span class="muted">v pohybe</span></h1>
       <p>
-        Motion stránka služieb inšpirovaná kamerou, objektívom, strihom, focusom, event energiou, sociálnym obsahom a postprodukciou.
+        Kamera, strih, farby, zvuk a finálny export v jednej vizuálnej stránke. Scrolluj alebo nechaj stránku, aby ťa automaticky previedla službami.
       </p>
       <div class="hero-actions">
         <a href="#motion-services" class="btn btn-primary">Spustiť scroll</a>
@@ -1242,8 +1495,7 @@ header{
 
 <main class="motion-services" id="motion-services">
 
-  <!-- STUŽKOVÉ - TIMELINE -->
-  <section class="service-scene" data-type="timeline">
+  <section class="service-scene" data-type="timeline" id="stuzkove">
     <div class="service-sticky">
       <div class="service-wrap">
         <div class="service-copy reveal">
@@ -1268,12 +1520,26 @@ header{
 
           <div class="mini-timeline">
             <div class="mini-ruler">
-              <span>00:00</span><span>00:10</span><span>00:20</span>
-              <span>00:30</span><span>00:40</span><span>00:50</span>
+              <span>00:00</span>
+              <span>00:10</span>
+              <span>00:20</span>
+              <span>00:30</span>
+              <span>00:40</span>
+              <span>00:50</span>
             </div>
+
             <div class="service-playhead"></div>
-            <div class="mini-track"><div class="mini-clip a"></div><div class="mini-clip b"></div><div class="mini-clip c"></div></div>
-            <div class="mini-track"><div class="mini-clip d"></div><div class="mini-clip e"></div></div>
+
+            <div class="mini-track">
+              <div class="mini-clip a"></div>
+              <div class="mini-clip b"></div>
+              <div class="mini-clip c"></div>
+            </div>
+
+            <div class="mini-track">
+              <div class="mini-clip d"></div>
+              <div class="mini-clip e"></div>
+            </div>
           </div>
 
           <div class="floating-tool tool-1">Program</div>
@@ -1285,15 +1551,14 @@ header{
     </div>
   </section>
 
-  <!-- SVADBY - FOCUS -->
-  <section class="service-scene" data-type="focus">
+  <section class="service-scene" data-type="wedding" id="svadby">
     <div class="service-sticky">
       <div class="service-wrap">
         <div class="service-copy reveal">
           <div class="service-kicker">Svadobné video</div>
           <h2>Svadby</h2>
           <p>
-            Pri svadbe je dôležitý cit pre detail. Pohľady, ruky, obrady, hostia a malé momenty vytvárajú atmosféru, ku ktorej sa dá vracať aj po rokoch.
+            Svadba je o detailoch, emócii a prirodzených momentoch. Preto je tu animácia riešená ako filmový príbeh okolo objektívu.
           </p>
           <div class="service-list">
             <div>Svadobný klip 3–7 minút</div>
@@ -1303,23 +1568,22 @@ header{
         </div>
 
         <div class="motion-stage">
-          <div class="focus-scene">
-            <div class="focus-ring r1"></div>
-            <div class="focus-ring r2"></div>
-            <div class="focus-ring r3"></div>
-            <div class="focus-center"></div>
-            <div class="focus-point fp1">Detail</div>
-            <div class="focus-point fp2">Emócia</div>
-            <div class="focus-point fp3">Moment</div>
-            <div class="focus-point fp4">Príbeh</div>
+          <div class="wedding-scene">
+            <div class="wedding-orbit"></div>
+            <div class="wedding-center"></div>
+
+            <div class="wedding-card wc-1">Obrad</div>
+            <div class="wedding-card wc-2">Prvý tanec</div>
+            <div class="wedding-card wc-3">Detaily</div>
+            <div class="wedding-card wc-4">Hostia</div>
+            <div class="wedding-card wc-5">Emócie</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- EVENTY - BEAT -->
-  <section class="service-scene" data-type="beat">
+  <section class="service-scene" data-type="beat" id="eventy">
     <div class="service-sticky">
       <div class="service-wrap">
         <div class="service-copy reveal">
@@ -1340,10 +1604,18 @@ header{
             <div class="beat-label">Event energy visualizer</div>
             <div class="beat-circle"></div>
             <div class="beat-bars">
-              <div class="beat-bar"></div><div class="beat-bar"></div><div class="beat-bar"></div>
-              <div class="beat-bar"></div><div class="beat-bar"></div><div class="beat-bar"></div>
-              <div class="beat-bar"></div><div class="beat-bar"></div><div class="beat-bar"></div>
-              <div class="beat-bar"></div><div class="beat-bar"></div><div class="beat-bar"></div>
+              <div class="beat-bar"></div>
+              <div class="beat-bar"></div>
+              <div class="beat-bar"></div>
+              <div class="beat-bar"></div>
+              <div class="beat-bar"></div>
+              <div class="beat-bar"></div>
+              <div class="beat-bar"></div>
+              <div class="beat-bar"></div>
+              <div class="beat-bar"></div>
+              <div class="beat-bar"></div>
+              <div class="beat-bar"></div>
+              <div class="beat-bar"></div>
             </div>
           </div>
         </div>
@@ -1351,15 +1623,14 @@ header{
     </div>
   </section>
 
-  <!-- PROMO - SOCIAL CARDS -->
-  <section class="service-scene" data-type="social">
+  <section class="service-scene" data-type="social" id="promo">
     <div class="service-sticky">
       <div class="service-wrap">
         <div class="service-copy reveal">
           <div class="service-kicker">Promo obsah</div>
           <h2>Promo</h2>
           <p>
-            Promo video potrebuje zaujať rýchlo. Preto pracuje s hookom, jasnou správou, vizuálom, rytmom a formátmi vhodnými aj na sociálne siete.
+            Promo video musí zaujať rýchlo. Preto tu pribúdajú pozretia, lajky a sledovatelia — ako vizuál rastu obsahu.
           </p>
           <div class="service-list">
             <div>Promo video pre projekt, službu alebo značku</div>
@@ -1370,20 +1641,31 @@ header{
 
         <div class="motion-stage">
           <div class="social-scene">
-            <div class="phone-card p1"><div class="phone-screen"></div></div>
-            <div class="phone-card p2"><div class="phone-screen"></div></div>
-            <div class="phone-card p3"><div class="phone-screen"></div></div>
-            <div class="social-tag st1">Hook</div>
-            <div class="social-tag st2">Brand</div>
-            <div class="social-tag st3">CTA</div>
+            <div class="phone-card">
+              <div class="phone-screen"></div>
+            </div>
+
+            <div class="growth-card likes-growth">
+              <span>Likes</span>
+              <strong id="likesCount">+0</strong>
+            </div>
+
+            <div class="growth-card views-growth">
+              <span>Views</span>
+              <strong id="viewsCount">+0</strong>
+            </div>
+
+            <div class="growth-card followers-growth">
+              <span>Followers</span>
+              <strong id="followersCount">+0</strong>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- POSTPRODUKCIA - COLOR WHEELS -->
-  <section class="service-scene" data-type="color">
+  <section class="service-scene" data-type="color" id="postprodukcia">
     <div class="service-sticky">
       <div class="service-wrap">
         <div class="service-copy reveal">
@@ -1404,6 +1686,7 @@ header{
             <div class="color-wheel cw1"></div>
             <div class="color-wheel cw2"></div>
             <div class="color-wheel cw3"></div>
+
             <div class="grade-panel">
               <div class="slider"></div>
               <div class="slider"></div>
@@ -1479,7 +1762,6 @@ header{
     </div>
   </div>
 </footer>
-
 <script>
 const toggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.main-nav');
@@ -1492,11 +1774,14 @@ toggle.addEventListener('click', (e) => {
 
 navItems.forEach(item => {
   const btn = item.querySelector('.nav-btn');
+
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
+
     navItems.forEach(i => {
       if(i !== item) i.classList.remove('active');
     });
+
     item.classList.toggle('active');
   });
 });
@@ -1506,7 +1791,10 @@ document.addEventListener('click', () => {
   navItems.forEach(item => item.classList.remove('active'));
 });
 
+/* ================= REVEAL ANIMÁCIE ================= */
+
 const revealItems = document.querySelectorAll('.reveal');
+
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if(entry.isIntersecting){
@@ -1514,110 +1802,256 @@ const observer = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.12 });
+
 revealItems.forEach(item => observer.observe(item));
+
+/* ================= INTRO + AUTO PREHLIADKA ================= */
+
+const introLoader = document.getElementById('introLoader');
+const skipTour = document.getElementById('skipTour');
+const scenes = document.querySelectorAll('.service-scene');
+
+let tourActive = true;
+let tourTimeouts = [];
+
+function goToScene(index, delay){
+  const scene = scenes[index];
+  if(!scene) return;
+
+  const timeout = setTimeout(() => {
+    if(!tourActive) return;
+
+    scene.scrollIntoView({
+      behavior:'smooth',
+      block:'start'
+    });
+  }, delay);
+
+  tourTimeouts.push(timeout);
+}
+
+function startAutoTour(){
+  if(!skipTour) return;
+
+  skipTour.classList.add('show');
+
+  goToScene(0, 700);
+  goToScene(1, 5200);
+  goToScene(2, 9700);
+  goToScene(3, 14200);
+  goToScene(4, 18700);
+
+  const endTimeout = setTimeout(() => {
+    if(!tourActive) return;
+
+    document.querySelector('.overview')?.scrollIntoView({
+      behavior:'smooth'
+    });
+
+    skipTour.classList.remove('show');
+    tourActive = false;
+  }, 23200);
+
+  tourTimeouts.push(endTimeout);
+}
+
+function stopAutoTour(){
+  tourActive = false;
+  tourTimeouts.forEach(t => clearTimeout(t));
+  skipTour?.classList.remove('show');
+}
+
+window.addEventListener('load', () => {
+  window.scrollTo(0, 0);
+
+  setTimeout(() => {
+    introLoader?.classList.add('hide');
+  }, 3100);
+
+  setTimeout(() => {
+    startAutoTour();
+  }, 3900);
+});
+
+skipTour?.addEventListener('click', stopAutoTour);
+
+window.addEventListener('wheel', () => {
+  if(tourActive) stopAutoTour();
+}, { passive:true });
+
+window.addEventListener('touchstart', () => {
+  if(tourActive) stopAutoTour();
+}, { passive:true });
+
+/* ================= HELPER ================= */
 
 function clamp(value, min, max){
   return Math.min(Math.max(value, min), max);
 }
 
-const scenes = document.querySelectorAll('.service-scene');
+/* ================= MOUSE GLOW ================= */
+
+window.addEventListener('mousemove', (e) => {
+  document.documentElement.style.setProperty('--mx', `${(e.clientX / window.innerWidth) * 100}%`);
+  document.documentElement.style.setProperty('--my', `${(e.clientY / window.innerHeight) * 100}%`);
+});
+
+/* ================= HERO ORBIT PARALLAX ================= */
+
+const orbitStage = document.querySelector('.orbit-stage');
+const orbitCards = document.querySelectorAll('.orbit-card');
+
+window.addEventListener('mousemove', (e) => {
+  if(window.innerWidth <= 768) return;
+
+  const x = e.clientX / window.innerWidth - 0.5;
+  const y = e.clientY / window.innerHeight - 0.5;
+
+  if(orbitStage){
+    orbitStage.style.transform = `rotateY(${x * 8}deg) rotateX(${y * -6}deg)`;
+  }
+
+  orbitCards.forEach((card, index) => {
+    const power = (index + 1) * 6;
+    card.style.translate = `${x * power}px ${y * -power}px`;
+  });
+});
+
+/* ================= SCROLL MOTION SLUŽBY ================= */
+
+const serviceScenes = document.querySelectorAll('.service-scene');
 
 function animateServices(){
-  scenes.forEach((scene) => {
+  const windowH = window.innerHeight;
+
+  serviceScenes.forEach(scene => {
     const rect = scene.getBoundingClientRect();
-    const h = window.innerHeight;
-    const progress = clamp((-rect.top) / (rect.height - h), 0, 1);
+    const progress = clamp((-rect.top) / (rect.height - windowH), 0, 1);
     const type = scene.dataset.type;
 
+    /* ===== STUŽKOVÉ / TIMELINE ===== */
     if(type === 'timeline'){
-      const frame = scene.querySelector('.video-frame');
       const playhead = scene.querySelector('.service-playhead');
+      const videoFrame = scene.querySelector('.video-frame');
       const tools = scene.querySelectorAll('.floating-tool');
       const clips = scene.querySelectorAll('.mini-clip');
 
-      if(playhead) playhead.style.left = `${8 + progress * 84}%`;
-
-      if(frame && window.innerWidth > 768){
-        const rotateY = (progress - .5) * 18;
-        const rotateX = (.5 - progress) * 8;
-        const y = Math.sin(progress * Math.PI) * -22;
-        frame.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) translateY(${y}px) scale(${1 + progress * .025})`;
+      if(playhead){
+        playhead.style.left = `${8 + progress * 84}%`;
       }
 
-      tools.forEach((tool, i) => {
-        const dir = i % 2 === 0 ? 1 : -1;
-        tool.style.transform = `translate3d(${dir * progress * (60 + i * 20)}px, ${Math.sin(progress * Math.PI) * (-40 + i * 10)}px, 0) rotate(${dir * progress * 14}deg)`;
-        tool.style.opacity = `${.35 + Math.sin(progress * Math.PI) * .65}`;
+      if(videoFrame){
+        const rotateY = -10 + progress * 20;
+        const rotateX = 6 - progress * 8;
+        const moveY = Math.sin(progress * Math.PI) * -26;
+
+        videoFrame.style.transform =
+          `rotateY(${rotateY}deg) rotateX(${rotateX}deg) translateY(${moveY}px)`;
+      }
+
+      tools.forEach((tool, index) => {
+        const direction = index % 2 === 0 ? 1 : -1;
+
+        tool.style.transform =
+          `translate3d(${progress * direction * 90}px, ${Math.sin(progress * Math.PI + index) * -45}px, 0) rotate(${progress * direction * 16}deg)`;
       });
 
-      clips.forEach((clip, i) => {
-        const scale = 1 + Math.sin((progress + i * .12) * Math.PI) * .08;
+      clips.forEach((clip, index) => {
+        const scale = 0.92 + Math.sin(progress * Math.PI + index * 0.35) * 0.12;
         clip.style.transform = `scaleX(${scale})`;
       });
     }
 
-    if(type === 'focus'){
-      const rings = scene.querySelectorAll('.focus-ring');
-      const points = scene.querySelectorAll('.focus-point');
-      const center = scene.querySelector('.focus-center');
+    /* ===== SVADBY / FILMOVÝ PRÍBEH ===== */
+    if(type === 'wedding'){
+      const orbit = scene.querySelector('.wedding-orbit');
+      const center = scene.querySelector('.wedding-center');
+      const cards = scene.querySelectorAll('.wedding-card');
 
-      rings.forEach((ring, i) => {
-        ring.style.transform = `translate(-50%,-50%) scale(${1 + progress * (.18 + i * .12)}) rotate(${progress * 60}deg)`;
-        ring.style.opacity = `${.35 + Math.sin(progress * Math.PI) * .55}`;
-      });
-
-      points.forEach((point, i) => {
-        const dir = i % 2 === 0 ? 1 : -1;
-        point.style.transform = `translate3d(${dir * progress * 45}px, ${Math.sin(progress * Math.PI + i) * 32}px, 0) scale(${.95 + Math.sin(progress * Math.PI) * .08})`;
-      });
+      if(orbit){
+        orbit.style.transform =
+          `translate(-50%,-50%) rotate(${progress * 210}deg) scale(${0.92 + progress * 0.12})`;
+      }
 
       if(center){
-        center.style.transform = `translate(-50%,-50%) scale(${1 + Math.sin(progress * Math.PI) * .12})`;
+        center.style.transform =
+          `translate(-50%,-50%) scale(${1 + Math.sin(progress * Math.PI) * 0.18})`;
       }
+
+      cards.forEach((card, index) => {
+        const angle = progress * 360 + index * 72;
+        const float = Math.sin(progress * Math.PI * 2 + index) * 18;
+        card.style.translate = `0 ${float}px`;
+        card.style.rotate = `${Math.sin(angle / 60) * 10}deg`;
+        card.style.opacity = `${0.55 + Math.sin(progress * Math.PI) * 0.45}`;
+      });
     }
 
+    /* ===== EVENTY / AUDIO ENERGY ===== */
     if(type === 'beat'){
       const bars = scene.querySelectorAll('.beat-bar');
       const circle = scene.querySelector('.beat-circle');
 
-      bars.forEach((bar, i) => {
-        const value = .22 + Math.abs(Math.sin(progress * 8 + i * .8)) * .95;
-        bar.style.transform = `scaleY(${value})`;
+      bars.forEach((bar, index) => {
+        const value =
+          0.25 +
+          Math.abs(Math.sin(progress * Math.PI * 4 + index * 0.7)) * 0.95;
+
+        bar.style.height = `${value * 100}%`;
+        bar.style.transform = `scaleY(${0.75 + value * 0.5})`;
       });
 
       if(circle){
-        circle.style.transform = `scale(${1 + Math.sin(progress * Math.PI) * .35}) rotate(${progress * 120}deg)`;
-        circle.style.opacity = `${.35 + Math.sin(progress * Math.PI) * .65}`;
+        circle.style.transform =
+          `scale(${1 + Math.sin(progress * Math.PI * 4) * 0.18}) rotate(${progress * 180}deg)`;
       }
     }
 
+    /* ===== PROMO / SOCIAL GROWTH ===== */
     if(type === 'social'){
-      const phones = scene.querySelectorAll('.phone-card');
-      const tags = scene.querySelectorAll('.social-tag');
+      const likes = document.getElementById('likesCount');
+      const views = document.getElementById('viewsCount');
+      const followers = document.getElementById('followersCount');
+      const phone = scene.querySelector('.phone-card');
+      const cards = scene.querySelectorAll('.growth-card');
 
-      phones.forEach((phone, i) => {
-        const dir = i === 1 ? -1 : 1;
-        phone.style.transform = `translate3d(${(progress - .5) * dir * 80}px, ${Math.sin(progress * Math.PI + i) * -22}px, 0) rotate(${[-8,4,10][i] + progress * dir * 10}deg)`;
-      });
+      const likeValue = Math.round(progress * 1240);
+      const viewValue = Math.round(progress * 18400);
+      const followerValue = Math.round(progress * 640);
 
-      tags.forEach((tag, i) => {
-        tag.style.transform = `translateY(${Math.sin(progress * Math.PI + i) * -26}px)`;
-        tag.style.opacity = `${.45 + Math.sin(progress * Math.PI) * .55}`;
+      if(likes) likes.textContent = '+' + likeValue;
+      if(views) views.textContent = '+' + viewValue;
+      if(followers) followers.textContent = '+' + followerValue;
+
+      if(phone){
+        phone.style.transform =
+          `translate(-50%,-50%) translateY(${Math.sin(progress * Math.PI) * -26}px) rotate(${progress * 10 - 5}deg)`;
+      }
+
+      cards.forEach((card, index) => {
+        card.style.transform =
+          `translateY(${Math.sin(progress * Math.PI + index) * -30}px) scale(${0.92 + Math.sin(progress * Math.PI) * 0.12})`;
       });
     }
 
+    /* ===== POSTPRODUKCIA / FARBY ===== */
     if(type === 'color'){
       const wheels = scene.querySelectorAll('.color-wheel');
       const sliders = scene.querySelectorAll('.slider');
 
-      wheels.forEach((wheel, i) => {
-        wheel.style.transform = `rotate(${progress * 220 + i * 40}deg) translateY(${Math.sin(progress * Math.PI + i) * -16}px)`;
+      wheels.forEach((wheel, index) => {
+        const direction = index % 2 === 0 ? 1 : -1;
+
+        wheel.style.transform =
+          `rotate(${progress * direction * 240}deg) translateY(${Math.sin(progress * Math.PI + index) * -18}px)`;
       });
 
-      sliders.forEach((slider, i) => {
-        const height = 28 + Math.abs(Math.sin(progress * 5 + i)) * 62;
-        slider.style.setProperty('--h', height + '%');
-        slider.style.transform = `scaleY(${.85 + Math.sin(progress * Math.PI + i) * .12})`;
+      sliders.forEach((slider, index) => {
+        const h =
+          28 +
+          Math.abs(Math.sin(progress * Math.PI * 2 + index * 0.8)) * 62;
+
+        slider.style.setProperty('--h', `${h}%`);
       });
     }
   });
@@ -1626,26 +2060,6 @@ function animateServices(){
 }
 
 requestAnimationFrame(animateServices);
-
-const orbitCards = document.querySelectorAll('.orbit-card');
-const orbitStage = document.querySelector('.orbit-stage');
-
-window.addEventListener('mousemove', (e) => {
-  if(window.innerWidth <= 768) return;
-
-  const x = e.clientX / window.innerWidth - .5;
-  const y = e.clientY / window.innerHeight - .5;
-
-  if(orbitStage){
-    orbitStage.style.transform = `rotateY(${x * 8}deg) rotateX(${y * -6}deg)`;
-  }
-
-  orbitCards.forEach((card, index) => {
-    const power = (index + 1) * 5;
-    card.style.translate = `${x * power}px ${y * -power}px`;
-  });
-});
 </script>
-
 </body>
 </html>
