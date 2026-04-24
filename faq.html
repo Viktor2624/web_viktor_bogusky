@@ -3,136 +3,590 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FAQ | Viktor Boguský</title>
+<title>Viktor Boguský | FAQ</title>
 <link rel="icon" type="image/png" href="Viktor-removebg-preview.png">
 
 <style>
+/* rovnaký základ ako cenník */
 :root{
   --bg:#050505;
   --text:#ffffff;
-  --muted:rgba(255,255,255,.7);
+  --muted:rgba(255,255,255,.72);
   --line:rgba(255,255,255,.10);
-  --panel:rgba(255,255,255,.06);
-  --radius:24px;
+  --shadow:0 30px 80px rgba(0,0,0,.45);
+  --radius:28px;
   --header-h:72px;
-  --max:1100px;
+  --max:1240px;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial, Helvetica, sans-serif;}
+html{scroll-behavior:smooth;}
 
 body{
-  background:var(--bg);
+  background:
+    radial-gradient(circle at 18% 20%, rgba(85,110,255,.10), transparent 26%),
+    radial-gradient(circle at 80% 15%, rgba(255,255,255,.04), transparent 18%),
+    radial-gradient(circle at 65% 72%, rgba(120,70,255,.08), transparent 24%),
+    var(--bg);
   color:var(--text);
   padding-top:var(--header-h);
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(circle at center, black 35%, transparent 90%);
+  opacity:.16;
+  z-index:-3;
+}
+
+a{color:inherit;text-decoration:none;}
+
+.container{
+  width:min(100% - 32px, var(--max));
+  margin:0 auto;
 }
 
 /* HEADER */
 header{
   position:fixed;
-  top:0;
-  width:100%;
+  inset:0 0 auto 0;
   height:var(--header-h);
-  background:rgba(0,0,0,.6);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--line);
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.08);
   z-index:1000;
 }
 
 .header-inner{
-  max-width:var(--max);
-  margin:auto;
+  width:min(100% - 32px, var(--max));
   height:100%;
+  margin:0 auto;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 20px;
+  gap:20px;
 }
 
 .logo{
-  font-weight:bold;
-  letter-spacing:2px;
-  text-decoration:none;
   color:#fff;
+  font-size:16px;
+  letter-spacing:2px;
+  font-weight:700;
+  white-space:nowrap;
 }
 
 .main-nav{
   display:flex;
-  gap:24px;
+  align-items:center;
+  gap:28px;
 }
 
-.main-nav a{
+.main-nav a,
+.nav-btn{
+  background:none;
+  border:none;
   color:#fff;
-  text-decoration:none;
   font-size:14px;
-  opacity:.8;
+  cursor:pointer;
+  opacity:.86;
+  padding:8px 0;
+  font-family:inherit;
+  transition:.25s ease;
 }
 
-.main-nav a:hover{opacity:1;}
+.main-nav a:hover,
+.nav-btn:hover{
+  opacity:1;
+  transform:translateY(-1px);
+}
+
+.nav-item{position:relative;}
+
+.dropdown{
+  position:absolute;
+  top:calc(100% + 12px);
+  left:0;
+  background:rgba(10,10,12,.96);
+  display:none;
+  flex-direction:column;
+  min-width:220px;
+  padding:10px;
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  border:1px solid rgba(255,255,255,.08);
+  z-index:2000;
+}
+
+.dropdown a{
+  padding:10px 12px;
+  font-size:13px;
+  white-space:nowrap;
+  border-radius:10px;
+}
+
+.dropdown a:hover{background:rgba(255,255,255,.06);}
+.nav-item.active .dropdown{display:flex;}
+
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:24px;
+  cursor:pointer;
+}
 
 /* HERO */
 .hero{
-  text-align:center;
-  padding:100px 20px 60px;
+  position:relative;
+  min-height:calc(100vh - var(--header-h));
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  isolation:isolate;
+}
+
+.hero video,
+.hero-overlay,
+.hero-glow{
+  position:absolute;
+  inset:0;
+}
+
+.hero video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:scale(1.08);
+  filter:brightness(.32) saturate(1.04);
+  z-index:-4;
+}
+
+.hero-overlay{
+  z-index:-3;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.34), rgba(0,0,0,.65)),
+    radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,.25) 46%, rgba(0,0,0,.72) 100%);
+}
+
+.hero-glow{
+  z-index:-2;
+  background:
+    radial-gradient(circle at 78% 34%, rgba(85,110,255,.16), transparent 18%),
+    radial-gradient(circle at 58% 68%, rgba(130,60,255,.10), transparent 22%),
+    radial-gradient(circle at 24% 58%, rgba(255,255,255,.04), transparent 18%);
+  filter:blur(18px);
+  pointer-events:none;
+}
+
+.hero-inner{
+  width:min(100% - 32px, var(--max));
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  gap:34px;
+  align-items:center;
+  padding:48px 0 46px;
+}
+
+.hero-copy{max-width:760px;position:relative;}
+
+.hero-name{
+  display:inline-block;
+  margin-bottom:14px;
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.68);
+  position:relative;
+  padding-left:20px;
+}
+
+.hero-name::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:50%;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  transform:translateY(-50%);
+  background:rgba(255,255,255,.85);
+  box-shadow:0 0 18px rgba(255,255,255,.38);
 }
 
 .hero h1{
-  font-size:clamp(36px,6vw,60px);
+  font-size:clamp(42px, 8vw, 90px);
+  line-height:.92;
+  letter-spacing:-2px;
   text-transform:uppercase;
-  margin-bottom:10px;
+  max-width:11ch;
+  text-shadow:0 10px 30px rgba(0,0,0,.28);
 }
 
-.hero p{
+.hero h1 .muted{color:rgba(255,255,255,.58);}
+
+.hero-copy p{
+  margin-top:24px;
+  max-width:640px;
+  font-size:clamp(16px, 2vw, 19px);
+  line-height:1.62;
   color:var(--muted);
 }
 
+.hero-actions{
+  margin-top:30px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  padding:0 24px;
+  border-radius:999px;
+  font-weight:700;
+  font-size:14px;
+  transition:.28s ease;
+  border:1px solid transparent;
+  position:relative;
+  overflow:hidden;
+}
+
+.btn-primary{background:#fff;color:#000;}
+.btn-secondary{
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.10);
+  backdrop-filter:blur(10px);
+}
+
+.btn:hover{transform:translateY(-2px);}
+
+.hero-side{
+  position:relative;
+  height:520px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hero-panel{
+  width:min(100%, 460px);
+  min-height:380px;
+  padding:28px;
+  border-radius:32px;
+  border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-badge{
+  display:inline-flex;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.24);
+  font-size:12px;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  margin-bottom:16px;
+}
+
+.hero-panel h3{
+  font-size:34px;
+  margin-bottom:14px;
+  letter-spacing:-1px;
+  text-transform:uppercase;
+}
+
+.hero-panel p{
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:18px;
+}
+
+.hero-list{
+  display:grid;
+  gap:12px;
+}
+
+.hero-list div{
+  padding:14px 16px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;
+  background:rgba(255,255,255,.04);
+}
+
 /* FAQ */
-.faq{
-  max-width:var(--max);
+.faq-section{
+  width:min(100% - 32px, var(--max));
   margin:auto;
-  padding:20px;
+  padding:40px 0 110px;
+}
+
+.faq-title{
+  font-size:clamp(30px, 5vw, 54px);
+  margin:60px 0 28px;
+  letter-spacing:-1px;
+  text-transform:uppercase;
+}
+
+.faq-layout{
+  display:grid;
+  grid-template-columns:.8fr 1.2fr;
+  gap:28px;
+  align-items:start;
+}
+
+.faq-info,
+.faq-list,
+.faq-cta{
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:28px;
+  backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+
+.faq-info{
+  padding:30px;
+  position:sticky;
+  top:100px;
+}
+
+.faq-info h3{
+  font-size:30px;
+  margin-bottom:14px;
+  text-transform:uppercase;
+  letter-spacing:-1px;
+}
+
+.faq-info p{
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:18px;
+}
+
+.faq-info-list{
+  display:grid;
+  gap:12px;
+}
+
+.faq-info-list div{
+  padding:13px 14px;
+  border-radius:16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  color:var(--muted);
+}
+
+.faq-list{
+  padding:10px;
 }
 
 .faq-item{
-  border-bottom:1px solid var(--line);
+  border-bottom:1px solid rgba(255,255,255,.09);
+}
+
+.faq-item:last-child{
+  border-bottom:none;
 }
 
 .faq-question{
   width:100%;
-  text-align:left;
   background:none;
   border:none;
   color:#fff;
-  font-size:18px;
-  padding:20px 0;
+  padding:22px 18px;
+  text-align:left;
   cursor:pointer;
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:18px;
+  font-size:18px;
+  font-weight:700;
+}
+
+.faq-icon{
+  flex:0 0 auto;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.05);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:.25s ease;
 }
 
 .faq-answer{
   max-height:0;
   overflow:hidden;
-  transition:0.4s ease;
+  transition:max-height .45s ease, padding .45s ease;
   color:var(--muted);
-  line-height:1.6;
+  line-height:1.7;
+  padding:0 18px;
 }
 
 .faq-item.active .faq-answer{
-  max-height:300px;
-  padding-bottom:20px;
+  max-height:360px;
+  padding:0 18px 22px;
+}
+
+.faq-item.active .faq-icon{
+  transform:rotate(45deg);
+  background:#fff;
+  color:#000;
+}
+
+.faq-cta{
+  margin-top:34px;
+  padding:34px;
+  text-align:center;
+}
+
+.faq-cta h3{
+  font-size:32px;
+  margin-bottom:14px;
+  text-transform:uppercase;
+  letter-spacing:-1px;
+}
+
+.faq-cta p{
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:24px;
 }
 
 /* FOOTER */
 .footer{
-  margin-top:80px;
-  padding:40px 20px;
-  border-top:1px solid var(--line);
+  padding:38px 0 28px;
+  border-top:1px solid rgba(255,255,255,.08);
+  margin-top:20px;
+}
+
+.footer-top{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:26px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
   text-align:center;
 }
 
-.footer p{
+.footer-contact p{
   color:var(--muted);
+  line-height:1.7;
+}
+
+.footer-socials{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+
+.footer-socials a{
+  opacity:.72;
+  transition:.25s ease;
+}
+
+.footer-socials a:hover{opacity:1;transform:translateY(-1px);}
+
+.footer-bottom{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  text-align:center;
+  font-size:13px;
+  color:rgba(255,255,255,.56);
+}
+
+.reveal{
+  opacity:0;
+  transform:translateY(34px);
+  transition:opacity .8s ease, transform .8s ease;
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+@media(max-width:1080px){
+  .hero-inner,
+  .faq-layout{
+    grid-template-columns:1fr;
+  }
+
+  .hero-side{height:auto;}
+  .faq-info{position:relative;top:auto;}
+}
+
+@media(max-width:768px){
+  :root{--header-h:64px;}
+
+  .menu-toggle{display:block;}
+
+  .main-nav{
+    position:absolute;
+    top:100%;
+    left:0;
+    width:100%;
+    flex-direction:column;
+    align-items:stretch;
+    display:none;
+    background:rgba(5,5,5,.96);
+    z-index:999;
+    gap:0;
+    padding:14px 16px 18px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+
+  .main-nav.active{display:flex;}
+
+  .main-nav a,
+  .nav-btn{
+    padding:14px 6px;
+    width:100%;
+    text-align:left;
+    font-size:15px;
+  }
+
+  .nav-item .dropdown{
+    position:static;
+    box-shadow:none;
+    border-radius:14px;
+    width:100%;
+    min-width:100%;
+    margin:0 0 8px 0;
+  }
+
+  .hero-inner{padding:34px 0 56px;}
+  .hero h1{max-width:none;}
+  .faq-section{padding:30px 0 90px;}
 }
 </style>
 </head>
@@ -142,90 +596,227 @@ header{
 <header>
   <div class="header-inner">
     <a href="index.html" class="logo">Viktor Boguský</a>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+
     <nav class="main-nav">
-      <a href="index.html">Domov</a>
       <a href="cennik.html">Cenník</a>
+      <a href="duo.html">DUO BALÍKY</a>
+      <a href="referencie.html">Referencie</a>
       <a href="portfolio.html">Portfólio</a>
       <a href="faq.html">FAQ</a>
       <a href="objednavka.html">Rezervácia</a>
+      <div class="nav-item">
+        <button class="nav-btn">Služby ▾</button>
+        <div class="dropdown">
+          <a href="sluzby.html">Prehľad služieb</a>
+        </div>
+      </div>
+      <a href="kontakt.html">Kontakt</a>
     </nav>
   </div>
 </header>
 
 <section class="hero">
-  <h1>Často kladené otázky</h1>
-  <p>Všetko, čo potrebuješ vedieť pred rezerváciou</p>
+  <video autoplay muted loop playsinline>
+    <source src="uvod_video.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-inner">
+    <div class="hero-copy reveal">
+      <div class="hero-name">Viktor Boguský</div>
+      <h1>Časté <span class="muted">otázky</span></h1>
+      <p>
+        Všetko dôležité pred rezerváciou: ako prebieha spolupráca, ako dlho trvá odovzdanie, čo rieši zmluva a čo očakávať po natáčaní.
+      </p>
+      <div class="hero-actions">
+        <a href="#faq" class="btn btn-primary">Pozrieť FAQ</a>
+        <a href="objednavka.html" class="btn btn-secondary">Rezervovať termín</a>
+      </div>
+    </div>
+
+    <div class="hero-side reveal">
+      <div class="hero-panel">
+        <div class="hero-badge">FAQ</div>
+        <h3>Rýchle odpovede pred rezerváciou</h3>
+        <p>
+          Táto stránka ti pomôže pochopiť celý priebeh spolupráce ešte pred tým, než odošleš rezerváciu.
+        </p>
+        <div class="hero-list">
+          <div>Rezervácia a zmluva</div>
+          <div>Odovzdanie videa do 60 dní</div>
+          <div>Platba, presun termínu a dodanie materiálu</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="faq">
+<section class="faq-section" id="faq">
+  <h2 class="faq-title reveal">FAQ</h2>
 
-  <div class="faq-item">
-    <button class="faq-question">
-      Ako prebieha rezervácia?
-      <span>+</span>
-    </button>
-    <div class="faq-answer">
-      Po odoslaní objednávky alebo správy sa dohodneme na detailoch (termín, rozsah služby). 
-      Následne sa podpisuje zmluva a uhrádza rezervačný poplatok, čím sa termín záväzne rezervuje.
+  <div class="faq-layout">
+    <aside class="faq-info reveal">
+      <h3>Predtým, než rezervuješ termín</h3>
+      <p>
+        Najčastejšie otázky som dal na jedno miesto, aby bolo jasné, čo sa deje pred natáčaním, počas neho aj po ňom.
+      </p>
+      <div class="faq-info-list">
+        <div>Najprv sa dohodne termín a rozsah služby.</div>
+        <div>Potom sa rieši zmluva a rezervačný poplatok.</div>
+        <div>Po natáčaní nasleduje postprodukcia a odovzdanie.</div>
+      </div>
+    </aside>
+
+    <div class="faq-list reveal">
+      <div class="faq-item active">
+        <button class="faq-question">
+          Ako prebieha rezervácia?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          Po odoslaní objednávky alebo správy sa dohodneme na termíne, rozsahu služby a detailoch akcie. Následne sa podpisuje zmluva a uhrádza sa rezervačný poplatok. Až potom je termín záväzne rezervovaný.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Ako dlho trvá odovzdanie videa?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          Štandardná doba odovzdania je do 60 dní od natáčania. Táto lehota je uvedená aj v zmluve, aby mali obe strany jasne nastavené očakávania. V niektorých prípadoch môže byť video hotové aj skôr.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Sme zmluvne chránení?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          Áno. Spolupráca je riešená zmluvou, ktorá chráni klienta aj dodávateľa. V zmluve je uvedený rozsah služby, termín, cena, dodanie a ďalšie podmienky spolupráce.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Čo ak sa termín alebo akcia zmení?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          Ak nastane zmena, rieši sa individuálne podľa situácie a dostupnosti nového termínu. Pri včasnej komunikácii sa vždy snažím nájsť čo najlepšie riešenie.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Dostaneme aj neupravené zábery?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          Štandardne sa odovzdáva finálne spracované video podľa dohodnutého balíka. Neupravené zábery sa môžu riešiť individuálne po dohode.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Ako prebieha platba?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          Pri rezervácii sa spravidla platí rezervačný poplatok, ktorý blokuje termín. Zvyšok sumy sa dopláca podľa dohody a podmienok uvedených v zmluve alebo objednávke.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          Môžeme si vybrať hudbu do videa?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          Hudobný štýl sa dá dohodnúť, ale pri zverejnení videa treba myslieť na autorské práva. Preto sa pri verejných videách často používa hudba vhodná na licencované použitie.
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="faq-item">
-    <button class="faq-question">
-      Ako dlho trvá odovzdanie videa?
-      <span>+</span>
-    </button>
-    <div class="faq-answer">
-      Štandardná doba dodania je do 60 dní od natáčania. 
-      V niektorých prípadoch môže byť video hotové aj skôr.
-    </div>
+  <div class="faq-cta reveal">
+    <h3>Nenašiel si odpoveď?</h3>
+    <p>
+      Napíš mi správu a upresním ti všetko podľa konkrétnej akcie alebo projektu.
+    </p>
+    <a href="kontakt.html" class="btn btn-primary">Kontaktovať</a>
   </div>
-
-  <div class="faq-item">
-    <button class="faq-question">
-      Sme zmluvne chránení?
-      <span>+</span>
-    </button>
-    <div class="faq-answer">
-      Áno, všetko je riešené cez zmluvu, ktorá chráni obe strany - klienta aj dodávateľa. 
-      Máš tak istotu termínu, rozsahu aj dodania služby.
-    </div>
-  </div>
-
-  <div class="faq-item">
-    <button class="faq-question">
-      Čo ak sa akcia zruší?
-      <span>+</span>
-    </button>
-    <div class="faq-answer">
-      Termín je možné presunúť podľa dohody. 
-      Rezervačný poplatok je nevratný, pretože blokuje termín.
-    </div>
-  </div>
-
-  <div class="faq-item">
-    <button class="faq-question">
-      Dostaneme aj neupravené zábery?
-      <span>+</span>
-    </button>
-    <div class="faq-answer">
-      Štandardne sa odovzdáva finálne upravené video. 
-      Neupravené zábery je možné poskytnúť po dohode.
-    </div>
-  </div>
-
 </section>
 
 <footer class="footer">
-  <p>© Viktor Boguský</p>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-contact"><p>kontakt@viktorbogusky.sk</p></div>
+      <div class="footer-contact"><p>+421 948 933 109</p></div>
+    </div>
+
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/vittquoo/" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com/profile.php?id=100079203706823" target="_blank">Facebook</a>
+      <a href="https://www.tiktok.com/@viktorbogusky" target="_blank">TikTok</a>
+    </div>
+
+    <div class="footer-bottom">
+      <span><a href="podmienky.html">Obchodné podmienky</a> | <a href="gdpr.html">GDPR</a></span>
+      <span>Vytvoril: Viktor Boguský</span>
+    </div>
+  </div>
 </footer>
 
 <script>
-const items = document.querySelectorAll('.faq-item');
+const toggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('.main-nav');
+const navItems = document.querySelectorAll('.nav-item');
 
-items.forEach(item=>{
-  const btn = item.querySelector('.faq-question');
-  btn.addEventListener('click', ()=>{
+toggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  nav.classList.toggle('active');
+});
+
+navItems.forEach(item => {
+  const btn = item.querySelector('.nav-btn');
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navItems.forEach(i => {
+      if(i !== item) i.classList.remove('active');
+    });
+    item.classList.toggle('active');
+  });
+});
+
+document.addEventListener('click', () => {
+  nav.classList.remove('active');
+  navItems.forEach(item => item.classList.remove('active'));
+});
+
+const revealItems = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+revealItems.forEach(item => observer.observe(item));
+
+const faqItems = document.querySelectorAll('.faq-item');
+
+faqItems.forEach(item => {
+  const question = item.querySelector('.faq-question');
+
+  question.addEventListener('click', () => {
+    faqItems.forEach(other => {
+      if(other !== item) other.classList.remove('active');
+    });
+
     item.classList.toggle('active');
   });
 });
