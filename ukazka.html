@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Viktor Boguský | Ukážka postprodukcie</title>
+<title>Viktor Boguský | Služby</title>
 <link rel="icon" type="image/png" href="Viktor-removebg-preview.png">
 
 <style>
 :root{
   --bg:#050505;
-  --text:#fff;
+  --text:#ffffff;
   --muted:rgba(255,255,255,.72);
   --line:rgba(255,255,255,.10);
   --shadow:0 30px 80px rgba(0,0,0,.45);
@@ -17,14 +17,20 @@
   --max:1240px;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial, Helvetica, sans-serif;}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
 html{scroll-behavior:smooth;}
 
 body{
   background:
-    radial-gradient(circle at 20% 20%, rgba(85,110,255,.12), transparent 26%),
+    radial-gradient(circle at 18% 20%, rgba(85,110,255,.12), transparent 26%),
     radial-gradient(circle at 80% 15%, rgba(180,120,255,.08), transparent 22%),
-    radial-gradient(circle at 60% 80%, rgba(255,255,255,.04), transparent 20%),
+    radial-gradient(circle at 65% 72%, rgba(255,255,255,.04), transparent 20%),
     var(--bg);
   color:var(--text);
   padding-top:var(--header-h);
@@ -44,6 +50,7 @@ body::before{
 }
 
 a{color:inherit;text-decoration:none;}
+ul{list-style:none;padding:0;}
 
 .container{
   width:min(100% - 32px, var(--max));
@@ -98,7 +105,10 @@ header{
 }
 
 .main-nav a:hover,
-.nav-btn:hover{opacity:1;transform:translateY(-1px);}
+.nav-btn:hover{
+  opacity:1;
+  transform:translateY(-1px);
+}
 
 .nav-item{position:relative;}
 
@@ -156,15 +166,15 @@ header{
   height:100%;
   object-fit:cover;
   transform:scale(1.08);
-  filter:brightness(.24) saturate(1.1);
+  filter:brightness(.25) saturate(1.08);
   z-index:-5;
 }
 
 .hero-overlay{
   z-index:-4;
   background:
-    linear-gradient(to bottom, rgba(0,0,0,.28), rgba(0,0,0,.78)),
-    radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,.25) 44%, rgba(0,0,0,.76) 100%);
+    linear-gradient(to bottom, rgba(0,0,0,.30), rgba(0,0,0,.78)),
+    radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,.20) 42%, rgba(0,0,0,.76) 100%);
 }
 
 .hero-glow{
@@ -179,7 +189,7 @@ header{
   width:min(100% - 32px, var(--max));
   margin:0 auto;
   display:grid;
-  grid-template-columns:1.05fr .95fr;
+  grid-template-columns:1fr 1fr;
   gap:34px;
   align-items:center;
   padding:48px 0;
@@ -246,7 +256,21 @@ header{
   font-size:14px;
   transition:.28s ease;
   border:1px solid transparent;
+  position:relative;
+  overflow:hidden;
 }
+
+.btn::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg, transparent 20%, rgba(255,255,255,.22), transparent 80%);
+  transform:translateX(-140%);
+  transition:transform .7s ease;
+}
+
+.btn:hover::after{transform:translateX(140%);}
+.btn:hover{transform:translateY(-2px);}
 
 .btn-primary{background:#fff;color:#000;}
 .btn-secondary{
@@ -255,60 +279,153 @@ header{
   backdrop-filter:blur(10px);
 }
 
-.btn:hover{transform:translateY(-2px);}
-
-.hero-stage{
+/* ORBIT LENS */
+.orbit-stage{
   position:relative;
-  height:540px;
-  perspective:1000px;
+  height:560px;
+  perspective:1200px;
+}
+
+.lens{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:260px;
+  height:260px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.16);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.22), transparent 8%),
+    radial-gradient(circle at 50% 50%, rgba(130,150,255,.20), transparent 28%),
+    radial-gradient(circle at 50% 50%, rgba(0,0,0,.25), rgba(0,0,0,.88) 62%),
+    #050505;
+  box-shadow:
+    inset 0 0 60px rgba(120,130,255,.22),
+    inset 0 0 120px rgba(0,0,0,.8),
+    0 30px 90px rgba(0,0,0,.65),
+    0 0 90px rgba(100,120,255,.16);
+  overflow:hidden;
+}
+
+.lens::before{
+  content:"";
+  position:absolute;
+  inset:18px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:inset 0 0 40px rgba(255,255,255,.08);
+}
+
+.lens::after{
+  content:"";
+  position:absolute;
+  width:70%;
+  height:18%;
+  left:15%;
+  top:24%;
+  border-radius:50%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+  transform:rotate(-22deg);
+  filter:blur(3px);
+}
+
+.aperture{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:90px;
+  height:90px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:#010101;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 0 35px rgba(80,110,255,.28);
+}
+
+.aperture::before{
+  content:"";
+  position:absolute;
+  inset:-18px;
+  border-radius:50%;
+  border:1px dashed rgba(255,255,255,.15);
+  animation:spin 14s linear infinite;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg);}
+}
+
+.orbit-ring{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:520px;
+  height:520px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.06);
+  animation:slowSpin 28s linear infinite;
+}
+
+@keyframes slowSpin{
+  to{transform:translate(-50%,-50%) rotate(360deg);}
 }
 
 .orbit-card{
   position:absolute;
-  width:260px;
+  width:190px;
+  min-height:118px;
+  padding:16px;
   border-radius:24px;
-  overflow:hidden;
   border:1px solid rgba(255,255,255,.12);
-  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  background:linear-gradient(180deg, rgba(255,255,255,.11), rgba(255,255,255,.04));
   backdrop-filter:blur(18px);
   box-shadow:var(--shadow);
   transform-style:preserve-3d;
 }
 
-.orbit-card video,
-.orbit-card .fake-video{
-  width:100%;
-  aspect-ratio:16/9;
-  object-fit:cover;
-  display:block;
-  background:
-    linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.03)),
-    radial-gradient(circle at 30% 30%, rgba(120,130,255,.35), transparent 32%),
-    #080808;
-}
-
 .orbit-card span{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  padding:12px 14px;
-  color:var(--muted);
-  font-size:12px;
+  display:inline-flex;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  font-size:10px;
   text-transform:uppercase;
   letter-spacing:1px;
+  color:rgba(255,255,255,.65);
+  margin-bottom:12px;
 }
 
-.card-a{top:20px;right:80px;transform:rotateZ(8deg) rotateY(-12deg);}
-.card-b{top:190px;right:210px;transform:rotateZ(-8deg) rotateY(16deg);}
-.card-c{bottom:28px;right:28px;transform:rotateZ(5deg) rotateY(-10deg);}
+.orbit-card h3{
+  font-size:20px;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
 
-/* SCROLL SHOWCASE */
-.scroll-scene{
+.orbit-card p{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.45;
+}
+
+.oc-1{top:22px;left:50%;transform:translateX(-50%);}
+.oc-2{right:0;top:165px;}
+.oc-3{right:38px;bottom:58px;}
+.oc-4{left:38px;bottom:58px;}
+.oc-5{left:0;top:165px;}
+
+/* CINEMATIC SCROLL */
+.motion-services{
   position:relative;
-  min-height:280vh;
 }
 
-.sticky-edit{
+.service-scene{
+  position:relative;
+  min-height:210vh;
+}
+
+.service-sticky{
   position:sticky;
   top:var(--header-h);
   min-height:calc(100vh - var(--header-h));
@@ -317,221 +434,204 @@ header{
   overflow:hidden;
 }
 
-.edit-wrap{
+.service-wrap{
   width:min(100% - 32px, var(--max));
   margin:0 auto;
   display:grid;
-  grid-template-columns:.8fr 1.2fr;
+  grid-template-columns:.85fr 1.15fr;
   gap:34px;
   align-items:center;
 }
 
-.scene-copy h2{
-  font-size:clamp(34px, 5vw, 64px);
-  line-height:.95;
-  letter-spacing:-1px;
-  text-transform:uppercase;
-  margin-bottom:20px;
-}
-
-.scene-copy p{
-  color:var(--muted);
-  line-height:1.7;
-  max-width:460px;
-}
-
-.scene-tags{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:24px;
-}
-
-.scene-tags span{
-  padding:9px 12px;
-  border-radius:999px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.10);
-  color:rgba(255,255,255,.75);
-  font-size:12px;
-}
-
-/* DAVINCI MOCKUP */
-.editor{
+.service-copy{
   position:relative;
-  min-height:560px;
-  border-radius:32px;
-  border:1px solid rgba(255,255,255,.12);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.035));
-  backdrop-filter:blur(18px);
-  box-shadow:var(--shadow);
-  overflow:hidden;
-  transform:rotateX(0deg) rotateY(0deg);
+  z-index:2;
 }
 
-.editor-top{
-  height:54px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 18px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  background:rgba(0,0,0,.28);
-}
-
-.dots{display:flex;gap:8px;}
-.dots span{
-  width:10px;height:10px;border-radius:50%;
-  background:rgba(255,255,255,.34);
-}
-
-.editor-title{
-  color:rgba(255,255,255,.65);
+.service-kicker{
+  display:inline-flex;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.06);
   font-size:12px;
   letter-spacing:1.2px;
   text-transform:uppercase;
+  margin-bottom:18px;
+  color:rgba(255,255,255,.72);
 }
 
-.viewer{
+.service-copy h2{
+  font-size:clamp(34px, 6vw, 70px);
+  line-height:.92;
+  text-transform:uppercase;
+  letter-spacing:-2px;
+  margin-bottom:22px;
+}
+
+.service-copy p{
+  color:var(--muted);
+  line-height:1.7;
+  max-width:470px;
+}
+
+.service-list{
+  margin-top:24px;
+  display:grid;
+  gap:12px;
+}
+
+.service-list div{
+  padding:14px 16px;
+  border-radius:18px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.09);
+  color:rgba(255,255,255,.76);
+}
+
+.motion-stage{
   position:relative;
-  height:260px;
-  margin:18px;
-  border-radius:24px;
-  overflow:hidden;
-  background:#000;
-  border:1px solid rgba(255,255,255,.10);
+  height:600px;
+  perspective:1300px;
 }
 
-.viewer video{
+.video-frame{
   position:absolute;
-  inset:0;
+  inset:50px 30px 120px 30px;
+  border-radius:32px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  background:#000;
+  box-shadow:var(--shadow);
+  transform:rotateY(-8deg) rotateX(5deg);
+  transform-style:preserve-3d;
+}
+
+.video-frame video,
+.video-frame .fake-preview{
   width:100%;
   height:100%;
   object-fit:cover;
-  filter:contrast(1.1) saturate(1.15);
+  display:block;
+  filter:brightness(.9) contrast(1.1) saturate(1.1);
 }
 
-.viewer::after{
-  content:"COLOR GRADE  •  CUT  •  SOUND DESIGN";
+.fake-preview{
+  background:
+    radial-gradient(circle at 35% 35%, rgba(130,150,255,.4), transparent 26%),
+    radial-gradient(circle at 70% 62%, rgba(200,120,255,.24), transparent 28%),
+    linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,.02)),
+    #050505;
+}
+
+.video-frame::after{
+  content:attr(data-label);
   position:absolute;
-  left:16px;
-  bottom:16px;
-  padding:8px 12px;
+  left:18px;
+  bottom:18px;
+  padding:9px 13px;
   border-radius:999px;
-  background:rgba(0,0,0,.5);
+  background:rgba(0,0,0,.55);
   border:1px solid rgba(255,255,255,.14);
+  color:rgba(255,255,255,.78);
   font-size:11px;
   letter-spacing:1.2px;
-  color:rgba(255,255,255,.78);
+  text-transform:uppercase;
 }
 
-.timeline{
-  position:relative;
-  margin:18px;
-  height:190px;
+.mini-timeline{
+  position:absolute;
+  left:10px;
+  right:10px;
+  bottom:20px;
+  height:92px;
   border-radius:24px;
-  background:rgba(0,0,0,.28);
+  background:rgba(0,0,0,.34);
   border:1px solid rgba(255,255,255,.10);
+  backdrop-filter:blur(14px);
   overflow:hidden;
+  box-shadow:0 20px 50px rgba(0,0,0,.35);
 }
 
-.time-ruler{
-  height:34px;
+.mini-ruler{
+  height:28px;
   display:grid;
-  grid-template-columns:repeat(8,1fr);
+  grid-template-columns:repeat(6,1fr);
   border-bottom:1px solid rgba(255,255,255,.08);
 }
 
-.time-ruler span{
-  padding:10px;
-  color:rgba(255,255,255,.45);
-  font-size:11px;
+.mini-ruler span{
+  padding:8px;
+  font-size:10px;
+  color:rgba(255,255,255,.44);
 }
 
-.track{
+.mini-track{
   position:relative;
-  height:38px;
+  height:31px;
   border-bottom:1px solid rgba(255,255,255,.06);
 }
 
-.clip{
+.mini-clip{
   position:absolute;
   top:7px;
-  height:24px;
-  border-radius:8px;
+  height:17px;
+  border-radius:7px;
+  background:linear-gradient(90deg, rgba(110,130,255,.70), rgba(190,120,255,.40));
   border:1px solid rgba(255,255,255,.12);
-  background:linear-gradient(90deg, rgba(120,140,255,.65), rgba(180,120,255,.38));
 }
 
-.clip.audio{
-  background:linear-gradient(90deg, rgba(255,255,255,.24), rgba(120,140,255,.28));
-}
+.mini-clip.a{left:5%;width:24%;}
+.mini-clip.b{left:34%;width:18%;}
+.mini-clip.c{left:57%;width:34%;}
+.mini-clip.d{left:14%;width:38%;background:linear-gradient(90deg, rgba(255,255,255,.22), rgba(110,130,255,.35));}
+.mini-clip.e{left:55%;width:30%;background:linear-gradient(90deg, rgba(255,255,255,.22), rgba(110,130,255,.35));}
 
-.clip.one{left:4%;width:22%;}
-.clip.two{left:29%;width:18%;}
-.clip.three{left:50%;width:27%;}
-.clip.four{left:79%;width:15%;}
-.clip.five{left:12%;width:34%;}
-.clip.six{left:50%;width:42%;}
-
-.wave{
-  position:absolute;
-  inset:7px 10px;
-  background:
-    repeating-linear-gradient(90deg,
-      rgba(255,255,255,.18) 0 3px,
-      transparent 3px 9px);
-  mask-image:linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
-  opacity:.8;
-}
-
-.playhead{
+.service-playhead{
   position:absolute;
   top:0;
   bottom:0;
-  left:12%;
+  left:8%;
   width:2px;
   background:#fff;
-  box-shadow:0 0 20px rgba(255,255,255,.6);
-  z-index:5;
+  box-shadow:0 0 18px rgba(255,255,255,.55);
+  z-index:4;
 }
 
-.playhead::before{
+.service-playhead::before{
   content:"";
   position:absolute;
-  top:0;
   left:50%;
+  top:0;
   transform:translateX(-50%);
-  width:18px;
-  height:18px;
+  width:16px;
+  height:16px;
   background:#fff;
   clip-path:polygon(50% 100%,0 0,100% 0);
 }
 
-/* floating assets */
-.float-asset{
+.floating-tool{
   position:absolute;
+  padding:14px 16px;
   border-radius:22px;
   border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.06);
+  background:rgba(255,255,255,.07);
   backdrop-filter:blur(14px);
   box-shadow:var(--shadow);
-  padding:14px;
   color:rgba(255,255,255,.78);
   font-size:12px;
-  text-transform:uppercase;
   letter-spacing:1px;
+  text-transform:uppercase;
   pointer-events:none;
 }
 
-.asset-1{top:16%;left:5%;}
-.asset-2{top:28%;right:6%;}
-.asset-3{bottom:13%;left:7%;}
-.asset-4{bottom:18%;right:10%;}
+.tool-1{top:12%;left:2%;}
+.tool-2{top:22%;right:0;}
+.tool-3{bottom:26%;left:0;}
+.tool-4{bottom:18%;right:6%;}
 
-/* PROCESS */
-.process{
+/* OVERVIEW */
+.overview{
   width:min(100% - 32px, var(--max));
   margin:0 auto;
   padding:110px 0;
@@ -558,13 +658,13 @@ header{
   line-height:1.65;
 }
 
-.process-grid{
+.overview-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:22px;
 }
 
-.process-card{
+.overview-card{
   padding:26px;
   border-radius:28px;
   border:1px solid rgba(255,255,255,.10);
@@ -572,27 +672,45 @@ header{
   backdrop-filter:blur(18px);
   box-shadow:var(--shadow);
   transition:.3s ease;
+  position:relative;
+  overflow:hidden;
 }
 
-.process-card:hover{transform:translateY(-8px);}
+.overview-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(130deg, rgba(255,255,255,.14), transparent 28%, transparent 72%, rgba(120,100,255,.10));
+  pointer-events:none;
+}
 
-.process-card span{
+.overview-card:hover{
+  transform:translateY(-8px) scale(1.01);
+}
+
+.overview-card span{
   display:inline-flex;
   margin-bottom:18px;
   color:rgba(255,255,255,.5);
   font-weight:700;
   letter-spacing:2px;
+  position:relative;
+  z-index:1;
 }
 
-.process-card h3{
+.overview-card h3{
   font-size:22px;
   margin-bottom:12px;
   text-transform:uppercase;
+  position:relative;
+  z-index:1;
 }
 
-.process-card p{
+.overview-card p{
   color:var(--muted);
   line-height:1.7;
+  position:relative;
+  z-index:1;
 }
 
 /* CTA */
@@ -657,6 +775,7 @@ header{
   color:rgba(255,255,255,.56);
 }
 
+/* REVEAL */
 .reveal{
   opacity:0;
   transform:translateY(34px);
@@ -668,14 +787,20 @@ header{
   transform:translateY(0);
 }
 
+/* MOBILE */
 @media(max-width:1080px){
   .hero-inner,
-  .edit-wrap{
+  .service-wrap{
     grid-template-columns:1fr;
   }
 
-  .hero-stage{height:520px;}
-  .process-grid{grid-template-columns:repeat(2,1fr);}
+  .orbit-stage{
+    height:620px;
+  }
+
+  .overview-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
 }
 
 @media(max-width:768px){
@@ -719,37 +844,54 @@ header{
   .hero-inner{padding:34px 0 56px;}
   .hero h1{max-width:none;}
 
+  .orbit-stage{
+    height:auto;
+    display:grid;
+    gap:16px;
+  }
+
+  .lens,
+  .orbit-ring{
+    display:none;
+  }
+
   .orbit-card{
     position:relative;
+    inset:auto!important;
     width:100%;
-    top:auto!important;
-    right:auto!important;
-    bottom:auto!important;
-    margin-bottom:16px;
     transform:none!important;
   }
 
-  .hero-stage{
-    height:auto;
-  }
-
-  .sticky-edit{
-    position:relative;
-    top:auto;
-    padding:80px 0;
-  }
-
-  .scroll-scene{
+  .service-scene{
     min-height:auto;
   }
 
-  .edit-wrap{
-    gap:28px;
+  .service-sticky{
+    position:relative;
+    top:auto;
+    min-height:auto;
+    padding:80px 0;
   }
 
-  .float-asset{display:none;}
-  .process-grid{grid-template-columns:1fr;}
-  .section-title{flex-direction:column;align-items:flex-start;}
+  .motion-stage{
+    height:520px;
+  }
+
+  .video-frame{
+    inset:20px 0 140px 0;
+    transform:none!important;
+  }
+
+  .floating-tool{display:none;}
+
+  .overview-grid{
+    grid-template-columns:1fr;
+  }
+
+  .section-title{
+    flex-direction:column;
+    align-items:flex-start;
+  }
 }
 </style>
 </head>
@@ -790,146 +932,290 @@ header{
   <div class="hero-inner">
     <div class="hero-copy reveal">
       <div class="hero-name">Viktor Boguský</div>
-      <h1>Postprodukcia <span class="muted">v pohybe</span></h1>
+      <h1>Služby <span class="muted">v pohybe</span></h1>
       <p>
-        Vizuálna ukážka toho, ako môže pôsobiť video stránka inšpirovaná strihom, timeline, color gradingom a pohybom záberov v priestore.
+        Motion stránka služieb inšpirovaná kamerou, objektívom, timeline, strihom a postprodukciou. Scrolluj nižšie a sleduj, ako sa jednotlivé služby menia na vizuálnu ukážku tvorby videa.
       </p>
       <div class="hero-actions">
-        <a href="#timeline" class="btn btn-primary">Spustiť ukážku</a>
-        <a href="portfolio.html" class="btn btn-secondary">Pozrieť portfólio</a>
+        <a href="#motion-services" class="btn btn-primary">Spustiť scroll</a>
+        <a href="objednavka.html" class="btn btn-secondary">Rezervovať termín</a>
       </div>
     </div>
 
-    <div class="hero-stage reveal">
-      <div class="orbit-card card-a">
-        <video autoplay muted loop playsinline>
-          <source src="uvod_video.mp4" type="video/mp4">
-        </video>
-        <span><b>Clip 01</b> Raw footage</span>
+    <div class="orbit-stage reveal">
+      <div class="lens">
+        <div class="aperture"></div>
       </div>
 
-      <div class="orbit-card card-b">
-        <div class="fake-video"></div>
-        <span><b>Color</b> Grade pass</span>
+      <div class="orbit-ring"></div>
+
+      <div class="orbit-card oc-1">
+        <span>Service 01</span>
+        <h3>Stužkové</h3>
+        <p>Klipy, záznamy, pozvánky a atmosféra večera.</p>
       </div>
 
-      <div class="orbit-card card-c">
-        <video autoplay muted loop playsinline>
-          <source src="uvod_video.mp4" type="video/mp4">
-        </video>
-        <span><b>Export</b> Final cut</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="scroll-scene" id="timeline">
-  <div class="sticky-edit">
-    <div class="edit-wrap">
-      <div class="scene-copy reveal">
-        <h2>Scrolluj a sleduj strih</h2>
-        <p>
-          Pri posúvaní stránky sa pohybuje playhead, timeline, videá aj celé strihové prostredie. Je to čisto naprogramovaný vizuálny efekt bez reálneho DaVinci Resolve.
-        </p>
-        <div class="scene-tags">
-          <span>Timeline</span>
-          <span>Cut</span>
-          <span>Color grading</span>
-          <span>Sound design</span>
-        </div>
+      <div class="orbit-card oc-2">
+        <span>Service 02</span>
+        <h3>Svadby</h3>
+        <p>Emócie, priebeh dňa, klip aj kompletný záznam.</p>
       </div>
 
-      <div class="editor reveal" id="editor">
-        <div class="editor-top">
-          <div class="dots"><span></span><span></span><span></span></div>
-          <div class="editor-title">Viktor Boguský / Cinematic timeline</div>
-          <div class="editor-title">00:00:24:16</div>
-        </div>
+      <div class="orbit-card oc-3">
+        <span>Service 03</span>
+        <h3>Eventy</h3>
+        <p>Aftermovie, dynamika, energia a vibe podujatia.</p>
+      </div>
 
-        <div class="viewer">
-          <video autoplay muted loop playsinline>
-            <source src="uvod_video.mp4" type="video/mp4">
-          </video>
-        </div>
+      <div class="orbit-card oc-4">
+        <span>Service 04</span>
+        <h3>Promo</h3>
+        <p>Obsah pre značky, projekty, kampane a sociálne siete.</p>
+      </div>
 
-        <div class="timeline">
-          <div class="time-ruler">
-            <span>00:00</span><span>00:05</span><span>00:10</span><span>00:15</span>
-            <span>00:20</span><span>00:25</span><span>00:30</span><span>00:35</span>
-          </div>
-
-          <div class="playhead" id="playhead"></div>
-
-          <div class="track">
-            <div class="clip one"></div>
-            <div class="clip two"></div>
-            <div class="clip three"></div>
-            <div class="clip four"></div>
-          </div>
-
-          <div class="track">
-            <div class="clip five"></div>
-            <div class="clip six"></div>
-          </div>
-
-          <div class="track">
-            <div class="clip audio one"></div>
-            <div class="clip audio three"></div>
-          </div>
-
-          <div class="track">
-            <div class="wave"></div>
-          </div>
-        </div>
-
-        <div class="float-asset asset-1" id="asset1">Color wheels</div>
-        <div class="float-asset asset-2" id="asset2">Audio clean</div>
-        <div class="float-asset asset-3" id="asset3">Motion blur</div>
-        <div class="float-asset asset-4" id="asset4">Final export</div>
+      <div class="orbit-card oc-5">
+        <span>Service 05</span>
+        <h3>Postprodukcia</h3>
+        <p>Strih, farby, zvuk, titulky, efekty a export.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="process">
+<main class="motion-services" id="motion-services">
+
+  <section class="service-scene" data-index="0">
+    <div class="service-sticky">
+      <div class="service-wrap">
+        <div class="service-copy reveal">
+          <div class="service-kicker">Kamerové služby</div>
+          <h2>Stužkové</h2>
+          <p>
+            Zachytenie celej atmosféry večera, emócií, programu, tanca aj spontánnych momentov. Ideálne pre triedy, ktoré chcú mať zo stužkovej silnú spomienku.
+          </p>
+          <div class="service-list">
+            <div>Záznam stužkovej v plnej dĺžke</div>
+            <div>3–7 minútový zostrih alebo klip</div>
+            <div>Pozvánka / úvodné video</div>
+          </div>
+        </div>
+
+        <div class="motion-stage">
+          <div class="video-frame" data-label="STUŽKOVÁ / EMÓCIA / RYTMUS">
+            <video autoplay muted loop playsinline>
+              <source src="uvod_video.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="mini-timeline">
+            <div class="mini-ruler"><span>00:00</span><span>00:10</span><span>00:20</span><span>00:30</span><span>00:40</span><span>00:50</span></div>
+            <div class="service-playhead"></div>
+            <div class="mini-track"><div class="mini-clip a"></div><div class="mini-clip b"></div><div class="mini-clip c"></div></div>
+            <div class="mini-track"><div class="mini-clip d"></div><div class="mini-clip e"></div></div>
+          </div>
+
+          <div class="floating-tool tool-1">Program</div>
+          <div class="floating-tool tool-2">Tanec</div>
+          <div class="floating-tool tool-3">Klip</div>
+          <div class="floating-tool tool-4">Export</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="service-scene" data-index="1">
+    <div class="service-sticky">
+      <div class="service-wrap">
+        <div class="service-copy reveal">
+          <div class="service-kicker">Kamerové služby</div>
+          <h2>Svadby</h2>
+          <p>
+            Svadobné video s dôrazom na prirodzenosť, emócie, detaily a priebeh dňa. Od krátkeho klipu až po záznam v plnej dĺžke.
+          </p>
+          <div class="service-list">
+            <div>Svadobný klip 3–7 minút</div>
+            <div>Záznam svadby v plnej dĺžke</div>
+            <div>Kompletná postprodukcia obrazu a zvuku</div>
+          </div>
+        </div>
+
+        <div class="motion-stage">
+          <div class="video-frame" data-label="SVADBA / DETAIL / ATMOSFÉRA">
+            <video autoplay muted loop playsinline>
+              <source src="uvod_video.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="mini-timeline">
+            <div class="mini-ruler"><span>00:00</span><span>00:10</span><span>00:20</span><span>00:30</span><span>00:40</span><span>00:50</span></div>
+            <div class="service-playhead"></div>
+            <div class="mini-track"><div class="mini-clip a"></div><div class="mini-clip b"></div><div class="mini-clip c"></div></div>
+            <div class="mini-track"><div class="mini-clip d"></div><div class="mini-clip e"></div></div>
+          </div>
+
+          <div class="floating-tool tool-1">Ceremony</div>
+          <div class="floating-tool tool-2">Moments</div>
+          <div class="floating-tool tool-3">Color</div>
+          <div class="floating-tool tool-4">Sound</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="service-scene" data-index="2">
+    <div class="service-sticky">
+      <div class="service-wrap">
+        <div class="service-copy reveal">
+          <div class="service-kicker">Eventy a akcie</div>
+          <h2>Eventy</h2>
+          <p>
+            Dynamické videá z koncertov, festivalov, firemných alebo školských akcií. Cieľom je preniesť energiu podujatia do krátkeho a použiteľného výstupu.
+          </p>
+          <div class="service-list">
+            <div>Aftermovie z akcie</div>
+            <div>Krátke zostrihy na sociálne siete</div>
+            <div>Zachytenie atmosféry, publika a detailov</div>
+          </div>
+        </div>
+
+        <div class="motion-stage">
+          <div class="video-frame" data-label="EVENT / ENERGIA / DYNAMIKA">
+            <div class="fake-preview"></div>
+          </div>
+
+          <div class="mini-timeline">
+            <div class="mini-ruler"><span>00:00</span><span>00:10</span><span>00:20</span><span>00:30</span><span>00:40</span><span>00:50</span></div>
+            <div class="service-playhead"></div>
+            <div class="mini-track"><div class="mini-clip a"></div><div class="mini-clip b"></div><div class="mini-clip c"></div></div>
+            <div class="mini-track"><div class="mini-clip d"></div><div class="mini-clip e"></div></div>
+          </div>
+
+          <div class="floating-tool tool-1">Crowd</div>
+          <div class="floating-tool tool-2">Beat cut</div>
+          <div class="floating-tool tool-3">Highlights</div>
+          <div class="floating-tool tool-4">Reels</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="service-scene" data-index="3">
+    <div class="service-sticky">
+      <div class="service-wrap">
+        <div class="service-copy reveal">
+          <div class="service-kicker">Promo obsah</div>
+          <h2>Promo</h2>
+          <p>
+            Promo videá, kampane, video portréty a obsah pre značky alebo projekty. Každé video sa prispôsobuje cieľu, publiku a platforme.
+          </p>
+          <div class="service-list">
+            <div>Promo video pre projekt, službu alebo značku</div>
+            <div>Video na sociálne siete</div>
+            <div>Video portrait / profilové video</div>
+          </div>
+        </div>
+
+        <div class="motion-stage">
+          <div class="video-frame" data-label="PROMO / BRAND / MESSAGE">
+            <div class="fake-preview"></div>
+          </div>
+
+          <div class="mini-timeline">
+            <div class="mini-ruler"><span>00:00</span><span>00:10</span><span>00:20</span><span>00:30</span><span>00:40</span><span>00:50</span></div>
+            <div class="service-playhead"></div>
+            <div class="mini-track"><div class="mini-clip a"></div><div class="mini-clip b"></div><div class="mini-clip c"></div></div>
+            <div class="mini-track"><div class="mini-clip d"></div><div class="mini-clip e"></div></div>
+          </div>
+
+          <div class="floating-tool tool-1">Brand</div>
+          <div class="floating-tool tool-2">Hook</div>
+          <div class="floating-tool tool-3">CTA</div>
+          <div class="floating-tool tool-4">Social</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="service-scene" data-index="4">
+    <div class="service-sticky">
+      <div class="service-wrap">
+        <div class="service-copy reveal">
+          <div class="service-kicker">Postprodukcia</div>
+          <h2>Strih &amp; farby</h2>
+          <p>
+            Kompletná postprodukcia videa: výber záberov, dynamický strih, colorgrading, úprava zvuku, titulky, efekty a finálny export.
+          </p>
+          <div class="service-list">
+            <div>Kompletná postprodukcia videa</div>
+            <div>Colorgrading a úprava zvuku</div>
+            <div>Titulky, efekty a finálny export</div>
+          </div>
+        </div>
+
+        <div class="motion-stage">
+          <div class="video-frame" data-label="POSTPRODUKCIA / CUT / GRADE">
+            <video autoplay muted loop playsinline>
+              <source src="uvod_video.mp4" type="video/mp4">
+            </video>
+          </div>
+
+          <div class="mini-timeline">
+            <div class="mini-ruler"><span>00:00</span><span>00:10</span><span>00:20</span><span>00:30</span><span>00:40</span><span>00:50</span></div>
+            <div class="service-playhead"></div>
+            <div class="mini-track"><div class="mini-clip a"></div><div class="mini-clip b"></div><div class="mini-clip c"></div></div>
+            <div class="mini-track"><div class="mini-clip d"></div><div class="mini-clip e"></div></div>
+          </div>
+
+          <div class="floating-tool tool-1">Cut</div>
+          <div class="floating-tool tool-2">Grade</div>
+          <div class="floating-tool tool-3">Sound</div>
+          <div class="floating-tool tool-4">Export</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<section class="overview">
   <div class="section-title reveal">
-    <h2>Čo sa deje za videom</h2>
-    <p>Jednoduchý pohľad na proces, ktorý stojí za finálnym videom.</p>
+    <h2>Prehľad služieb</h2>
+    <p>Krátke zhrnutie toho, čo si môžeš objednať samostatne alebo ako kompletný balík.</p>
   </div>
 
-  <div class="process-grid">
-    <div class="process-card reveal">
+  <div class="overview-grid">
+    <div class="overview-card reveal">
       <span>01</span>
-      <h3>Výber záberov</h3>
-      <p>Z natočeného materiálu sa vyberajú momenty, ktoré nesú emóciu a príbeh.</p>
+      <h3>Stužkové</h3>
+      <p>Záznam, klip, pozvánka alebo úvodné video s dôrazom na emóciu večera.</p>
     </div>
 
-    <div class="process-card reveal">
+    <div class="overview-card reveal">
       <span>02</span>
-      <h3>Strih</h3>
-      <p>Zábery sa ukladajú do rytmu hudby, atmosféry a prirodzeného priebehu.</p>
+      <h3>Svadby</h3>
+      <p>Svadobný klip, záznam v plnej dĺžke a kompletné spracovanie dňa.</p>
     </div>
 
-    <div class="process-card reveal">
+    <div class="overview-card reveal">
       <span>03</span>
-      <h3>Farby a zvuk</h3>
-      <p>Color grading, úprava zvuku a doladenie detailov vytvárajú finálny dojem.</p>
+      <h3>Eventy</h3>
+      <p>Aftermovie, zostrihy a dynamické videá z koncertov, festivalov a akcií.</p>
     </div>
 
-    <div class="process-card reveal">
+    <div class="overview-card reveal">
       <span>04</span>
-      <h3>Export</h3>
-      <p>Video sa pripraví v správnom formáte na odovzdanie alebo zverejnenie.</p>
+      <h3>Promo</h3>
+      <p>Promo videá, video na sociálne siete, kampane a profilové videá.</p>
     </div>
   </div>
 </section>
 
 <section class="cta reveal">
-  <h2>Chceš podobný vizuál vo videu?</h2>
+  <h2>Nevieš, čo presne potrebuješ?</h2>
   <p>
-    Ak chceš stužkovú, svadbu, event alebo promo video spracované tak, aby malo atmosféru a moderný strih, ozvi sa mi.
+    Napíš mi, o aký projekt ide, kde sa bude natáčať a aký výsledok si predstavuješ. Navrhnem ti vhodné riešenie alebo balík podľa tvojich potrieb.
   </p>
-  <a href="objednavka.html" class="btn btn-primary">Rezervovať termín</a>
+  <a href="kontakt.html" class="btn btn-primary">Kontaktovať</a>
 </section>
 
 <footer class="footer">
@@ -988,42 +1274,55 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 revealItems.forEach(item => observer.observe(item));
 
-const playhead = document.getElementById('playhead');
-const editor = document.getElementById('editor');
-const asset1 = document.getElementById('asset1');
-const asset2 = document.getElementById('asset2');
-const asset3 = document.getElementById('asset3');
-const asset4 = document.getElementById('asset4');
-
 function clamp(value, min, max){
   return Math.min(Math.max(value, min), max);
 }
 
-function animateScroll(){
-  const scene = document.querySelector('.scroll-scene');
-  if(!scene || !playhead || !editor) return;
+const scenes = document.querySelectorAll('.service-scene');
 
-  const rect = scene.getBoundingClientRect();
-  const windowH = window.innerHeight;
-  const progress = clamp((-rect.top) / (rect.height - windowH), 0, 1);
+function animateServices(){
+  scenes.forEach((scene) => {
+    const rect = scene.getBoundingClientRect();
+    const h = window.innerHeight;
+    const progress = clamp((-rect.top) / (rect.height - h), 0, 1);
 
-  playhead.style.left = `${8 + progress * 84}%`;
+    const frame = scene.querySelector('.video-frame');
+    const playhead = scene.querySelector('.service-playhead');
+    const tools = scene.querySelectorAll('.floating-tool');
+    const clips = scene.querySelectorAll('.mini-clip');
 
-  const rotateY = (progress - 0.5) * 18;
-  const rotateX = (0.5 - progress) * 8;
-  editor.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(${Math.sin(progress * Math.PI) * -18}px)`;
+    if(playhead){
+      playhead.style.left = `${8 + progress * 84}%`;
+    }
 
-  if(asset1) asset1.style.transform = `translate3d(${progress * 80}px, ${progress * -60}px, 0) rotate(${progress * 18}deg)`;
-  if(asset2) asset2.style.transform = `translate3d(${progress * -80}px, ${progress * 70}px, 0) rotate(${progress * -14}deg)`;
-  if(asset3) asset3.style.transform = `translate3d(${progress * 120}px, ${progress * 40}px, 0) rotate(${progress * 12}deg)`;
-  if(asset4) asset4.style.transform = `translate3d(${progress * -110}px, ${progress * -50}px, 0) rotate(${progress * -18}deg)`;
+    if(frame && window.innerWidth > 768){
+      const rotateY = (progress - .5) * 18;
+      const rotateX = (.5 - progress) * 8;
+      const y = Math.sin(progress * Math.PI) * -22;
+      frame.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) translateY(${y}px) scale(${1 + progress * .025})`;
+    }
 
-  requestAnimationFrame(animateScroll);
+    tools.forEach((tool, i) => {
+      const dir = i % 2 === 0 ? 1 : -1;
+      const x = dir * progress * (60 + i * 20);
+      const y = Math.sin(progress * Math.PI) * (-40 + i * 10);
+      tool.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${dir * progress * 14}deg)`;
+      tool.style.opacity = `${.35 + Math.sin(progress * Math.PI) * .65}`;
+    });
+
+    clips.forEach((clip, i) => {
+      const scale = 1 + Math.sin((progress + i * .12) * Math.PI) * .08;
+      clip.style.transform = `scaleX(${scale})`;
+    });
+  });
+
+  requestAnimationFrame(animateServices);
 }
 
-requestAnimationFrame(animateScroll);
+requestAnimationFrame(animateServices);
 
 const orbitCards = document.querySelectorAll('.orbit-card');
+const orbitStage = document.querySelector('.orbit-stage');
 
 window.addEventListener('mousemove', (e) => {
   if(window.innerWidth <= 768) return;
@@ -1031,8 +1330,12 @@ window.addEventListener('mousemove', (e) => {
   const x = e.clientX / window.innerWidth - .5;
   const y = e.clientY / window.innerHeight - .5;
 
+  if(orbitStage){
+    orbitStage.style.transform = `rotateY(${x * 8}deg) rotateX(${y * -6}deg)`;
+  }
+
   orbitCards.forEach((card, index) => {
-    const power = (index + 1) * 8;
+    const power = (index + 1) * 5;
     card.style.translate = `${x * power}px ${y * -power}px`;
   });
 });
