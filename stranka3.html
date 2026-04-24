@@ -471,13 +471,77 @@ header{
   padding:36px 0 110px;
 }
 
+.packages-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:24px;
+  margin-bottom:24px;
+}
+
+.packages-head p{
+  color:var(--cyan);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+}
+
+.packages-head h2{
+  margin-top:8px;
+  font-size:clamp(30px,4vw,54px);
+  line-height:1;
+  letter-spacing:-.055em;
+  text-transform:uppercase;
+}
+
+.package-controls{
+  display:flex;
+  gap:10px;
+}
+
+.package-arrow{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.07);
+  color:#fff;
+  font-size:30px;
+  cursor:pointer;
+  transition:.22s ease;
+}
+
+.package-arrow:hover{
+  background:#fff;
+  color:#000;
+  transform:translateY(-3px);
+}
+
+.packages-slider{
+  position:relative;
+  overflow-x:auto;
+  overflow-y:visible;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+  padding:16px max(16px, calc((100vw - var(--max)) / 2)) 28px;
+  margin-left:calc(50% - 50vw);
+  margin-right:calc(50% - 50vw);
+  scrollbar-width:none;
+}
+
+.packages-slider::-webkit-scrollbar{display:none;}
+
 .duo-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
+  display:flex;
   gap:26px;
+  width:max-content;
 }
 
 .duo-card{
+  flex:0 0 min(390px, calc(100vw - 54px));
+  scroll-snap-align:center;
   position:relative;
   padding:30px;
   border-radius:30px;
@@ -500,6 +564,16 @@ header{
 .duo-card:hover{
   transform:translateY(-10px);
   border-color:rgba(86,232,255,.28);
+}
+
+.slider-hint{
+  display:none;
+  margin:4px auto 0;
+  width:max-content;
+  color:rgba(255,255,255,.48);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.18em;
 }
 
 .duo-card.best{
@@ -786,6 +860,10 @@ header{
     grid-template-columns:1fr;
   }
 
+  .packages-head{
+    align-items:flex-start;
+  }
+
   .duo-visual{
     order:-1;
     min-height:430px;
@@ -795,13 +873,15 @@ header{
     position:relative;
     top:auto;
   }
-
-  .duo-grid{
-    grid-template-columns:1fr;
-  }
 }
 
 @media(max-width:768px){
+  .package-controls{display:none;}
+  .packages-head{display:block;}
+  .packages-slider{padding-left:16px;padding-right:16px;scroll-padding:16px;}
+  .duo-card{flex-basis:calc(100vw - 42px);scroll-snap-align:start;}
+  .slider-hint{display:block;}
+
   :root{--header-h:64px;}
 
   .menu-toggle{display:block;}
@@ -962,7 +1042,19 @@ header{
 </section>
 
 <section class="duo-section" id="duo-packages">
-  <div class="duo-grid">
+  <div class="packages-head reveal">
+    <div>
+      <p>Vyber si balík</p>
+      <h2>Potiahni do boku a porovnaj možnosti.</h2>
+    </div>
+    <div class="package-controls">
+      <button type="button" class="package-arrow" id="packagesPrev" aria-label="Predchádzajúci balík">‹</button>
+      <button type="button" class="package-arrow" id="packagesNext" aria-label="Ďalší balík">›</button>
+    </div>
+  </div>
+
+  <div class="packages-slider" id="packagesSlider">
+    <div class="duo-grid">
     <div class="duo-card reveal">
       <div class="duo-tag">Základ</div>
       <h3>Duo Start</h3>
@@ -1005,6 +1097,9 @@ header{
       <button class="duo-btn" onclick="selectPackage('Duo Premium - 700€')">Rezervovať</button>
     </div>
   </div>
+  </div>
+
+  <div class="slider-hint reveal">Ťahaj do boku / swipe</div>
 
   <div class="builder-wrap reveal" id="custom-builder">
     <div class="builder-copy">
@@ -1098,6 +1193,9 @@ const toggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.main-nav');
 const navItems = document.querySelectorAll('.nav-item');
 const duoScene = document.getElementById('duoScene');
+const packagesSlider = document.getElementById('packagesSlider');
+const packagesPrev = document.getElementById('packagesPrev');
+const packagesNext = document.getElementById('packagesNext');
 
 toggle.addEventListener('click', (e) => {
   e.stopPropagation();
@@ -1119,6 +1217,18 @@ document.addEventListener('click', () => {
   nav.classList.remove('active');
   navItems.forEach(item => item.classList.remove('active'));
 });
+
+// Horizontálny posun balíkov cez šípky na PC
+function scrollPackages(direction){
+  if(!packagesSlider) return;
+  const card = packagesSlider.querySelector('.duo-card');
+  const gap = 26;
+  const amount = card ? card.offsetWidth + gap : 420;
+  packagesSlider.scrollBy({ left: direction * amount, behavior:'smooth' });
+}
+
+if(packagesPrev) packagesPrev.addEventListener('click', () => scrollPackages(-1));
+if(packagesNext) packagesNext.addEventListener('click', () => scrollPackages(1));
 
 // Jemný 3D parallax iba na hero visual, aby stránka nelagovala.
 window.addEventListener('mousemove', (e) => {
