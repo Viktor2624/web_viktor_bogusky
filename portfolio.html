@@ -1,837 +1,771 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Viktor Boguský | Portfólio</title>
-  <link rel="icon" type="image/png" href="Viktor-removebg-preview.png" />
-  <style>
-    :root{
-      --bg:#050505;
-      --text:#ffffff;
-      --muted:rgba(255,255,255,.72);
-      --line:rgba(255,255,255,.10);
-      --panel:rgba(255,255,255,.06);
-      --panel-strong:rgba(255,255,255,.10);
-      --shadow:0 30px 80px rgba(0,0,0,.45);
-      --radius:28px;
-      --header-h:72px;
-      --max:1240px;
-    }
-
-    *{margin:0;padding:0;box-sizing:border-box;}
-    html{scroll-behavior:smooth;}
-
-    body{
-      font-family:Arial, Helvetica, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at 18% 20%, rgba(85,110,255,.10), transparent 26%),
-        radial-gradient(circle at 80% 15%, rgba(255,255,255,.04), transparent 18%),
-        radial-gradient(circle at 65% 72%, rgba(120,70,255,.08), transparent 24%),
-        var(--bg);
-      padding-top:var(--header-h);
-      overflow-x:hidden;
-    }
-
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      background:
-        linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
-      background-size:48px 48px;
-      mask-image:radial-gradient(circle at center, black 35%, transparent 90%);
-      opacity:.16;
-      z-index:-2;
-    }
-
-    a{color:inherit;}
-
-    .container{
-      width:min(100% - 32px, var(--max));
-      margin:0 auto;
-    }
-
-    header{
-      position:fixed;
-      inset:0 0 auto 0;
-      height:var(--header-h);
-      background:rgba(0,0,0,.55);
-      backdrop-filter:blur(16px);
-      border-bottom:1px solid rgba(255,255,255,.08);
-      z-index:1000;
-    }
-
-    .header-inner{
-      width:min(100% - 32px, var(--max));
-      height:100%;
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
-    }
-
-    .logo{
-      text-decoration:none;
-      font-size:16px;
-      font-weight:700;
-      letter-spacing:2px;
-      white-space:nowrap;
-    }
-
-    .menu-toggle{
-      display:none;
-      background:none;
-      border:none;
-      color:#fff;
-      font-size:28px;
-      cursor:pointer;
-    }
-
-    .main-nav{
-      display:flex;
-      align-items:center;
-      gap:28px;
-    }
-
-    .main-nav a,
-    .nav-btn{
-      background:none;
-      border:none;
-      color:#fff;
-      text-decoration:none;
-      font-size:14px;
-      font-family:inherit;
-      cursor:pointer;
-      opacity:.86;
-      transition:.25s ease;
-      padding:8px 0;
-    }
-
-    .main-nav a:hover,
-    .nav-btn:hover{opacity:1;transform:translateY(-1px);}
-
-    .nav-item{position:relative;}
-
-    .dropdown{
-      position:absolute;
-      top:calc(100% + 12px);
-      left:0;
-      display:none;
-      flex-direction:column;
-      min-width:220px;
-      padding:10px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(10,10,12,.96);
-      box-shadow:var(--shadow);
-    }
-
-    .dropdown a{
-      padding:10px 12px;
-      border-radius:10px;
-      font-size:13px;
-      white-space:nowrap;
-    }
-
-    .dropdown a:hover{background:rgba(255,255,255,.06);}
-    .nav-item.active .dropdown{display:flex;}
-
-    .hero{
-      position:relative;
-      min-height:calc(100vh - var(--header-h));
-      display:flex;
-      align-items:center;
-      overflow:hidden;
-      isolation:isolate;
-    }
-
-    .hero-video-wrap,
-    .hero-overlay,
-    .hero-glow{
-      position:absolute;
-      inset:0;
-    }
-
-    .hero-video-wrap{z-index:-3;}
-
-    .hero-video-wrap video{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      transform:scale(1.08);
-      filter:brightness(.34) saturate(1.05);
-    }
-
-    .hero-overlay{
-      z-index:-2;
-      background:
-        linear-gradient(to bottom, rgba(0,0,0,.34), rgba(0,0,0,.65)),
-        radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,.25) 46%, rgba(0,0,0,.72) 100%);
-    }
-
-    .hero-glow{
-      z-index:-1;
-      background:
-        radial-gradient(circle at 78% 34%, rgba(85,110,255,.16), transparent 18%),
-        radial-gradient(circle at 58% 68%, rgba(130,60,255,.10), transparent 22%);
-      filter:blur(18px);
-      pointer-events:none;
-    }
-
-    .hero-inner{
-      width:min(100% - 32px, var(--max));
-      margin:0 auto;
-      display:grid;
-      grid-template-columns:1.08fr .92fr;
-      gap:34px;
-      align-items:center;
-      padding:48px 0 46px;
-    }
-
-    .hero-copy{max-width:760px;}
-
-    .hero h1{
-      font-size:clamp(42px, 8vw, 90px);
-      line-height:.92;
-      letter-spacing:-2px;
-      text-transform:uppercase;
-      max-width:11ch;
-    }
-
-    .hero h1 .muted{color:rgba(255,255,255,.58);}
-
-    .hero-copy p{
-      margin-top:24px;
-      max-width:640px;
-      font-size:clamp(16px, 2vw, 19px);
-      line-height:1.62;
-      color:var(--muted);
-    }
-
-    .hero-actions{
-      margin-top:30px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:14px;
-    }
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:50px;
-      padding:0 24px;
-      border-radius:999px;
-      text-decoration:none;
-      font-weight:700;
-      font-size:14px;
-      transition:.28s ease;
-      border:1px solid transparent;
-    }
-
-    .btn-primary{background:#fff;color:#000;}
-    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,255,255,.16);}
-
-    .btn-secondary{
-      background:rgba(255,255,255,.06);
-      border-color:rgba(255,255,255,.10);
-      backdrop-filter:blur(10px);
-    }
-
-    .btn-secondary:hover{background:rgba(255,255,255,.1);transform:translateY(-2px);}
-
-    .hero-side{
-      position:relative;
-      height:600px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .floating-scene{
-      position:relative;
-      width:min(100%, 560px);
-      height:100%;
-    }
-
-    .review-card{
-      position:absolute;
-      width:250px;
-      min-height:160px;
-      padding:20px;
-      border-radius:24px;
-      border:1px solid rgba(255,255,255,.12);
-      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
-      backdrop-filter:blur(18px);
-      box-shadow:var(--shadow);
-      color:rgba(255,255,255,.9);
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      z-index:2;
-      transition:transform .2s linear;
-    }
-
-    .review-card .label{
-      font-size:12px;
-      letter-spacing:1.2px;
-      text-transform:uppercase;
-      color:rgba(255,255,255,.76);
-      margin-bottom:10px;
-    }
-
-    .review-card strong{
-      font-size:21px;
-      line-height:1.22;
-      letter-spacing:0;
-      font-weight:700;
-      margin-bottom:10px;
-    }
-
-    .review-card p{
-      font-size:14px;
-      line-height:1.55;
-      color:var(--muted);
-    }
-
-    .review-1{top:58px;right:36px;transform:rotate(7deg);}
-    .review-2{top:232px;right:118px;transform:rotate(-2deg);}
-    .review-3{top:408px;right:18px;transform:rotate(-6deg);}
-
-    .section{padding:110px 0;}
-
-    .section-title{
-      display:flex;
-      justify-content:space-between;
-      align-items:end;
-      gap:24px;
-      margin-bottom:34px;
-    }
-
-    .section-title h2{
-      font-size:clamp(30px, 5vw, 54px);
-      line-height:1;
-      letter-spacing:-1px;
-      text-transform:uppercase;
-    }
-
-    .section-title p{
-      max-width:440px;
-      color:var(--muted);
-      line-height:1.65;
-    }
-
-    .portfolio{padding-top:46px;}
-
-    .portfolio-grid{
-      display:grid;
-      grid-template-columns:repeat(12, 1fr);
-      gap:22px;
-    }
-
-    .video-card{
-      grid-column:span 4;
-      border-radius:28px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      background:#000;
-      box-shadow:var(--shadow);
-      transition:transform .35s ease, border-color .35s ease, box-shadow .35s ease;
-    }
-
-    .video-card:hover{
-      transform:translateY(-6px) scale(1.01);
-      border-color:rgba(255,255,255,.18);
-      box-shadow:0 30px 90px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.04) inset;
-    }
-
-    .video-card.large{grid-column:span 6;}
-
-    .video-shell{
-      position:relative;
-      width:100%;
-      padding-top:56.25%;
-      background:#000;
-      overflow:hidden;
-    }
-
-    .video-shell iframe{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      border:0;
-    }
-
-    .video-meta{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:14px;
-      padding:16px 18px;
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-    }
-
-    .video-meta strong{font-size:15px;}
-
-    .video-meta span{
-      font-size:12px;
-      color:rgba(255,255,255,.6);
-      text-transform:uppercase;
-      letter-spacing:1.2px;
-      white-space:nowrap;
-    }
-
-    .cta-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:28px;
-    }
-
-    .cta-card,
-    .contact-card{
-      padding:30px;
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:var(--radius);
-      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      backdrop-filter:blur(14px);
-      box-shadow:var(--shadow);
-    }
-
-    .cta-card h3,
-    .contact-card h3{
-      font-size:26px;
-      margin-bottom:14px;
-      letter-spacing:-.5px;
-      text-transform:uppercase;
-    }
-
-    .cta-card p,
-    .contact-card p{
-      color:var(--muted);
-      line-height:1.7;
-    }
-
-    .contact-list{
-      margin-top:22px;
-      display:grid;
-      gap:14px;
-    }
-
-    .contact-item{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:16px;
-      padding:14px 16px;
-      border-radius:18px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-      text-decoration:none;
-    }
-
-    .contact-item span{
-      color:rgba(255,255,255,.65);
-      font-size:12px;
-      text-transform:uppercase;
-      letter-spacing:1.2px;
-    }
-
-    .contact-item strong{
-      font-size:15px;
-      word-break:break-word;
-    }
-
-    footer.footer{
-      padding:38px 0 28px;
-      border-top:1px solid rgba(255,255,255,.08);
-      margin-top:20px;
-    }
-
-    .footer-top{
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      gap:26px;
-      flex-wrap:wrap;
-      margin-bottom:14px;
-      text-align:center;
-    }
-
-    .footer-contact p{
-      color:var(--muted);
-      line-height:1.7;
-    }
-
-    .footer-socials{
-      display:flex;
-      justify-content:center;
-      gap:20px;
-      flex-wrap:wrap;
-      margin-bottom:14px;
-    }
-
-    .footer-socials a{
-      text-decoration:none;
-      opacity:.72;
-      transition:.25s ease;
-    }
-
-    .footer-socials a:hover{opacity:1;transform:translateY(-1px);}
-
-    .footer-bottom{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:8px;
-      text-align:center;
-      font-size:13px;
-      color:rgba(255,255,255,.56);
-    }
-
-    .footer-bottom a{text-decoration:none;color:inherit;}
-
-    .reveal{
-      opacity:0;
-      transform:translateY(34px);
-      transition:opacity .8s ease, transform .8s ease;
-    }
-
-    .reveal.visible{
-      opacity:1;
-      transform:translateY(0);
-    }
-
-    @media (max-width:1080px){
-      .hero-inner,
-      .cta-grid{grid-template-columns:1fr;}
-      .hero-side{height:560px;}
-      .section-title{flex-direction:column;align-items:flex-start;}
-      .video-card,
-      .video-card.large{grid-column:span 6;}
-    }
-
-    @media (max-width:768px){
-      :root{--header-h:64px;--radius:22px;}
-      .menu-toggle{display:block;}
-
-      .main-nav{
-        position:absolute;
-        top:100%;
-        left:0;
-        width:100%;
-        padding:14px 16px 18px;
-        flex-direction:column;
-        align-items:stretch;
-        gap:0;
-        display:none;
-        background:rgba(5,5,5,.96);
-        border-bottom:1px solid rgba(255,255,255,.08);
-      }
-
-      .main-nav.active{display:flex;}
-
-      .main-nav a,
-      .nav-btn{
-        width:100%;
-        text-align:left;
-        padding:14px 6px;
-        font-size:15px;
-      }
-
-      .dropdown{
-        position:static;
-        margin:0 0 8px 0;
-        border-radius:14px;
-        box-shadow:none;
-        min-width:100%;
-      }
-
-      .hero{min-height:auto;}
-      .hero-inner{padding:34px 0 72px;}
-      .hero h1{max-width:none;}
-      .hero-side{height:auto;}
-
-      .floating-scene{
-        display:grid;
-        gap:16px;
-        height:auto;
-      }
-
-      .review-card{
-        position:relative;
-        top:auto;
-        right:auto;
-        width:100%;
-        transform:none !important;
-      }
-
-      .portfolio-grid{grid-template-columns:1fr;}
-      .video-card,
-      .video-card.large{grid-column:auto;}
-      .footer-top,
-      .footer-bottom{align-items:center;}
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viktor Boguský | Portfólio</title>
+<link rel="icon" type="image/png" href="Viktor-removebg-preview.png">
+
+<style>
+:root{
+  --bg:#050505;
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.72);
+  --line:rgba(255,255,255,.10);
+  --panel:rgba(255,255,255,.06);
+  --shadow:0 30px 80px rgba(0,0,0,.45);
+  --radius:28px;
+  --header-h:72px;
+  --max:1240px;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:
+    radial-gradient(circle at 18% 20%, rgba(85,110,255,.10), transparent 26%),
+    radial-gradient(circle at 80% 15%, rgba(255,255,255,.04), transparent 18%),
+    radial-gradient(circle at 65% 72%, rgba(120,70,255,.08), transparent 24%),
+    var(--bg);
+  color:var(--text);
+  padding-top:var(--header-h);
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+  background-size:48px 48px;
+  mask-image:radial-gradient(circle at center, black 35%, transparent 90%);
+  opacity:.16;
+  z-index:-3;
+}
+
+a{color:inherit;}
+
+.container{
+  width:min(100% - 32px, var(--max));
+  margin:0 auto;
+}
+
+header{
+  position:fixed;
+  inset:0 0 auto 0;
+  height:var(--header-h);
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  z-index:1000;
+}
+
+.header-inner{
+  width:min(100% - 32px, var(--max));
+  height:100%;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.logo{
+  color:#fff;
+  text-decoration:none;
+  font-size:16px;
+  letter-spacing:2px;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+.main-nav{
+  display:flex;
+  align-items:center;
+  gap:28px;
+}
+
+.main-nav a,
+.nav-btn{
+  background:none;
+  border:none;
+  color:#fff;
+  text-decoration:none;
+  font-size:14px;
+  cursor:pointer;
+  opacity:.86;
+  padding:8px 0;
+  font-family:inherit;
+  transition:.25s ease;
+}
+
+.main-nav a:hover,
+.nav-btn:hover{
+  opacity:1;
+  transform:translateY(-1px);
+}
+
+.nav-item{position:relative;}
+
+.dropdown{
+  position:absolute;
+  top:calc(100% + 12px);
+  left:0;
+  background:rgba(10,10,12,.96);
+  display:none;
+  flex-direction:column;
+  min-width:220px;
+  padding:10px;
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  border:1px solid rgba(255,255,255,.08);
+  z-index:2000;
+}
+
+.dropdown a{
+  padding:10px 12px;
+  font-size:13px;
+  white-space:nowrap;
+  border-radius:10px;
+}
+
+.dropdown a:hover{background:rgba(255,255,255,.06);}
+.nav-item.active .dropdown{display:flex;}
+
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:24px;
+  cursor:pointer;
+}
+
+.hero{
+  position:relative;
+  min-height:calc(100vh - var(--header-h));
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  isolation:isolate;
+}
+
+.hero video,
+.hero-overlay,
+.hero-glow{
+  position:absolute;
+  inset:0;
+}
+
+.hero video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:scale(1.08);
+  filter:brightness(.32) saturate(1.04);
+  z-index:-4;
+}
+
+.hero-overlay{
+  z-index:-3;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,.34), rgba(0,0,0,.65)),
+    radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,.25) 46%, rgba(0,0,0,.72) 100%);
+}
+
+.hero-glow{
+  z-index:-2;
+  background:
+    radial-gradient(circle at 78% 34%, rgba(85,110,255,.16), transparent 18%),
+    radial-gradient(circle at 58% 68%, rgba(130,60,255,.10), transparent 22%),
+    radial-gradient(circle at 24% 58%, rgba(255,255,255,.04), transparent 18%);
+  filter:blur(18px);
+  pointer-events:none;
+}
+
+.hero-inner{
+  width:min(100% - 32px, var(--max));
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  gap:34px;
+  align-items:center;
+  padding:48px 0 46px;
+}
+
+.hero-copy{
+  max-width:760px;
+  position:relative;
+}
+
+.hero-copy::after{
+  content:"";
+  position:absolute;
+  right:-20px;
+  bottom:-20px;
+  width:260px;
+  height:260px;
+  background:radial-gradient(circle, rgba(90,110,255,.14), transparent 68%);
+  filter:blur(22px);
+  pointer-events:none;
+  z-index:-1;
+}
+
+.hero-name{
+  display:inline-block;
+  margin-bottom:14px;
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.68);
+  position:relative;
+  padding-left:20px;
+}
+
+.hero-name::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:50%;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  transform:translateY(-50%);
+  background:rgba(255,255,255,.85);
+  box-shadow:0 0 18px rgba(255,255,255,.38);
+}
+
+.hero h1{
+  font-size:clamp(42px, 8vw, 90px);
+  line-height:.92;
+  letter-spacing:-2px;
+  text-transform:uppercase;
+  max-width:11ch;
+  text-shadow:0 10px 30px rgba(0,0,0,.28);
+}
+
+.hero h1 .muted{color:rgba(255,255,255,.58);}
+
+.hero-copy p{
+  margin-top:24px;
+  max-width:640px;
+  font-size:clamp(16px, 2vw, 19px);
+  line-height:1.62;
+  color:var(--muted);
+}
+
+.hero-actions{
+  margin-top:30px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  padding:0 24px;
+  border-radius:999px;
+  text-decoration:none;
+  font-weight:700;
+  font-size:14px;
+  transition:.28s ease;
+  border:1px solid transparent;
+  position:relative;
+  overflow:hidden;
+}
+
+.btn::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg, transparent 20%, rgba(255,255,255,.22), transparent 80%);
+  transform:translateX(-140%);
+  transition:transform .7s ease;
+}
+
+.btn:hover::after{transform:translateX(140%);}
+
+.btn-primary{background:#fff;color:#000;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,255,255,.16);}
+
+.btn-secondary{
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.10);
+  backdrop-filter:blur(10px);
+}
+
+.btn-secondary:hover{background:rgba(255,255,255,.1);transform:translateY(-2px);}
+
+.hero-side{
+  position:relative;
+  height:520px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hero-panel{
+  width:min(100%, 460px);
+  min-height:380px;
+  padding:28px;
+  border-radius:32px;
+  border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-panel::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(130deg, rgba(255,255,255,.14), transparent 30%, transparent 70%, rgba(120,100,255,.10));
+  pointer-events:none;
+}
+
+.hero-badge{
+  display:inline-flex;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.24);
+  font-size:12px;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  margin-bottom:16px;
+}
+
+.hero-panel h3{
+  font-size:34px;
+  margin-bottom:14px;
+  letter-spacing:-1px;
+  text-transform:uppercase;
+}
+
+.hero-panel p{
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:18px;
+}
+
+.hero-list{
+  display:grid;
+  gap:12px;
+}
+
+.hero-list div{
+  padding:14px 16px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;
+  background:rgba(255,255,255,.04);
+}
+
+.portfolio{
+  width:min(100% - 32px, var(--max));
+  margin:auto;
+  padding:40px 0 110px;
+}
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:24px;
+  margin-bottom:34px;
+}
+
+.section-title h2{
+  font-size:clamp(30px, 5vw, 54px);
+  line-height:1;
+  letter-spacing:-1px;
+  text-transform:uppercase;
+}
+
+.section-title p{
+  max-width:440px;
+  color:var(--muted);
+  line-height:1.65;
+}
+
+.portfolio-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:22px;
+}
+
+.video-card{
+  grid-column:span 4;
+  border-radius:28px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.10);
+  background:#000;
+  box-shadow:var(--shadow);
+  transition:transform .35s ease, border-color .35s ease, box-shadow .35s ease, filter .35s ease;
+  position:relative;
+}
+
+.video-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(130deg, rgba(255,255,255,.14), transparent 24%, transparent 76%, rgba(120,100,255,.08));
+  pointer-events:none;
+  z-index:2;
+  opacity:.6;
+}
+
+.video-card:hover{
+  transform:translateY(-6px) scale(1.01);
+  border-color:rgba(255,255,255,.18);
+  box-shadow:0 30px 90px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.04) inset;
+  filter:brightness(1.05);
+}
+
+.video-card.large{grid-column:span 6;}
+
+.video-shell{
+  position:relative;
+  width:100%;
+  padding-top:56.25%;
+  background:#000;
+  overflow:hidden;
+}
+
+.video-shell iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+.video-meta{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  padding:16px 18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+}
+
+.video-meta strong{font-size:15px;}
+
+.video-meta span{
+  font-size:12px;
+  color:rgba(255,255,255,.6);
+  text-transform:uppercase;
+  letter-spacing:1.2px;
+  white-space:nowrap;
+}
+
+.footer{
+  padding:38px 0 28px;
+  border-top:1px solid rgba(255,255,255,.08);
+  margin-top:20px;
+}
+
+.footer-wrap{
+  width:min(100% - 32px, var(--max));
+  margin:auto;
+}
+
+.footer-top{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:26px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+  text-align:center;
+}
+
+.footer-contact p{
+  color:var(--muted);
+  line-height:1.7;
+}
+
+.footer-socials{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+
+.footer-socials a{
+  text-decoration:none;
+  opacity:.72;
+  transition:.25s ease;
+}
+
+.footer-socials a:hover{opacity:1;transform:translateY(-1px);}
+
+.footer-bottom{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  text-align:center;
+  font-size:13px;
+  color:rgba(255,255,255,.56);
+}
+
+.footer-bottom a{text-decoration:none;color:inherit;}
+
+.reveal{
+  opacity:0;
+  transform:translateY(34px);
+  transition:opacity .8s ease, transform .8s ease;
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+@media(max-width:1080px){
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-side{height:auto;}
+  .section-title{flex-direction:column;align-items:flex-start;}
+  .video-card,
+  .video-card.large{grid-column:span 6;}
+}
+
+@media(max-width:768px){
+  :root{--header-h:64px;--radius:22px;}
+
+  .menu-toggle{display:block;}
+
+  .main-nav{
+    position:absolute;
+    top:100%;
+    left:0;
+    width:100%;
+    flex-direction:column;
+    align-items:stretch;
+    display:none;
+    background:rgba(5,5,5,.96);
+    z-index:999;
+    gap:0;
+    padding:14px 16px 18px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+
+  .main-nav.active{display:flex;}
+
+  .main-nav a,
+  .nav-btn{
+    padding:14px 6px;
+    width:100%;
+    text-align:left;
+    font-size:15px;
+  }
+
+  .nav-item .dropdown{
+    position:static;
+    box-shadow:none;
+    border-radius:14px;
+    width:100%;
+    min-width:100%;
+    margin:0 0 8px 0;
+  }
+
+  .hero-inner{padding:34px 0 56px;}
+  .hero h1{max-width:none;}
+  .portfolio-grid{grid-template-columns:1fr;}
+  .video-card,
+  .video-card.large{grid-column:auto;}
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <div class="header-inner">
-      <a href="index.html" class="logo">Viktor Boguský</a>
-      <button class="menu-toggle" aria-label="Menu">☰</button>
 
-      <nav class="main-nav">
-        <a href="cennik.html">Cenník</a>
-        <a href="duo.html">DUO BALÍKY</a>
-        <a href="referencie.html">Referencie</a>
-        <a href="portfolio.html">Portfólio</a>
-        <a href="objednavka.html">Rezervácia</a>
-        <div class="nav-item">
-          <button class="nav-btn">Služby ▾</button>
-          <div class="dropdown">
-            <a href="sluzby.html">Prehľad služieb</a>
-          </div>
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">Viktor Boguský</a>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+
+    <nav class="main-nav">
+      <a href="cennik.html">Cenník</a>
+      <a href="duo.html">DUO BALÍKY</a>
+      <a href="referencie.html">Referencie</a>
+      <a href="portfolio.html">Portfólio</a>
+      <a href="objednavka.html">Rezervácia</a>
+      <div class="nav-item">
+        <button class="nav-btn">Služby ▾</button>
+        <div class="dropdown">
+          <a href="sluzby.html">Prehľad služieb</a>
         </div>
-        <a href="kontakt.html">Kontakt</a>
-      </nav>
-    </div>
-  </header>
+      </div>
+      <a href="kontakt.html">Kontakt</a>
+    </nav>
+  </div>
+</header>
 
-  <section class="hero" id="top">
-    <div class="hero-video-wrap">
-      <video autoplay muted loop playsinline>
-        <source src="uvod_video.mp4" type="video/mp4" />
-      </video>
-    </div>
-    <div class="hero-overlay"></div>
-    <div class="hero-glow"></div>
+<section class="hero">
+  <video autoplay muted loop playsinline>
+    <source src="uvod_video.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-glow"></div>
 
-    <div class="hero-inner">
-      <div class="hero-copy reveal">
-        <h1>Kamera &amp; <span class="muted">postprodukcia</span></h1>
+  <div class="hero-inner">
+    <div class="hero-copy reveal">
+      <div class="hero-name">Viktor Boguský</div>
+      <h1>Video <span class="muted">projekty</span></h1>
+      <p>
+        Výber videí, ktoré reprezentujú moju tvorbu v oblasti kamery, postprodukcie a celkovej atmosféry záberov. Od stužkových až po eventy a ďalšie projekty.
+      </p>
+      <div class="hero-actions">
+        <a href="#portfolio-grid" class="btn btn-primary">Pozrieť portfólio</a>
+        <a href="objednavka.html" class="btn btn-secondary">Rezervovať termín</a>
+      </div>
+    </div>
+
+    <div class="hero-side reveal">
+      <div class="hero-panel">
+        <div class="hero-badge">Portfólio</div>
+        <h3>Ukážky mojej práce</h3>
         <p>
-          Portfólio vybraných video projektov, kde je dôraz na atmosféru, emóciu, rytmus strihu a výsledný cinematic dojem.
-          Jednoducho ukážka mojej práce v oblasti kamery a postprodukcie.
+          Táto podstránka je postavená v rovnakom štýle ako DUO balíky, aby celý web pôsobil konzistentne. Hlavný dôraz ostáva na videách a ich prehľadnom zobrazení.
         </p>
-        <div class="hero-actions">
-          <a href="objednavka.html" class="btn btn-primary">Rezervovať termín</a>
-          <a href="#portfolio" class="btn btn-secondary">Pozrieť portfólio</a>
-        </div>
-      </div>
-
-      <div class="hero-side reveal">
-        <div class="floating-scene">
-          <div class="review-card review-1" id="reviewOne">
-            <span class="label">Referencia</span>
-            <strong>„Sem daj svoju dlhšiu referenciu, pokojne aj vetu alebo dve.”</strong>
-            <p>Skvelý prístup a výsledok</p>
-          </div>
-
-          <div class="review-card review-2" id="reviewTwo">
-            <span class="label">Referencia</span>
-            <strong>„Profesionálny prístup, krásne spracovanie a video, ku ktorému sa stále radi vraciame.”</strong>
-            <p>Toto je ideálny typ dlhšej referencie.</p>
-          </div>
-
-          <div class="review-card review-3" id="reviewThree">
-            <span class="label">Referencia</span>
-            <strong>„Ďalšia referencia – môže byť dlhšia, aby to pôsobilo reálne.”</strong>
-            <p>Rýchla komunikácia a kvalita</p>
-          </div>
+        <div class="hero-list">
+          <div>Prémiovejší vizuál a rovnaký dizajnový jazyk</div>
+          <div>Video karty zladené s ostatnými podstránkami</div>
+          <div>Jednoduchý prístup k portfóliu aj rezervácii</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section portfolio" id="portfolio">
-    <div class="container">
-      <div class="section-title reveal">
-        <h2>Portfólio</h2>
-        <p>Tu si môžeš nechať svoje videá presne ako ich máš teraz. Ja som len upravil spôsob, ako sú vizuálne podané.</p>
-      </div>
+<section class="portfolio" id="portfolio-grid">
+  <div class="section-title reveal">
+    <h2>Portfólio</h2>
+    <p>Tu si môžeš nechať svoje videá presne ako ich máš teraz. Upravený je len vizuál a rozloženie, aby všetko ladilo s novším štýlom webu.</p>
+  </div>
 
-      <div class="portfolio-grid">
-        <article class="video-card large reveal">
-          <div class="video-shell"><iframe src="https://www.youtube.com/embed/3zES1AlxCd4?rel=0" title="Video projekt 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-          <div class="video-meta"><strong>Video projekt</strong><span>Featured</span></div>
-        </article>
+  <div class="portfolio-grid">
+    <article class="video-card large reveal">
+      <div class="video-shell"><iframe src="https://www.youtube.com/embed/3zES1AlxCd4?rel=0" title="Video projekt 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div class="video-meta"><strong>Video projekt</strong><span>Featured</span></div>
+    </article>
 
-        <article class="video-card large reveal">
-          <div class="video-shell"><iframe src="https://www.youtube.com/embed/V8z1SuHkfCk?rel=0" title="Video projekt 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-          <div class="video-meta"><strong>Video projekt</strong><span>Featured</span></div>
-        </article>
+    <article class="video-card large reveal">
+      <div class="video-shell"><iframe src="https://www.youtube.com/embed/V8z1SuHkfCk?rel=0" title="Video projekt 2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div class="video-meta"><strong>Video projekt</strong><span>Featured</span></div>
+    </article>
 
-        <article class="video-card reveal">
-          <div class="video-shell"><iframe src="https://www.youtube.com/embed/OFbEqTHUjWs?rel=0" title="Video projekt 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
-        </article>
+    <article class="video-card reveal">
+      <div class="video-shell"><iframe src="https://www.youtube.com/embed/OFbEqTHUjWs?rel=0" title="Video projekt 3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+    </article>
 
-        <article class="video-card reveal">
-          <div class="video-shell"><iframe src="https://www.youtube.com/embed/gsAweub-Gak?rel=0" title="Video projekt 4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
-        </article>
+    <article class="video-card reveal">
+      <div class="video-shell"><iframe src="https://www.youtube.com/embed/gsAweub-Gak?rel=0" title="Video projekt 4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+    </article>
 
-        <article class="video-card reveal">
-          <div class="video-shell"><iframe src="https://www.youtube.com/embed/LnRKT-GFs0k?rel=0" title="Video projekt 5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
-        </article>
+    <article class="video-card reveal">
+      <div class="video-shell"><iframe src="https://www.youtube.com/embed/LnRKT-GFs0k?rel=0" title="Video projekt 5" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+    </article>
 
-        <article class="video-card reveal">
-          <div class="video-shell"><iframe src="https://www.youtube.com/embed/eMUl9JdsNG0?rel=0" title="Video projekt 6" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
-        </article>
+    <article class="video-card reveal">
+      <div class="video-shell"><iframe src="https://www.youtube.com/embed/eMUl9JdsNG0?rel=0" title="Video projekt 6" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+    </article>
 
-        <article class="video-card reveal">
-          <div class="video-shell"><iframe src="https://www.youtube.com/embed/9Z8BojDP5no?rel=0" title="Video projekt 7" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
-        </article>
+    <article class="video-card reveal">
+      <div class="video-shell"><iframe src="https://www.youtube.com/embed/9Z8BojDP5no?rel=0" title="Video projekt 7" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+    </article>
 
-        <article class="video-card reveal">
-          <div class="video-shell"><iframe src="https://www.youtube.com/embed/NDVJBNPrBe0?rel=0" title="Video projekt 8" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
-        </article>
+    <article class="video-card reveal">
+      <div class="video-shell"><iframe src="https://www.youtube.com/embed/NDVJBNPrBe0?rel=0" title="Video projekt 8" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+    </article>
 
-        <article class="video-card reveal">
-          <div class="video-shell"><iframe src="https://www.youtube.com/embed/4qI7UFOcfo4?rel=0" title="Video projekt 9" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-          <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
-        </article>
-      </div>
+    <article class="video-card reveal">
+      <div class="video-shell"><iframe src="https://www.youtube.com/embed/4qI7UFOcfo4?rel=0" title="Video projekt 9" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div class="video-meta"><strong>Video projekt</strong><span>Showcase</span></div>
+    </article>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-wrap">
+    <div class="footer-top">
+      <div class="footer-contact"><p>kontakt@viktorbogusky.sk</p></div>
+      <div class="footer-contact"><p>+421 948 933 109</p></div>
     </div>
-  </section>
 
-  <section class="section">
-    <div class="container">
-      <div class="cta-grid">
-        <div class="cta-card reveal">
-          <h3>Rezervácia</h3>
-          <p>Ak ťa moja tvorba zaujala a chceš si rezervovať termín, stačí prejsť na objednávku alebo ma kontaktovať priamo.</p>
-          <div class="hero-actions">
-            <a href="objednavka.html" class="btn btn-primary">Prejsť na rezerváciu</a>
-            <a href="kontakt.html" class="btn btn-secondary">Kontakt</a>
-          </div>
-        </div>
-
-        <div class="contact-card reveal">
-          <h3>Kontakt</h3>
-          <p>Detaily a odkazy som nechal tvoje, len som ich zabalil do vizuálne krajšej sekcie.</p>
-          <div class="contact-list">
-            <a class="contact-item" href="mailto:kontakt@viktorbogusky.sk">
-              <div>
-                <span>E-mail</span>
-                <strong>kontakt@viktorbogusky.sk</strong>
-              </div>
-            </a>
-            <a class="contact-item" href="tel:+421948933109">
-              <div>
-                <span>Telefón</span>
-                <strong>+421 948 933 109</strong>
-              </div>
-            </a>
-            <a class="contact-item" href="https://www.instagram.com/vittquoo/" target="_blank">
-              <div>
-                <span>Instagram</span>
-                <strong>@vittquoo</strong>
-              </div>
-            </a>
-            <a class="contact-item" href="https://www.tiktok.com/@viktorbogusky" target="_blank">
-              <div>
-                <span>TikTok</span>
-                <strong>@viktorbogusky</strong>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/vittquoo/" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com/profile.php?id=100079203706823" target="_blank">Facebook</a>
+      <a href="https://www.tiktok.com/@viktorbogusky" target="_blank">TikTok</a>
     </div>
-  </section>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-contact"><p>kontakt@viktorbogusky.sk</p></div>
-        <div class="footer-contact"><p>+421 948 933 109</p></div>
-      </div>
-
-      <div class="footer-socials">
-        <a href="https://www.instagram.com/vittquoo/" target="_blank">Instagram</a>
-        <a href="https://www.facebook.com/profile.php?id=100079203706823" target="_blank">Facebook</a>
-        <a href="https://www.tiktok.com/@viktorbogusky" target="_blank">TikTok</a>
-      </div>
-
-      <div class="footer-bottom">
-        <span><a href="podmienky.html">Obchodné podmienky</a> | <a href="gdpr.html">GDPR</a></span>
-        <span>Vytvoril: Viktor Boguský</span>
-      </div>
+    <div class="footer-bottom">
+      <span><a href="podmienky.html">Obchodné podmienky</a> | <a href="gdpr.html">GDPR</a></span>
+      <span>Vytvoril: Viktor Boguský</span>
     </div>
-  </footer>
+  </div>
+</footer>
 
-  <script>
-    const toggle = document.querySelector('.menu-toggle');
-    const nav = document.querySelector('.main-nav');
-    const navItems = document.querySelectorAll('.nav-item');
+<script>
+const toggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('.main-nav');
+const navItems = document.querySelectorAll('.nav-item');
 
-    toggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      nav.classList.toggle('active');
+toggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  nav.classList.toggle('active');
+});
+
+navItems.forEach(item => {
+  const btn = item.querySelector('.nav-btn');
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navItems.forEach(i => {
+      if(i !== item) i.classList.remove('active');
     });
+    item.classList.toggle('active');
+  });
+});
 
-    navItems.forEach(item => {
-      const btn = item.querySelector('.nav-btn');
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        navItems.forEach(i => {
-          if(i !== item) i.classList.remove('active');
-        });
-        item.classList.toggle('active');
-      });
-    });
+document.addEventListener('click', () => {
+  nav.classList.remove('active');
+  navItems.forEach(item => item.classList.remove('active'));
+});
 
-    document.addEventListener('click', () => {
-      nav.classList.remove('active');
-      navItems.forEach(item => item.classList.remove('active'));
-    });
-
-    const revealItems = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.15 });
-    revealItems.forEach(item => observer.observe(item));
-
-    const reviewOne = document.getElementById('reviewOne');
-    const reviewTwo = document.getElementById('reviewTwo');
-    const reviewThree = document.getElementById('reviewThree');
-
-    function applyFloating(x = 0, y = 0){
-      if(window.innerWidth <= 768){
-        if(reviewOne) reviewOne.style.transform = 'none';
-        if(reviewTwo) reviewTwo.style.transform = 'none';
-        if(reviewThree) reviewThree.style.transform = 'none';
-        return;
-      }
-
-      if(reviewOne) reviewOne.style.transform = `rotate(7deg) translate3d(${x * 10}px, ${y * -8}px, 0)`;
-      if(reviewTwo) reviewTwo.style.transform = `rotate(-2deg) translate3d(${x * 6}px, ${y * 4}px, 0)`;
-      if(reviewThree) reviewThree.style.transform = `rotate(-6deg) translate3d(${x * -8}px, ${y * 8}px, 0)`;
+const revealItems = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
     }
+  });
+}, { threshold: 0.12 });
+revealItems.forEach(item => observer.observe(item));
+</script>
 
-    applyFloating(0,0);
-
-    window.addEventListener('mousemove', (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5);
-      const y = (e.clientY / window.innerHeight - 0.5);
-      applyFloating(x, y);
-    });
-
-    window.addEventListener('resize', () => applyFloating(0,0));
-  </script>
 </body>
 </html>
