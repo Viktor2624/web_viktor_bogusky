@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viktor Boguský | Kamera & Postprodukcia</title>
+<link rel="icon" type="image/png" href="Viktor-removebg-preview.png">
+
+<style>
+:root{
+  --bg:#03040a;
+  --text:#ffffff;
+  --muted:rgba(255,255,255,.72);
+  --glass:rgba(255,255,255,.07);
+  --glass-border:rgba(255,255,255,.14);
+  --cyan:#55e7ff;
+  --blue:#4d7cff;
+  --violet:#9b5cff;
+  --pink:#ff4fd8;
+  --green:#7dffca;
+  --header-h:72px;
+  --max:1240px;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial, Helvetica, sans-serif;
+  overflow-x:hidden;
+  cursor:crosshair;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:9998;
+  opacity:.12;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+  background-size:100% 4px, 240px 240px;
+  mix-blend-mode:screen;
+}
+
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:9997;
+  background:
+    radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(85,231,255,.18), transparent 18%),
+    radial-gradient(circle at calc(var(--mx,50%) + 12%) calc(var(--my,50%) + 8%), rgba(155,92,255,.12), transparent 24%);
+}
+
+/* ================= LOADING INTRO ================= */
+.loader{
+  position:fixed;
+  inset:0;
+  z-index:10000;
+  display:grid;
+  place-items:center;
+  background:#000;
+  animation:loaderOut .9s ease forwards;
+  animation-delay:2.1s;
+}
+
+.loader-content{text-align:center;animation:loaderText 1.8s ease forwards;}
+.loader-line{
+  width:220px;height:1px;margin:18px auto 0;
+  background:linear-gradient(90deg, transparent, var(--cyan), var(--violet), transparent);
+  transform:scaleX(0);animation:loadLine 1.6s ease forwards;
+}
+.loader-title{font-size:clamp(22px,4vw,46px);letter-spacing:.22em;text-transform:uppercase;font-weight:900;}
+.loader-sub{margin-top:10px;color:var(--muted);letter-spacing:.4em;font-size:11px;text-transform:uppercase;}
+@keyframes loaderOut{to{opacity:0;visibility:hidden;}}
+@keyframes loaderText{0%{opacity:0;filter:blur(20px);transform:translateY(30px);}45%,80%{opacity:1;filter:blur(0);transform:translateY(0);}100%{opacity:0;filter:blur(12px);transform:translateY(-18px);}}
+@keyframes loadLine{0%{transform:scaleX(0);opacity:0;}35%,80%{transform:scaleX(1);opacity:1;}100%{transform:scaleX(.2);opacity:0;}}
+
+/* ================= HEADER ================= */
+header{
+  position:fixed;top:0;width:100%;z-index:1000;
+  background:linear-gradient(180deg, rgba(0,0,0,.72), rgba(0,0,0,.12));
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.header-inner{max-width:var(--max);margin:auto;min-height:var(--header-h);padding:0 22px;display:flex;align-items:center;justify-content:space-between;}
+.logo{color:#fff;text-decoration:none;font-size:16px;letter-spacing:2px;font-weight:900;text-transform:uppercase;}
+.logo span{color:var(--cyan);text-shadow:0 0 18px rgba(85,231,255,.55);}
+.main-nav{display:flex;align-items:center;gap:24px;}
+.main-nav a,.nav-btn{background:none;border:none;color:#fff;text-decoration:none;font-size:13px;cursor:pointer;opacity:.78;padding:8px 0;font-family:inherit;transition:.25s ease;}
+.main-nav a:hover,.nav-btn:hover{opacity:1;color:var(--cyan);text-shadow:0 0 14px rgba(85,231,255,.45);}
+.nav-item{position:relative;}
+.dropdown{position:absolute;top:100%;left:0;display:none;flex-direction:column;min-width:200px;padding:10px;border-radius:16px;background:rgba(10,12,22,.88);border:1px solid rgba(255,255,255,.12);box-shadow:0 24px 60px rgba(0,0,0,.55);backdrop-filter:blur(18px);z-index:2000;}
+.dropdown a{padding:10px 12px;font-size:13px;border-radius:10px;white-space:nowrap;}
+.dropdown a:hover{background:rgba(255,255,255,.07);}
+.nav-item.active .dropdown{display:flex;}
+.menu-toggle{display:none;background:none;border:none;color:#fff;font-size:28px;cursor:pointer;}
+
+/* ================= HERO ================= */
+.hero{
+  position:relative;
+  min-height:100vh;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  padding:118px 20px 80px;
+  perspective:1600px;
+  background:
+    radial-gradient(circle at 16% 18%, rgba(77,124,255,.24), transparent 28%),
+    radial-gradient(circle at 84% 20%, rgba(255,79,216,.14), transparent 26%),
+    radial-gradient(circle at 54% 96%, rgba(85,231,255,.18), transparent 34%),
+    linear-gradient(140deg, #03040a 0%, #070917 48%, #010104 100%);
+}
+
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.24;filter:contrast(1.25) saturate(.75) brightness(.62);transform:scale(1.05);}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg, rgba(0,0,0,.85), rgba(0,0,0,.24), rgba(0,0,0,.86)),radial-gradient(circle at center, transparent 0%, rgba(0,0,0,.62) 72%);}
+
+.motion-grid{
+  position:absolute;
+  inset:-20%;
+  background-image:
+    linear-gradient(rgba(85,231,255,.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(155,92,255,.07) 1px, transparent 1px);
+  background-size:72px 72px;
+  transform:rotateX(68deg) rotateZ(-18deg) translateY(8%);
+  transform-origin:center;
+  opacity:.42;
+  animation:gridDrift 18s linear infinite;
+}
+@keyframes gridDrift{to{background-position:0 144px,144px 0;}}
+
+.light-beam{position:absolute;top:-20%;width:26vw;height:140vh;opacity:.36;filter:blur(20px);transform:rotate(24deg);background:linear-gradient(180deg, transparent, rgba(85,231,255,.22), transparent);animation:beamMove 9s ease-in-out infinite alternate;}
+.light-beam.one{left:4%;}.light-beam.two{right:8%;animation-delay:-4s;background:linear-gradient(180deg, transparent, rgba(155,92,255,.22), transparent);}.light-beam.three{left:42%;animation-delay:-2s;background:linear-gradient(180deg, transparent, rgba(255,79,216,.14), transparent);}
+@keyframes beamMove{from{transform:rotate(20deg) translateX(-50px);opacity:.18;}to{transform:rotate(30deg) translateX(80px);opacity:.46;}}
+
+.particles{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.particle{position:absolute;width:4px;height:4px;border-radius:50%;background:rgba(85,231,255,.78);box-shadow:0 0 20px rgba(85,231,255,.95);animation:floatParticle linear infinite;}
+@keyframes floatParticle{from{transform:translate3d(0, 110vh, 0) scale(.6);opacity:0;}15%{opacity:1;}85%{opacity:1;}to{transform:translate3d(var(--drift), -20vh, 0) scale(1.2);opacity:0;}}
+
+.hero-inner{position:relative;z-index:5;max-width:var(--max);width:100%;display:grid;grid-template-columns:.95fr 1.05fr;align-items:center;gap:34px;transform-style:preserve-3d;}
+.hero-copy{transform:translateZ(130px);}
+.kicker{display:inline-flex;align-items:center;gap:10px;padding:9px 14px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:rgba(255,255,255,.06);backdrop-filter:blur(18px);color:rgba(255,255,255,.82);font-size:12px;letter-spacing:.22em;text-transform:uppercase;animation:reveal .8s ease forwards;opacity:0;}
+.kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 18px var(--cyan);}
+.hero h1{margin-top:24px;font-size:clamp(50px,8vw,112px);line-height:.86;letter-spacing:-.075em;text-transform:uppercase;font-weight:950;animation:reveal .9s ease forwards;animation-delay:.12s;opacity:0;}
+.hero h1 span{display:block;background:linear-gradient(100deg, #fff, #dff9ff, #8befff, #b996ff);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 70px rgba(85,231,255,.16);}
+.hero h2{margin-top:22px;font-size:clamp(20px,3vw,38px);color:#fff;letter-spacing:.02em;animation:reveal .9s ease forwards;animation-delay:.24s;opacity:0;}
+.hero p{max-width:620px;margin-top:16px;color:var(--muted);font-size:clamp(16px,1.7vw,20px);line-height:1.7;animation:reveal .9s ease forwards;animation-delay:.36s;opacity:0;}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px;animation:reveal .9s ease forwards;animation-delay:.48s;opacity:0;}
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 25px;border-radius:999px;text-decoration:none;color:#fff;font-weight:900;font-size:14px;overflow:hidden;transition:.35s ease;transform-style:preserve-3d;}
+.btn.primary{background:linear-gradient(135deg, var(--blue), var(--cyan));color:#001015;box-shadow:0 0 38px rgba(85,231,255,.30);}
+.btn.secondary{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);backdrop-filter:blur(14px);}
+.btn::after{content:"";position:absolute;inset:0;transform:translateX(-120%);background:linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);transition:.55s ease;}
+.btn:hover{transform:translateY(-5px) rotateX(8deg) scale(1.03);}
+.btn:hover::after{transform:translateX(120%);}
+@keyframes reveal{from{opacity:0;filter:blur(18px);transform:translateY(32px);}to{opacity:1;filter:blur(0);transform:translateY(0);}}
+
+/* ================= FIGMA / 3D MOTION SCENE ================= */
+.hero-visual{position:relative;min-height:590px;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .08s ease-out;}
+.scene-depth{position:absolute;inset:0;transform-style:preserve-3d;animation:sceneBreath 6s ease-in-out infinite;}
+@keyframes sceneBreath{0%,100%{transform:translateZ(0) scale(1);}50%{transform:translateZ(30px) scale(1.025);}}
+
+.orbit{position:absolute;inset:50% auto auto 50%;width:min(470px,82vw);height:min(470px,82vw);transform:translate(-50%,-50%) rotateX(66deg) rotateZ(0deg);border:1px solid rgba(85,231,255,.26);border-radius:50%;box-shadow:0 0 80px rgba(85,231,255,.13);animation:spin 16s linear infinite;}
+.orbit.two{width:min(570px,90vw);height:min(570px,90vw);border-color:rgba(155,92,255,.18);animation-duration:25s;animation-direction:reverse;}
+.orbit.three{width:min(350px,72vw);height:min(350px,72vw);border-color:rgba(255,79,216,.17);animation-duration:11s;transform:translate(-50%,-50%) rotateX(72deg) rotateY(34deg) rotateZ(0deg);}
+@keyframes spin{to{transform:translate(-50%,-50%) rotateX(66deg) rotateZ(360deg);}}
+
+.camera-card{position:absolute;left:50%;top:50%;width:min(430px,82vw);height:310px;transform:translate(-50%,-50%) translateZ(120px);border-radius:34px;border:1px solid rgba(255,255,255,.16);background:linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,.035)),radial-gradient(circle at 80% 20%, rgba(85,231,255,.25), transparent 34%);box-shadow:0 34px 100px rgba(0,0,0,.58), inset 0 0 40px rgba(255,255,255,.05);backdrop-filter:blur(24px);transform-style:preserve-3d;animation:cardFloat 4.5s ease-in-out infinite;}
+@keyframes cardFloat{0%,100%{translate:0 0;}50%{translate:0 -18px;}}
+.camera-body{position:absolute;left:48px;top:88px;width:260px;height:138px;border-radius:28px;background:linear-gradient(145deg, #151928, #05060d);border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 0 30px rgba(255,255,255,.04), 0 24px 50px rgba(0,0,0,.55);transform:translateZ(50px);}
+.camera-body::before{content:"REC";position:absolute;top:17px;left:22px;color:#ff4668;font-size:12px;letter-spacing:.18em;font-weight:900;text-shadow:0 0 14px rgba(255,70,104,.8);}
+.camera-body::after{content:"4K POST";position:absolute;right:20px;bottom:16px;color:rgba(255,255,255,.56);font-size:11px;letter-spacing:.22em;}
+.lens{position:absolute;right:56px;top:84px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 45% 42%, rgba(255,255,255,.92) 0 4%, transparent 5%),radial-gradient(circle, #06101b 0 22%, #102a43 23% 38%, #05070d 39% 58%, #1d2340 59% 70%, #05060d 71%);border:1px solid rgba(255,255,255,.24);box-shadow:0 0 45px rgba(85,231,255,.35), inset 0 0 35px rgba(85,231,255,.18);transform:translateZ(95px);animation:lensPulse 3s ease-in-out infinite;}
+@keyframes lensPulse{0%,100%{box-shadow:0 0 45px rgba(85,231,255,.28), inset 0 0 35px rgba(85,231,255,.16);}50%{box-shadow:0 0 80px rgba(155,92,255,.45), inset 0 0 48px rgba(155,92,255,.24);}}
+.top-handle{position:absolute;left:90px;top:54px;width:150px;height:34px;border-radius:18px 18px 10px 10px;background:linear-gradient(145deg, #171b2c, #080910);border:1px solid rgba(255,255,255,.14);transform:translateZ(75px);}
+.film-strip{position:absolute;right:22px;bottom:24px;width:210px;height:46px;display:flex;gap:8px;padding:8px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);transform:translateZ(125px) rotateZ(-5deg);animation:filmFloat 4.5s ease-in-out infinite;}
+.film-strip span{flex:1;border-radius:6px;background:linear-gradient(135deg, rgba(85,231,255,.34), rgba(155,92,255,.22));border:1px solid rgba(255,255,255,.08);}
+@keyframes filmFloat{0%,100%{transform:translateZ(125px) rotateZ(-5deg) translateY(0);}50%{transform:translateZ(125px) rotateZ(3deg) translateY(-14px);}}
+
+.figma-panel{position:absolute;border-radius:22px;background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(18px);box-shadow:0 24px 80px rgba(0,0,0,.35);transform-style:preserve-3d;overflow:hidden;}
+.figma-panel::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg, transparent, rgba(255,255,255,.12), transparent);transform:translateX(-120%);animation:shine 5s ease-in-out infinite;}
+@keyframes shine{50%,100%{transform:translateX(120%);}}
+.panel-one{left:0;top:40px;width:190px;height:120px;transform:translateZ(180px) rotateY(18deg) rotateZ(-8deg);animation:panelFloat 5s ease-in-out infinite;}
+.panel-two{right:8px;top:76px;width:160px;height:190px;transform:translateZ(95px) rotateY(-20deg) rotateZ(7deg);animation:panelFloat 6s ease-in-out infinite reverse;}
+.panel-three{left:56px;bottom:22px;width:250px;height:86px;transform:translateZ(210px) rotateX(14deg) rotateZ(5deg);animation:panelFloat 5.5s ease-in-out infinite;}
+@keyframes panelFloat{0%,100%{translate:0 0;}50%{translate:0 -22px;}}
+.panel-dots{display:flex;gap:7px;padding:13px;}
+.panel-dots span{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 16px rgba(85,231,255,.75);}
+.panel-line{height:8px;margin:12px 14px;border-radius:999px;background:linear-gradient(90deg, rgba(85,231,255,.7), rgba(155,92,255,.25));}
+.panel-line.small{width:52%;}.panel-line.mid{width:76%;}.panel-thumb{position:absolute;right:16px;bottom:16px;width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg, var(--cyan), var(--violet));box-shadow:0 0 34px rgba(85,231,255,.34);}
+
+.timeline-3d{position:absolute;right:20px;bottom:68px;width:280px;height:74px;padding:14px;display:flex;align-items:center;gap:8px;transform:translateZ(240px) rotateX(12deg) rotateY(-18deg);border-radius:20px;background:rgba(0,0,0,.36);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(18px);animation:timelineMove 3.6s ease-in-out infinite;}
+.timeline-3d span{height:38px;flex:1;border-radius:9px;background:linear-gradient(180deg, rgba(85,231,255,.72), rgba(77,124,255,.22));animation:barWave 1.8s ease-in-out infinite;}
+.timeline-3d span:nth-child(2){animation-delay:.15s}.timeline-3d span:nth-child(3){animation-delay:.3s}.timeline-3d span:nth-child(4){animation-delay:.45s}.timeline-3d span:nth-child(5){animation-delay:.6s}.timeline-3d span:nth-child(6){animation-delay:.75s}
+@keyframes timelineMove{0%,100%{translate:0 0;}50%{translate:0 -16px;}}
+@keyframes barWave{0%,100%{height:24px;}50%{height:48px;}}
+
+.floating-tag{position:absolute;padding:12px 16px;border-radius:16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(16px);color:rgba(255,255,255,.86);font-weight:900;font-size:13px;transform-style:preserve-3d;box-shadow:0 20px 60px rgba(0,0,0,.28);animation:tagFloat 5s ease-in-out infinite;}
+.tag-one{left:0;top:220px;transform:translateZ(260px);}.tag-two{right:0;top:330px;transform:translateZ(190px);animation-delay:-1.7s;}.tag-three{left:80px;bottom:130px;transform:translateZ(165px);animation-delay:-3s;}
+@keyframes tagFloat{0%,100%{translate:0 0;}50%{translate:0 -18px;}}
+
+.scroll-hint{position:absolute;left:50%;bottom:28px;z-index:6;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;color:rgba(255,255,255,.56);font-size:11px;letter-spacing:.22em;text-transform:uppercase;}
+.scroll-hint span{width:1px;height:44px;background:linear-gradient(transparent, var(--cyan), transparent);animation:scrollPulse 1.6s ease-in-out infinite;}
+@keyframes scrollPulse{0%,100%{opacity:.25;transform:scaleY(.6);}50%{opacity:1;transform:scaleY(1);}}
+
+/* ================= SCROLL EDITOR TIMELINE ================= */
+.edit-timeline{
+  position:relative;
+  min-height:320vh;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(85,231,255,.10), transparent 24%),
+    radial-gradient(circle at 78% 42%, rgba(155,92,255,.13), transparent 28%),
+    linear-gradient(180deg, #03040a 0%, #080916 42%, #020207 100%);
+  overflow:hidden;
+}
+
+.timeline-sticky{
+  position:sticky;
+  top:0;
+  height:100vh;
+  display:grid;
+  place-items:center;
+  padding:90px 20px 40px;
+  perspective:1500px;
+  overflow:hidden;
+}
+
+.timeline-bg-grid{
+  position:absolute;
+  inset:-30%;
+  background-image:
+    linear-gradient(rgba(85,231,255,.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(155,92,255,.06) 1px, transparent 1px);
+  background-size:64px 64px;
+  transform:rotateX(64deg) rotateZ(-12deg) translateY(10%);
+  animation:timelineGrid 18s linear infinite;
+  opacity:.5;
+}
+
+@keyframes timelineGrid{
+  to{background-position:0 128px,128px 0;}
+}
+
+.editor-ui{
+  position:relative;
+  z-index:3;
+  width:min(1180px,94vw);
+  height:min(700px,76vh);
+  min-height:560px;
+  border-radius:34px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.11), rgba(255,255,255,.035)),
+    rgba(4,6,14,.78);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 50px 140px rgba(0,0,0,.65), inset 0 0 80px rgba(255,255,255,.03);
+  backdrop-filter:blur(28px);
+  overflow:hidden;
+  transform-style:preserve-3d;
+  transform:rotateX(var(--editor-rx,0deg)) rotateY(var(--editor-ry,0deg));
+  transition:transform .08s ease-out;
+}
+
+.editor-ui::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(85,231,255,.18), transparent 30%);
+  pointer-events:none;
+}
+
+.editor-topbar{
+  position:relative;
+  z-index:2;
+  height:54px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 20px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+  background:rgba(0,0,0,.28);
+}
+
+.editor-dots{display:flex;gap:8px;}
+.editor-dots span{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.35);}
+.editor-dots span:nth-child(1){background:#ff5f57;}.editor-dots span:nth-child(2){background:#ffbd2e;}.editor-dots span:nth-child(3){background:#28c840;}
+.editor-topbar p{color:rgba(255,255,255,.66);font-size:13px;letter-spacing:.08em;}
+.editor-topbar strong{font-size:12px;color:#ff4668;letter-spacing:.22em;text-shadow:0 0 16px rgba(255,70,104,.7);}
+
+.viewer-panel{
+  position:absolute;
+  left:28px;
+  right:28px;
+  top:78px;
+  height:48%;
+  transform:translateZ(80px);
+}
+
+.viewer-frame{
+  position:relative;
+  height:100%;
+  border-radius:28px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 25% 30%, rgba(85,231,255,.18), transparent 28%),
+    radial-gradient(circle at 80% 60%, rgba(255,79,216,.14), transparent 28%),
+    linear-gradient(135deg, rgba(6,12,28,.95), rgba(0,0,0,.88));
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:inset 0 0 70px rgba(0,0,0,.65), 0 30px 90px rgba(0,0,0,.35);
+}
+
+.viewer-frame::before{
+  content:"";
+  position:absolute;
+  inset:18px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:22px;
+  pointer-events:none;
+}
+
+.viewer-noise{
+  position:absolute;
+  inset:0;
+  opacity:.11;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode:screen;
+}
+
+.viewer-scan{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, transparent, rgba(85,231,255,.18), transparent);
+  height:30%;
+  animation:scanMove 3.4s ease-in-out infinite;
+  opacity:.55;
+}
+
+@keyframes scanMove{
+  0%,100%{transform:translateY(-90%);}
+  50%{transform:translateY(260%);}
+}
+
+.viewer-content{
+  position:absolute;
+  left:44px;
+  bottom:38px;
+  max-width:620px;
+  transition:.35s ease;
+}
+
+.viewer-content span{
+  color:var(--cyan);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+}
+
+.viewer-content h2{
+  margin-top:12px;
+  font-size:clamp(34px,5vw,72px);
+  line-height:.9;
+  letter-spacing:-.06em;
+  text-transform:uppercase;
+}
+
+.viewer-content p{
+  max-width:560px;
+  margin-top:14px;
+  color:rgba(255,255,255,.68);
+  font-size:16px;
+  line-height:1.6;
+}
+
+.playhead{
+  position:absolute;
+  left:50%;
+  top:54%;
+  bottom:28px;
+  width:2px;
+  z-index:10;
+  background:linear-gradient(180deg, transparent, var(--cyan), var(--pink));
+  box-shadow:0 0 24px rgba(85,231,255,.85);
+  transform:translateZ(220px);
+}
+
+.playhead span{
+  position:absolute;
+  top:-16px;
+  left:50%;
+  width:34px;
+  height:24px;
+  transform:translateX(-50%);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  background:linear-gradient(135deg, var(--cyan), var(--violet));
+  box-shadow:0 0 26px rgba(85,231,255,.75);
+}
+
+.timeline-area{
+  position:absolute;
+  left:28px;
+  right:28px;
+  bottom:28px;
+  height:38%;
+  border-radius:24px;
+  background:rgba(0,0,0,.34);
+  border:1px solid rgba(255,255,255,.10);
+  overflow:hidden;
+  transform:translateZ(120px);
+}
+
+.time-ruler{
+  height:38px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 28px;
+  color:rgba(255,255,255,.38);
+  font-size:11px;
+  letter-spacing:.12em;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.tracks{
+  position:absolute;
+  left:0;
+  right:0;
+  top:38px;
+  bottom:0;
+  transform:translateX(var(--timeline-x,0px));
+  transition:transform .08s linear;
+}
+
+.track{
+  position:relative;
+  height:33.333%;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  min-width:1900px;
+}
+
+.track-label{
+  position:sticky;
+  left:0;
+  z-index:4;
+  width:100px;
+  height:100%;
+  display:grid;
+  place-items:center;
+  color:rgba(255,255,255,.48);
+  background:rgba(5,6,13,.9);
+  border-right:1px solid rgba(255,255,255,.08);
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.16em;
+}
+
+.clip{
+  position:absolute;
+  top:14px;
+  height:calc(100% - 28px);
+  border-radius:16px;
+  padding:15px 18px;
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 18px 50px rgba(0,0,0,.28);
+  overflow:hidden;
+}
+
+.clip::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+  transform:translateX(-120%);
+  animation:clipShine 5s ease-in-out infinite;
+}
+
+@keyframes clipShine{60%,100%{transform:translateX(130%);}}
+
+.clip b{display:block;font-size:16px;letter-spacing:.08em;}.clip small{display:block;margin-top:6px;color:rgba(255,255,255,.62);}
+.clip-cyan{left:160px;width:300px;background:linear-gradient(135deg, rgba(85,231,255,.55), rgba(85,231,255,.12));}
+.clip-violet{left:500px;width:330px;background:linear-gradient(135deg, rgba(155,92,255,.58), rgba(155,92,255,.14));}
+.clip-blue{left:870px;width:360px;background:linear-gradient(135deg, rgba(77,124,255,.58), rgba(77,124,255,.14));}
+.clip-pink{left:1270px;width:310px;background:linear-gradient(135deg, rgba(255,79,216,.52), rgba(255,79,216,.12));}
+.clip-green{left:1620px;width:290px;background:linear-gradient(135deg, rgba(125,255,202,.45), rgba(125,255,202,.11));}
+
+.wave{
+  position:absolute;
+  top:22px;
+  height:28px;
+  border-radius:999px;
+  background:repeating-linear-gradient(90deg, rgba(85,231,255,.7) 0 4px, transparent 4px 10px);
+  opacity:.75;
+  filter:drop-shadow(0 0 12px rgba(85,231,255,.45));
+  animation:wavePulse 1.6s ease-in-out infinite;
+}
+.wave-one{left:180px;width:420px;}.wave-two{left:660px;width:520px;animation-delay:.2s;}.wave-three{left:1260px;width:480px;animation-delay:.35s;}
+@keyframes wavePulse{0%,100%{transform:scaleY(.72);opacity:.45;}50%{transform:scaleY(1.25);opacity:1;}}
+
+.fx-chip{
+  position:absolute;
+  top:18px;
+  padding:12px 18px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.07);
+  color:rgba(255,255,255,.72);
+  backdrop-filter:blur(12px);
+  font-size:12px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+}
+.fx-chip:nth-child(2){left:240px;}.fx-chip:nth-child(3){left:640px;}.fx-chip:nth-child(4){left:1060px;}.fx-chip:nth-child(5){left:1480px;}
+
+.timeline-copy{
+  position:absolute;
+  left:50%;
+  bottom:5vh;
+  z-index:8;
+  transform:translateX(-50%) translateZ(300px);
+  width:min(720px,88vw);
+  padding:22px 26px;
+  border-radius:26px;
+  text-align:center;
+  background:rgba(255,255,255,.065);
+  border:1px solid rgba(255,255,255,.14);
+  backdrop-filter:blur(18px);
+  box-shadow:0 24px 80px rgba(0,0,0,.36);
+}
+
+.timeline-copy p{
+  color:var(--cyan);
+  text-transform:uppercase;
+  letter-spacing:.25em;
+  font-size:11px;
+  font-weight:900;
+}
+
+.timeline-copy h2{
+  margin-top:8px;
+  font-size:clamp(28px,4vw,50px);
+  line-height:1;
+  letter-spacing:-.055em;
+}
+
+.timeline-copy span{
+  display:block;
+  margin-top:10px;
+  color:rgba(255,255,255,.68);
+  line-height:1.5;
+}
+
+/* ================= VIDEOS ================= */
+.videos{position:relative;max-width:var(--max);margin:auto;padding:90px 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px;}
+.videos iframe{width:100%;aspect-ratio:16/9;border:none;border-radius:22px;background:#111;box-shadow:0 24px 70px rgba(0,0,0,.42);transition:.35s ease;}
+.videos iframe:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 30px 90px rgba(85,231,255,.14);}
+
+/* ================= FOOTER ================= */
+.footer{background:#000;padding:50px 20px 20px;border-top:1px solid rgba(255,255,255,.08);}
+.footer-top{max-width:900px;margin:auto;display:flex;justify-content:space-between;align-items:center;text-align:center;gap:26px;}
+.footer-contact p{opacity:.8;line-height:1.7;}.footer-socials a{margin-left:20px;color:#fff;text-decoration:none;opacity:.7;transition:.25s ease;}.footer-socials a:hover{opacity:1;color:var(--cyan);}.footer-bottom{margin-top:30px;text-align:center;font-size:13px;opacity:.6;display:flex;flex-direction:column;gap:6px;}.footer-bottom a{color:#fff;text-decoration:none;}
+
+@media(max-width:900px){
+  .main-nav{position:absolute;top:var(--header-h);left:0;width:100%;flex-direction:column;align-items:center;display:none;gap:0;padding:12px 20px 24px;background:rgba(0,0,0,.94);border-bottom:1px solid rgba(255,255,255,.10);}
+  .main-nav.active{display:flex;}.main-nav a,.nav-btn{width:100%;padding:14px 0;text-align:center;font-size:15px;}.nav-item{width:100%;}.nav-item .dropdown{position:static;width:100%;box-shadow:none;border-radius:14px;}.menu-toggle{display:block;}
+  .hero-inner{grid-template-columns:1fr;text-align:center;}.hero-copy{display:flex;flex-direction:column;align-items:center;}.hero-visual{min-height:470px;order:-1;}.camera-card{height:270px;}.camera-body{left:32px;width:218px;height:122px;}.lens{width:124px;height:124px;right:38px;top:92px;}.top-handle{left:72px;}.floating-tag{font-size:11px;padding:10px 12px;}.panel-one{left:4px}.panel-two{right:2px}.timeline-3d{right:0;width:230px;}
+}
+
+@media(max-width:600px){
+  body{cursor:auto;}.header-inner{padding:0 16px;}.logo{font-size:13px;letter-spacing:1.4px;}.hero{padding-top:100px;}.hero h1{font-size:46px;}.hero-actions{width:100%;justify-content:center;}.btn{width:100%;max-width:280px;}.film-strip,.tag-three,.panel-three,.timeline-3d{display:none;}.panel-one{transform:translateZ(120px) scale(.8) rotateZ(-8deg);}.panel-two{transform:translateZ(90px) scale(.8) rotateZ(7deg);}.footer-top{flex-direction:column;}.footer-socials a{margin:0 10px;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="loader">
+  <div class="loader-content">
+    <div class="loader-title">Viktor Boguský</div>
+    <div class="loader-sub">Camera / Edit / Story</div>
+    <div class="loader-line"></div>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">Viktor <span>Boguský</span></a>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+
+    <nav class="main-nav">
+      <a href="index.html">Domov</a>
+
+      <div class="nav-item">
+        <button class="nav-btn">Služby ▾</button>
+        <div class="dropdown">
+          <a href="sluzby.html">Prehľad služieb</a>
+          <a href="cennik.html">Cenník</a>
+          <a href="odporucanie.html">Zľavy</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <button class="nav-btn">Portfólio ▾</button>
+        <div class="dropdown">
+          <a href="portfolio.html">Video projekty</a>
+          <a href="referencie.html">Referencie</a>
+        </div>
+      </div>
+
+      <a href="omne.html">O mne</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="objednavka.html">Rezervovať termín</a>
+      <a href="duo.html">DUO BALÍKY</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="domov">
+  <video autoplay muted loop playsinline>
+    <source src="uvod_video.mp4" type="video/mp4">
+  </video>
+
+  <div class="hero-overlay"></div>
+  <div class="motion-grid"></div>
+  <div class="light-beam one"></div>
+  <div class="light-beam two"></div>
+  <div class="light-beam three"></div>
+  <div class="particles" id="particles"></div>
+
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="kicker">Cinematic video tvorba</div>
+      <h1><span>Viktor</span><span>Boguský</span></h1>
+      <h2>Kamera & Postprodukcia</h2>
+      <p>Tvorím videá, ktoré majú atmosféru, emóciu a príbeh. Od stužkových a svadieb až po eventy, promo videá a modernú postprodukciu.</p>
+      <div class="hero-actions">
+        <a href="portfolio.html" class="btn primary">Pozrieť portfólio</a>
+        <a href="kontakt.html" class="btn secondary">Kontaktovať</a>
+      </div>
+    </div>
+
+    <div class="hero-visual" id="heroVisual" aria-hidden="true">
+      <div class="scene-depth">
+      <div class="orbit"></div>
+      <div class="orbit two"></div>
+      <div class="orbit three"></div>
+
+      <div class="camera-card">
+        <div class="top-handle"></div>
+        <div class="camera-body"></div>
+        <div class="lens"></div>
+        <div class="film-strip">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <div class="figma-panel panel-one">
+        <div class="panel-dots"><span></span><span></span><span></span></div>
+        <div class="panel-line mid"></div>
+        <div class="panel-line small"></div>
+      </div>
+
+      <div class="figma-panel panel-two">
+        <div class="panel-dots"><span></span><span></span><span></span></div>
+        <div class="panel-line mid"></div>
+        <div class="panel-line small"></div>
+        <div class="panel-thumb"></div>
+      </div>
+
+      <div class="figma-panel panel-three">
+        <div class="panel-line mid"></div>
+        <div class="panel-line small"></div>
+      </div>
+
+      <div class="timeline-3d">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+
+      <div class="floating-tag tag-one">COLOR GRADING</div>
+      <div class="floating-tag tag-two">STUŽKOVÉ / SVADBY</div>
+      <div class="floating-tag tag-three">CINEMATIC EDIT</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span></span>
+    scroll
+  </div>
+</section>
+
+<section class="edit-timeline" id="process">
+  <div class="timeline-sticky">
+    <div class="timeline-bg-grid"></div>
+
+    <div class="editor-ui" id="editorUi">
+      <div class="editor-topbar">
+        <div class="editor-dots"><span></span><span></span><span></span></div>
+        <p>Viktor_Bogusky_project.timeline</p>
+        <strong>REC 4K</strong>
+      </div>
+
+      <div class="viewer-panel">
+        <div class="viewer-frame">
+          <div class="viewer-noise"></div>
+          <div class="viewer-scan"></div>
+          <div class="viewer-content" id="viewerContent">
+            <span>01 / ZÁBER</span>
+            <h2>Najprv chytím atmosféru.</h2>
+            <p>Každé video začína momentom, svetlom a emóciou, ktorú treba zachytiť v správnej sekunde.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="playhead">
+        <span></span>
+      </div>
+
+      <div class="timeline-area">
+        <div class="time-ruler">
+          <span>00:00</span><span>00:08</span><span>00:16</span><span>00:24</span><span>00:32</span><span>00:40</span>
+        </div>
+
+        <div class="tracks" id="tracks">
+          <div class="track video-track">
+            <div class="track-label">VIDEO 01</div>
+            <div class="clip clip-cyan" data-step="0"><b>ZÁBERY</b><small>kamera / momenty</small></div>
+            <div class="clip clip-violet" data-step="1"><b>SVETLO</b><small>atmosféra / look</small></div>
+            <div class="clip clip-blue" data-step="2"><b>STRIH</b><small>tempo / energia</small></div>
+            <div class="clip clip-pink" data-step="3"><b>GRADE</b><small>farby / emócia</small></div>
+            <div class="clip clip-green" data-step="4"><b>EXPORT</b><small>finálny film</small></div>
+          </div>
+
+          <div class="track audio-track">
+            <div class="track-label">AUDIO 01</div>
+            <div class="wave wave-one"></div>
+            <div class="wave wave-two"></div>
+            <div class="wave wave-three"></div>
+          </div>
+
+          <div class="track fx-track">
+            <div class="track-label">FX 01</div>
+            <div class="fx-chip">speed ramp</div>
+            <div class="fx-chip">film grain</div>
+            <div class="fx-chip">sound hit</div>
+            <div class="fx-chip">light leak</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-copy">
+      <p>Scrolluj cez proces</p>
+      <h2>Stránka ako video editor.</h2>
+      <span>Každý scroll je posun po timeline — od natočenia až po finálne video.</span>
+    </div>
+  </div>
+</section>
+
+<section class="videos" id="portfolio">
+  <iframe src="https://www.youtube.com/embed/3zES1AlxCd4" allowfullscreen></iframe>
+  <iframe src="https://www.youtube.com/embed/V8z1SuHkfCk" allowfullscreen></iframe>
+  <iframe src="https://www.youtube.com/embed/LiYAjlk7jZg" allowfullscreen></iframe>
+  <iframe src="https://www.youtube.com/embed/9Z8BojDP5no" allowfullscreen></iframe>
+</section>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-contact">
+      <p>kontakt@viktorbogusky.sk</p>
+      <p>+421 948 933 109</p>
+    </div>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/vittquoo/" target="_blank">Instagram</a>
+      <a href="https://www.facebook.com/profile.php?id=100079203706823" target="_blank">Facebook</a>
+      <a href="https://www.tiktok.com/@viktorbogusky" target="_blank">TikTok</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>Vytvoril: Viktor Boguský</span>
+    <span><a href="gdpr.html">GDPR</a> | <a href="podmienky.html">Obchodné podmienky</a></span>
+  </div>
+</footer>
+
+<script>
+const toggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('.main-nav');
+const navItems = document.querySelectorAll('.nav-item');
+const heroVisual = document.getElementById('heroVisual');
+const particlesWrap = document.getElementById('particles');
+const parallaxItems = document.querySelectorAll('.figma-panel, .floating-tag, .camera-card, .timeline-3d');
+
+// Hamburger toggle
+toggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  nav.classList.toggle('active');
+});
+
+// Dropdown toggle
+navItems.forEach(item => {
+  const btn = item.querySelector('.nav-btn');
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navItems.forEach(i => {
+      if(i !== item) i.classList.remove('active');
+    });
+    item.classList.toggle('active');
+  });
+});
+
+// Klik mimo -> zatvori menu aj dropdowny
+document.addEventListener('click', () => {
+  nav.classList.remove('active');
+  navItems.forEach(item => item.classList.remove('active'));
+});
+
+// 3D parallax podľa myši
+window.addEventListener('mousemove', (e) => {
+  const x = e.clientX / window.innerWidth;
+  const y = e.clientY / window.innerHeight;
+
+  document.body.style.setProperty('--mx', `${x * 100}%`);
+  document.body.style.setProperty('--my', `${y * 100}%`);
+
+  const rotateY = (x - 0.5) * 18;
+  const rotateX = (0.5 - y) * 14;
+
+  if(heroVisual){
+    heroVisual.style.setProperty('--ry', `${rotateY}deg`);
+    heroVisual.style.setProperty('--rx', `${rotateX}deg`);
+  }
+
+  parallaxItems.forEach((item, index) => {
+    const depth = (index + 1) * 6;
+    item.style.marginLeft = `${(x - 0.5) * depth}px`;
+    item.style.marginTop = `${(y - 0.5) * depth}px`;
+  });
+});
+
+// Particles generator
+function createParticles(){
+  const count = window.innerWidth < 700 ? 42 : 86;
+  particlesWrap.innerHTML = '';
+
+  for(let i = 0; i < count; i++){
+    const p = document.createElement('span');
+    p.className = 'particle';
+    p.style.left = `${Math.random() * 100}%`;
+    p.style.animationDuration = `${8 + Math.random() * 11}s`;
+    p.style.animationDelay = `${Math.random() * -16}s`;
+    p.style.opacity = `${0.35 + Math.random() * 0.65}`;
+    p.style.setProperty('--drift', `${-120 + Math.random() * 240}px`);
+    const size = 2 + Math.random() * 4;
+    p.style.width = `${size}px`;
+    p.style.height = `${size}px`;
+    particlesWrap.appendChild(p);
+  }
+}
+
+createParticles();
+window.addEventListener('resize', createParticles);
+
+// Scroll storytelling: editor timeline
+const editTimeline = document.querySelector('.edit-timeline');
+const editorUi = document.getElementById('editorUi');
+const tracks = document.getElementById('tracks');
+const viewerContent = document.getElementById('viewerContent');
+const timelineCopy = document.querySelector('.timeline-copy');
+
+const timelineSteps = [
+  {
+    label:'01 / ZÁBER',
+    title:'Najprv chytím atmosféru.',
+    text:'Každé video začína momentom, svetlom a emóciou, ktorú treba zachytiť v správnej sekunde.'
+  },
+  {
+    label:'02 / SVETLO',
+    title:'Potom budujem náladu.',
+    text:'Svetlo, farby a kompozícia vytvoria pocit, ktorý divák vníma ešte skôr, než začne príbeh.'
+  },
+  {
+    label:'03 / STRIH',
+    title:'Tempo rozhoduje o energii.',
+    text:'Strihám tak, aby video malo rytmus, gradáciu a aby každý záber mal svoje miesto.'
+  },
+  {
+    label:'04 / COLOR GRADE',
+    title:'Farby dodajú filmu charakter.',
+    text:'Cinematic look, kontrast, glow, film grain a atmosféra, ktorá odlíši výsledok od obyčajného záznamu.'
+  },
+  {
+    label:'05 / EXPORT',
+    title:'Finál, ktorý ostane.',
+    text:'Výsledkom je video pripravené na zdieľanie, spomienku alebo prezentáciu tvojej značky.'
+  }
+];
+
+let activeStep = -1;
+
+function clamp(value, min, max){
+  return Math.min(Math.max(value, min), max);
+}
+
+function setViewerStep(step){
+  if(!viewerContent || step === activeStep) return;
+  activeStep = step;
+  const data = timelineSteps[step];
+
+  viewerContent.style.opacity = 0;
+  viewerContent.style.transform = 'translateY(18px) scale(.98)';
+
+  setTimeout(() => {
+    viewerContent.innerHTML = `<span>${data.label}</span><h2>${data.title}</h2><p>${data.text}</p>`;
+    viewerContent.style.opacity = 1;
+    viewerContent.style.transform = 'translateY(0) scale(1)';
+  }, 180);
+}
+
+function updateEditorTimeline(){
+  if(!editTimeline) return;
+
+  const rect = editTimeline.getBoundingClientRect();
+  const total = rect.height - window.innerHeight;
+  const progress = clamp((-rect.top) / total, 0, 1);
+  const timelineX = -progress * 1450;
+  const step = clamp(Math.round(progress * (timelineSteps.length - 1)), 0, timelineSteps.length - 1);
+
+  if(tracks){
+    tracks.style.setProperty('--timeline-x', `${timelineX}px`);
+  }
+
+  setViewerStep(step);
+
+  if(editorUi){
+    const rx = (progress - .5) * 7;
+    const ry = Math.sin(progress * Math.PI * 2) * 5;
+    editorUi.style.setProperty('--editor-rx', `${rx}deg`);
+    editorUi.style.setProperty('--editor-ry', `${ry}deg`);
+  }
+
+  if(timelineCopy){
+    timelineCopy.style.opacity = clamp(1 - progress * 1.35, 0, 1);
+    timelineCopy.style.transform = `translateX(-50%) translateY(${progress * 90}px) translateZ(300px) scale(${1 - progress * .08})`;
+  }
+}
+
+updateEditorTimeline();
+window.addEventListener('scroll', updateEditorTimeline, { passive:true });
+window.addEventListener('resize', updateEditorTimeline);
+</script>
+
+</body>
+</html>
