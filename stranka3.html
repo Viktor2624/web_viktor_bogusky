@@ -10,12 +10,13 @@
 :root{
   --bg:#050505;
   --gold:#c79a4b;
-  --gold-soft:rgba(199,154,75,.22);
-  --text:#fff;
+  --gold-soft:rgba(199,154,75,.25);
+  --text:#ffffff;
   --muted:rgba(255,255,255,.68);
-  --line:rgba(255,255,255,.10);
-  --max:1180px;
+  --line:rgba(255,255,255,.12);
   --header-h:74px;
+  --max:1180px;
+  --shadow:0 35px 90px rgba(0,0,0,.55);
 }
 
 *{
@@ -25,11 +26,13 @@
   font-family:Arial, Helvetica, sans-serif;
 }
 
-html{scroll-behavior:smooth;}
+html{
+  scroll-behavior:smooth;
+}
 
 body{
   background:#050505;
-  color:#fff;
+  color:var(--text);
   overflow-x:hidden;
   padding-top:var(--header-h);
 }
@@ -39,14 +42,15 @@ a{
   text-decoration:none;
 }
 
-img,video{
-  max-width:100%;
+img,
+video{
   display:block;
+  max-width:100%;
 }
 
 .container{
   width:min(100% - 36px, var(--max));
-  margin:auto;
+  margin:0 auto;
 }
 
 /* HEADER */
@@ -57,7 +61,7 @@ header{
   width:100%;
   height:var(--header-h);
   z-index:1000;
-  background:rgba(0,0,0,.72);
+  background:rgba(0,0,0,.78);
   backdrop-filter:blur(18px);
   border-bottom:1px solid rgba(255,255,255,.08);
 }
@@ -65,7 +69,7 @@ header{
 .header-inner{
   width:min(100% - 36px, var(--max));
   height:100%;
-  margin:auto;
+  margin:0 auto;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -80,13 +84,13 @@ header{
 .nav{
   display:flex;
   align-items:center;
-  gap:34px;
+  gap:30px;
 }
 
 .nav a{
   font-size:12px;
-  letter-spacing:1.8px;
   text-transform:uppercase;
+  letter-spacing:1.7px;
   font-weight:800;
   opacity:.86;
   transition:.25s ease;
@@ -101,7 +105,6 @@ header{
   padding:10px 18px;
   border:1px solid var(--gold);
   border-radius:999px;
-  color:#fff;
 }
 
 .menu-toggle{
@@ -120,8 +123,8 @@ header{
   display:flex;
   align-items:center;
   justify-content:center;
-  overflow:hidden;
   text-align:center;
+  overflow:hidden;
   isolation:isolate;
 }
 
@@ -135,17 +138,17 @@ header{
   width:100%;
   height:100%;
   object-fit:cover;
-  filter:brightness(.45) contrast(1.05) saturate(.95);
+  filter:brightness(.42) contrast(1.08) saturate(.95);
 }
 
 .hero::before{
   content:"";
   position:absolute;
   inset:0;
-  background:
-    radial-gradient(circle at center, rgba(0,0,0,.16), rgba(0,0,0,.78) 78%),
-    linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.92));
   z-index:-3;
+  background:
+    radial-gradient(circle at center, rgba(0,0,0,.10), rgba(0,0,0,.82) 76%),
+    linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.92));
 }
 
 .hero-content{
@@ -158,7 +161,7 @@ header{
   line-height:.9;
   letter-spacing:7px;
   text-transform:uppercase;
-  margin-bottom:12px;
+  margin-bottom:14px;
   text-shadow:0 10px 40px rgba(0,0,0,.55);
 }
 
@@ -197,6 +200,7 @@ header{
   letter-spacing:1.4px;
   font-weight:800;
   transition:.3s ease;
+  cursor:pointer;
 }
 
 .btn-primary{
@@ -209,14 +213,17 @@ header{
   transform:translateY(-2px);
 }
 
-/* LENS SECTION */
+/* LENS / ORBIT SECTION */
 .lens-section{
   position:relative;
-  padding:120px 0 90px;
-  background:
-    radial-gradient(circle at center, rgba(199,154,75,.09), transparent 28%),
-    linear-gradient(to bottom, #050505, #090909);
+  padding:120px 0 100px;
   overflow:hidden;
+  background:
+    radial-gradient(circle at center, rgba(199,154,75,.12), transparent 30%),
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.04), transparent 20%),
+    linear-gradient(to bottom, #050505, #080808 50%, #050505);
+  border-top:1px solid rgba(255,255,255,.07);
+  border-bottom:1px solid rgba(255,255,255,.07);
 }
 
 .section-small{
@@ -234,43 +241,126 @@ header{
   font-size:clamp(30px, 5vw, 48px);
   text-transform:uppercase;
   letter-spacing:6px;
-  margin-bottom:54px;
+  margin-bottom:60px;
 }
 
-.lens-wrap{
+/* hlavný stage */
+.lens-stage{
   position:relative;
-  width:min(620px, 92vw);
-  aspect-ratio:1/1;
-  margin:auto;
+  width:min(760px, 96vw);
+  height:min(760px, 96vw);
+  margin:0 auto;
   display:flex;
   align-items:center;
   justify-content:center;
 }
 
-.orbit-line{
+/* kružnica */
+.orbit-ring{
   position:absolute;
-  inset:42px;
-  border:1px solid rgba(199,154,75,.38);
+  width:78%;
+  height:78%;
   border-radius:50%;
-  box-shadow:0 0 60px rgba(199,154,75,.12);
+  border:1px dashed rgba(199,154,75,.38);
+  box-shadow:
+    0 0 80px rgba(199,154,75,.08),
+    inset 0 0 80px rgba(199,154,75,.05);
+  z-index:1;
 }
 
+/* rotujúci orbit systém */
+.orbit-system{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  z-index:3;
+  animation:orbitRotate 26s linear infinite;
+  transform-origin:center;
+}
+
+/* jednotlivé položky na jednej kružnici */
+.orbit-service{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:190px;
+  min-height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px 18px;
+  border-radius:999px;
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(12px);
+  color:#fff;
+  text-align:center;
+  font-size:15px;
+  font-weight:900;
+  letter-spacing:.4px;
+  line-height:1.2;
+  text-transform:uppercase;
+}
+
+/* dôležité: položky sa držia čitateľne, aj keď systém rotuje */
+.orbit-service span{
+  display:block;
+  animation:orbitCounter 26s linear infinite;
+}
+
+/* rovnaká kružnica, rôzne uhly */
+.orbit-service:nth-child(1){
+  transform:translate(-50%,-50%) rotate(0deg) translateX(300px) rotate(0deg);
+}
+
+.orbit-service:nth-child(2){
+  transform:translate(-50%,-50%) rotate(60deg) translateX(300px) rotate(-60deg);
+}
+
+.orbit-service:nth-child(3){
+  transform:translate(-50%,-50%) rotate(120deg) translateX(300px) rotate(-120deg);
+}
+
+.orbit-service:nth-child(4){
+  transform:translate(-50%,-50%) rotate(180deg) translateX(300px) rotate(-180deg);
+}
+
+.orbit-service:nth-child(5){
+  transform:translate(-50%,-50%) rotate(240deg) translateX(300px) rotate(-240deg);
+}
+
+.orbit-service:nth-child(6){
+  transform:translate(-50%,-50%) rotate(300deg) translateX(300px) rotate(-300deg);
+}
+
+/* objektív */
 .lens{
-  width:310px;
+  width:min(330px, 48vw);
   aspect-ratio:1/1;
   border-radius:50%;
   position:relative;
-  z-index:4;
+  z-index:6;
   background:
-    radial-gradient(circle at 36% 30%, rgba(255,255,255,.35) 0 4%, transparent 10%),
-    radial-gradient(circle at 58% 55%, rgba(80,130,255,.35), transparent 16%),
-    radial-gradient(circle, #020204 0 30%, #07070a 31% 45%, #15151a 46% 56%, #2a292c 57% 65%, #090909 66% 100%);
-  border:2px solid rgba(199,154,75,.38);
+    radial-gradient(circle at 36% 30%, rgba(255,255,255,.45) 0 4%, transparent 10%),
+    radial-gradient(circle at 60% 58%, rgba(70,120,255,.38), transparent 16%),
+    radial-gradient(circle, #030305 0 30%, #08080b 31% 43%, #15151a 44% 55%, #2b2a32 56% 66%, #090909 67% 100%);
+  border:2px solid rgba(199,154,75,.42);
   box-shadow:
     inset 0 0 40px rgba(255,255,255,.08),
-    inset 0 0 90px rgba(0,0,0,.95),
+    inset 0 0 100px rgba(0,0,0,.95),
     0 0 0 18px rgba(255,255,255,.025),
-    0 25px 90px rgba(0,0,0,.75);
+    0 25px 90px rgba(0,0,0,.75),
+    0 0 80px rgba(199,154,75,.14);
+}
+
+.lens::before{
+  content:"";
+  position:absolute;
+  inset:12%;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:inset 0 0 45px rgba(0,0,0,.9);
 }
 
 .lens::after{
@@ -280,103 +370,43 @@ header{
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:44px;
+  font-size:42px;
   letter-spacing:6px;
-  color:rgba(255,255,255,.84);
-  font-weight:800;
+  font-weight:900;
+  color:rgba(255,255,255,.86);
 }
 
-.orbit-item{
+/* jemná zlatá aura */
+.lens-glow{
   position:absolute;
-  width:150px;
-  color:#fff;
-  z-index:5;
-}
-
-.orbit-item h3{
-  font-size:17px;
-  text-transform:uppercase;
-  letter-spacing:1.8px;
-  color:#fff;
-  margin-bottom:8px;
-}
-
-.orbit-item p{
-  font-size:13px;
-  line-height:1.5;
-  color:var(--muted);
-}
-
-.orbit-item::before{
-  content:"";
-  width:46px;
-  height:46px;
+  width:390px;
+  height:390px;
   border-radius:50%;
-  border:1px solid var(--gold);
-  background:rgba(0,0,0,.72);
-  box-shadow:0 0 28px rgba(199,154,75,.25);
-  position:absolute;
-  top:-4px;
-}
-
-.item-left-top{
-  left:0;
-  top:120px;
-  text-align:right;
-  padding-right:70px;
-}
-
-.item-left-top::before{
-  right:8px;
-}
-
-.item-left-bottom{
-  left:0;
-  bottom:120px;
-  text-align:right;
-  padding-right:70px;
-}
-
-.item-left-bottom::before{
-  right:8px;
-}
-
-.item-right-top{
-  right:0;
-  top:120px;
-  padding-left:70px;
-}
-
-.item-right-top::before{
-  left:8px;
-}
-
-.item-right-bottom{
-  right:0;
-  bottom:120px;
-  padding-left:70px;
-}
-
-.item-right-bottom::before{
-  left:8px;
+  background:radial-gradient(circle, rgba(199,154,75,.18), transparent 65%);
+  filter:blur(24px);
+  z-index:2;
 }
 
 .discover{
   position:absolute;
-  bottom:22px;
+  bottom:34px;
   left:50%;
   transform:translateX(-50%);
+  z-index:7;
+  padding:12px 26px;
+  border-radius:999px;
+  background:rgba(0,0,0,.72);
+  border:1px solid rgba(199,154,75,.45);
   color:var(--gold);
   letter-spacing:3px;
   text-transform:uppercase;
   font-size:12px;
-  font-weight:800;
+  font-weight:900;
 }
 
 /* PORTFOLIO */
 .portfolio{
   padding:100px 0;
-  border-top:1px solid rgba(255,255,255,.07);
   background:#050505;
 }
 
@@ -437,6 +467,7 @@ header{
   text-align:center;
   color:rgba(255,255,255,.48);
   font-size:13px;
+  line-height:1.8;
 }
 
 .footer-contact{
@@ -471,7 +502,17 @@ header{
   color:#000;
 }
 
-/* REVEAL */
+/* ANIMATIONS */
+@keyframes orbitRotate{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+
+@keyframes orbitCounter{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(-360deg);}
+}
+
 .reveal{
   opacity:0;
   transform:translateY(30px);
@@ -483,9 +524,34 @@ header{
   transform:translateY(0);
 }
 
-/* MOBILE */
-@media(max-width:900px){
-  .menu-toggle{display:block;}
+/* RESPONSIVE */
+@media(max-width:1000px){
+  .nav{
+    gap:18px;
+  }
+
+  .video-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .footer-inner{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+
+  .footer-contact{
+    text-align:center;
+  }
+
+  .socials{
+    justify-content:center;
+  }
+}
+
+@media(max-width:820px){
+  .menu-toggle{
+    display:block;
+  }
 
   .nav{
     position:absolute;
@@ -510,23 +576,6 @@ header{
     text-align:center;
     padding:14px;
   }
-
-  .video-grid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  .footer-inner{
-    grid-template-columns:1fr;
-    text-align:center;
-  }
-
-  .footer-contact{
-    text-align:center;
-  }
-
-  .socials{
-    justify-content:center;
-  }
 }
 
 @media(max-width:700px){
@@ -534,49 +583,58 @@ header{
     letter-spacing:3px;
   }
 
-  .lens-section{
-    padding:80px 0;
+  .lens-stage{
+    width:100%;
+    height:720px;
   }
 
-  .lens-wrap{
-    aspect-ratio:auto;
-    display:grid;
-    gap:18px;
+  .orbit-ring{
+    width:86%;
+    height:86%;
   }
 
-  .orbit-line{
-    display:none;
+  .orbit-service{
+    width:145px;
+    min-height:52px;
+    font-size:12px;
+    padding:10px 12px;
+  }
+
+  .orbit-service:nth-child(1){
+    transform:translate(-50%,-50%) rotate(0deg) translateX(150px) rotate(0deg);
+  }
+
+  .orbit-service:nth-child(2){
+    transform:translate(-50%,-50%) rotate(60deg) translateX(150px) rotate(-60deg);
+  }
+
+  .orbit-service:nth-child(3){
+    transform:translate(-50%,-50%) rotate(120deg) translateX(150px) rotate(-120deg);
+  }
+
+  .orbit-service:nth-child(4){
+    transform:translate(-50%,-50%) rotate(180deg) translateX(150px) rotate(-180deg);
+  }
+
+  .orbit-service:nth-child(5){
+    transform:translate(-50%,-50%) rotate(240deg) translateX(150px) rotate(-240deg);
+  }
+
+  .orbit-service:nth-child(6){
+    transform:translate(-50%,-50%) rotate(300deg) translateX(150px) rotate(-300deg);
   }
 
   .lens{
-    width:230px;
-    margin:auto;
+    width:220px;
   }
 
-  .orbit-item{
-    position:relative;
-    inset:auto;
-    width:100%;
-    text-align:left;
-    padding:18px 18px 18px 76px;
-    border:1px solid rgba(255,255,255,.10);
-    border-radius:18px;
-    background:rgba(255,255,255,.04);
-  }
-
-  .orbit-item::before{
-    left:16px;
-    top:50%;
-    transform:translateY(-50%);
+  .lens-glow{
+    width:260px;
+    height:260px;
   }
 
   .discover{
-    position:relative;
-    bottom:auto;
-    left:auto;
-    transform:none;
-    text-align:center;
-    margin-top:10px;
+    bottom:60px;
   }
 
   .video-grid{
@@ -585,7 +643,6 @@ header{
 }
 </style>
 </head>
-
 <body>
 
 <header>
@@ -599,7 +656,8 @@ header{
     <nav class="nav">
       <a href="index.html">Domov</a>
       <a href="sluzby.html">Služby</a>
-      <a href="duo.html">Duo balíky</a>
+      <a href="duo.html">DUO balíky</a>
+      <a href="cennik.html">Cenník</a>
       <a href="portfolio.html">Portfólio</a>
       <a href="omne.html">O mne</a>
       <a href="kontakt.html">Kontakt</a>
@@ -611,14 +669,13 @@ header{
 <section class="hero">
   <div class="hero-bg">
     <video autoplay muted loop playsinline>
-      <source src="video_1.mov" type="video/quicktime">
-      <source src="video_1.mp4" type="video/mp4">
+      <source src="video_1.mov" type="video/mp4">
     </video>
   </div>
 
   <div class="hero-content reveal">
     <h1>Viktor Boguský</h1>
-    <div class="hero-sub">Kamera & Postprodukcia</div>
+    <div class="hero-sub">Kamera &amp; Postprodukcia</div>
     <p>Zachytím momenty, ktoré už nikdy nezažiješ znova.</p>
 
     <div class="hero-actions">
@@ -630,34 +687,23 @@ header{
 
 <section class="lens-section">
   <div class="container">
-    <div class="section-small reveal">Výstupy</div>
-    <h2 class="section-title reveal">Čo môžeš získať</h2>
+    <div class="section-small reveal">Výstupy podľa balíka</div>
+    <h2 class="section-title reveal">Čo môže obsahovať video</h2>
 
-    <div class="lens-wrap reveal">
-      <div class="orbit-line"></div>
+    <div class="lens-stage reveal">
+      <div class="orbit-ring"></div>
+      <div class="lens-glow"></div>
 
-      <div class="orbit-item item-left-top">
-        <h3>Klip</h3>
-        <p>Cinematic zostrih z najlepších momentov.</p>
-      </div>
-
-      <div class="orbit-item item-left-bottom">
-        <h3>Záznam</h3>
-        <p>Kompletný záznam udalosti od začiatku do konca.</p>
+      <div class="orbit-system">
+        <div class="orbit-service"><span>5–10 minútový klip</span></div>
+        <div class="orbit-service"><span>Záznam</span></div>
+        <div class="orbit-service"><span>45 minútový film</span></div>
+        <div class="orbit-service"><span>Pozvánka</span></div>
+        <div class="orbit-service"><span>Úvodné video</span></div>
+        <div class="orbit-service"><span>Kompletný balík</span></div>
       </div>
 
       <div class="lens"></div>
-
-      <div class="orbit-item item-right-top">
-        <h3>Pozvánka</h3>
-        <p>Štýlové pozvanie na vašu udalosť.</p>
-      </div>
-
-      <div class="orbit-item item-right-bottom">
-        <h3>Úvodné video</h3>
-        <p>Video, ktoré pripraví atmosféru večera.</p>
-      </div>
-
       <div class="discover">Objav viac</div>
     </div>
   </div>
@@ -670,19 +716,19 @@ header{
 
     <div class="video-grid">
       <div class="video-card reveal">
-        <iframe src="https://www.youtube.com/embed/3zES1AlxCd4?rel=0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/3zES1AlxCd4?rel=0" title="Stužková slávnosť" allowfullscreen></iframe>
       </div>
 
       <div class="video-card reveal">
-        <iframe src="https://www.youtube.com/embed/V8z1SuHkfCk?rel=0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/V8z1SuHkfCk?rel=0" title="Stužková slávnosť" allowfullscreen></iframe>
       </div>
 
       <div class="video-card reveal">
-        <iframe src="https://www.youtube.com/embed/LiYAjlk7jZg?rel=0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/LiYAjlk7jZg?rel=0" title="Dokumentárny film NIMA" allowfullscreen></iframe>
       </div>
 
       <div class="video-card reveal">
-        <iframe src="https://www.youtube.com/embed/9Z8BojDP5no?rel=0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/9Z8BojDP5no?rel=0" title="Dronové zábery Levoča" allowfullscreen></iframe>
       </div>
     </div>
 
@@ -699,14 +745,13 @@ header{
     </div>
 
     <div class="footer-center">
-      © 2026 Viktor Boguský. Všetky práva vyhradené.
-      <br>
-      <a href="gdpr.html">GDPR</a> | <a href="podmienky.html">Obchodné podmienky</a>
+      <p>© 2026 Viktor Boguský. Všetky práva vyhradené.</p>
+      <p><a href="gdpr.html">GDPR</a> | <a href="podmienky.html">Obchodné podmienky</a></p>
     </div>
 
     <div class="footer-contact">
-      <div>kontakt@viktorbogusky.sk</div>
-      <div>+421 948 933 109</div>
+      <p>kontakt@viktorbogusky.sk</p>
+      <p>+421 948 933 109</p>
 
       <div class="socials">
         <a href="https://www.instagram.com/vittquoo/" target="_blank">IG</a>
@@ -716,27 +761,96 @@ header{
     </div>
   </div>
 </footer>
-
 <script>
+
+/* ======================
+   MOBILE MENU
+====================== */
 const toggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
 
-toggle.addEventListener('click', () => {
-  nav.classList.toggle('active');
+if(toggle){
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    nav.classList.toggle('active');
+  });
+}
+
+document.addEventListener('click', () => {
+  nav.classList.remove('active');
 });
 
+
+/* ======================
+   REVEAL ANIMATIONS
+====================== */
 const revealItems = document.querySelectorAll('.reveal');
 
-const observer = new IntersectionObserver((entries) => {
+const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if(entry.isIntersecting){
       entry.target.classList.add('visible');
     }
   });
-}, { threshold: 0.14 });
+}, {
+  threshold: 0.12
+});
 
-revealItems.forEach(item => observer.observe(item));
+revealItems.forEach(el => revealObserver.observe(el));
+
+
+/* ======================
+   ORBIT SPEED CONTROL
+====================== */
+const orbit = document.querySelector('.orbit-system');
+
+const orbitObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      orbit.style.animationDuration = "18s"; // rýchlejšie keď viditeľné
+    } else {
+      orbit.style.animationDuration = "28s"; // pomalšie mimo
+    }
+  });
+}, { threshold: 0.4 });
+
+if(orbit){
+  orbitObserver.observe(orbit);
+}
+
+
+/* ======================
+   HERO PARALLAX (LIGHT)
+====================== */
+const hero = document.querySelector('.hero');
+
+window.addEventListener('mousemove', (e) => {
+  if(window.innerWidth < 768) return;
+
+  const x = (e.clientX / window.innerWidth - 0.5);
+  const y = (e.clientY / window.innerHeight - 0.5);
+
+  hero.style.transform = `translate3d(${x * 6}px, ${y * 4}px, 0)`;
+});
+
+window.addEventListener('mouseleave', () => {
+  hero.style.transform = 'translate3d(0,0,0)';
+});
+
+
+/* ======================
+   SMOOTH SCROLL (buttons)
+====================== */
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if(target){
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+
 </script>
-
 </body>
 </html>
