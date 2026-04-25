@@ -293,7 +293,7 @@ header{
 /* LENS HERO */
 .hero-side{
   position:relative;
-  min-height:520px;
+  min-height:560px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -301,8 +301,8 @@ header{
 
 .lens-scene{
   position:relative;
-  width:min(100%, 520px);
-  height:520px;
+  width:min(100%, 560px);
+  height:560px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -310,8 +310,8 @@ header{
 
 .lens{
   position:relative;
-  width:280px;
-  height:280px;
+  width:250px;
+  height:250px;
   border-radius:50%;
   background:
     radial-gradient(circle at 50% 50%, #050505 0 27%, #111 28% 38%, #2b2b34 39% 48%, #050505 49% 58%, #1c1c24 59% 67%, #070707 68% 100%);
@@ -321,12 +321,13 @@ header{
     inset 0 0 90px rgba(90,110,255,.16),
     0 30px 90px rgba(0,0,0,.6);
   animation:lensFloat 5s ease-in-out infinite;
+  z-index:3;
 }
 
 .lens::before{
   content:"";
   position:absolute;
-  inset:42px;
+  inset:40px;
   border-radius:50%;
   background:
     radial-gradient(circle at 35% 30%, rgba(255,255,255,.35), transparent 10%),
@@ -342,7 +343,7 @@ header{
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:18px;
+  font-size:17px;
   letter-spacing:4px;
   font-weight:800;
   color:rgba(255,255,255,.78);
@@ -351,44 +352,49 @@ header{
 
 .orbit{
   position:absolute;
-  inset:0;
+  inset:58px;
   border-radius:50%;
-  border:1px dashed rgba(255,255,255,.12);
-  animation:orbitRotate 18s linear infinite;
+  border:1px dashed rgba(255,255,255,.13);
+  animation:orbitRotate 26s linear infinite;
+  z-index:2;
 }
 
 .orbit-item{
   position:absolute;
+  left:50%;
+  top:50%;
+  width:150px;
+  min-height:44px;
   display:flex;
   align-items:center;
   justify-content:center;
-  min-width:130px;
-  padding:12px 14px;
+  text-align:center;
+  padding:10px 14px;
   border-radius:999px;
   background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.14);
   backdrop-filter:blur(14px);
   box-shadow:0 20px 50px rgba(0,0,0,.35);
   color:#fff;
-  font-size:13px;
+  font-size:12px;
   font-weight:700;
-  letter-spacing:.4px;
-  animation:orbitText 18s linear infinite reverse;
+  letter-spacing:.3px;
+  line-height:1.25;
+  transform-origin:0 0;
+  animation:orbitText 26s linear infinite reverse;
 }
 
-.orbit-item strong{
-  margin-left:6px;
-  color:rgba(255,255,255,.62);
-}
-
-.item-1{top:22px;left:50%;transform:translateX(-50%);}
-.item-2{right:-2px;top:50%;transform:translateY(-50%);}
-.item-3{bottom:22px;left:50%;transform:translateX(-50%);}
-.item-4{left:-2px;top:50%;transform:translateY(-50%);}
+/* všetky položky sú na jednej kružnici */
+.item-1{transform:rotate(0deg) translateX(220px) translate(-50%, -50%);}
+.item-2{transform:rotate(60deg) translateX(220px) translate(-50%, -50%);}
+.item-3{transform:rotate(120deg) translateX(220px) translate(-50%, -50%);}
+.item-4{transform:rotate(180deg) translateX(220px) translate(-50%, -50%);}
+.item-5{transform:rotate(240deg) translateX(220px) translate(-50%, -50%);}
+.item-6{transform:rotate(300deg) translateX(220px) translate(-50%, -50%);}
 
 .lens-note{
   position:absolute;
-  bottom:34px;
+  bottom:18px;
   left:50%;
   transform:translateX(-50%);
   padding:12px 18px;
@@ -401,6 +407,7 @@ header{
   text-transform:uppercase;
   backdrop-filter:blur(12px);
   white-space:nowrap;
+  z-index:4;
 }
 
 @keyframes lensFloat{
@@ -627,7 +634,7 @@ header{
 
 @media(max-width:1080px){
   .hero-inner{grid-template-columns:1fr;}
-  .hero-side{height:auto;min-height:460px;}
+  .hero-side{height:auto;min-height:520px;}
 }
 
 @media(max-width:768px){
@@ -672,10 +679,38 @@ header{
   .hero-inner{padding:34px 0 56px;}
   .hero h1{max-width:none;}
   .pricing{padding:30px 0 90px;}
-  .lens-scene{height:430px;}
-  .lens{width:220px;height:220px;}
-  .orbit-item{min-width:112px;font-size:12px;padding:10px 12px;}
-  .lens-note{bottom:10px;font-size:11px;}
+
+  .lens-scene{
+    width:100%;
+    height:460px;
+  }
+
+  .lens{
+    width:190px;
+    height:190px;
+  }
+
+  .orbit{
+    inset:70px;
+  }
+
+  .orbit-item{
+    width:118px;
+    font-size:11px;
+    padding:9px 10px;
+  }
+
+  .item-1{transform:rotate(0deg) translateX(165px) translate(-50%, -50%);}
+  .item-2{transform:rotate(60deg) translateX(165px) translate(-50%, -50%);}
+  .item-3{transform:rotate(120deg) translateX(165px) translate(-50%, -50%);}
+  .item-4{transform:rotate(180deg) translateX(165px) translate(-50%, -50%);}
+  .item-5{transform:rotate(240deg) translateX(165px) translate(-50%, -50%);}
+  .item-6{transform:rotate(300deg) translateX(165px) translate(-50%, -50%);}
+
+  .lens-note{
+    bottom:0;
+    font-size:10px;
+  }
 }
 </style>
 </head>
@@ -727,13 +762,15 @@ header{
     <div class="hero-side reveal">
       <div class="lens-scene">
         <div class="orbit">
-          <div class="orbit-item item-1">Start <strong>200€</strong></div>
-          <div class="orbit-item item-2">Memory <strong>300€</strong></div>
-          <div class="orbit-item item-3">Premium <strong>350€</strong></div>
-          <div class="orbit-item item-4">Deluxe <strong>400€</strong></div>
+          <div class="orbit-item item-1">5–10 minútový klip</div>
+          <div class="orbit-item item-2">Záznam</div>
+          <div class="orbit-item item-3">45 minútový film</div>
+          <div class="orbit-item item-4">Pozvánka</div>
+          <div class="orbit-item item-5">Úvodné video</div>
+          <div class="orbit-item item-6">Kompletný balík</div>
         </div>
         <div class="lens"></div>
-        <div class="lens-note">Balíky okolo objektívu</div>
+        <div class="lens-note">Výstupy podľa balíka</div>
       </div>
     </div>
   </div>
