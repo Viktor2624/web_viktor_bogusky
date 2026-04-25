@@ -4,26 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Viktor Boguský | Kamera & Postprodukcia</title>
+
 <link rel="icon" type="image/png" href="logo_1.png">
 
 <style>
 :root{
   --bg:#050505;
-  --gold:#c79a4b;
-  --gold-soft:rgba(199,154,75,.25);
   --text:#ffffff;
   --muted:rgba(255,255,255,.68);
-  --line:rgba(255,255,255,.12);
-  --header-h:74px;
+  --line:rgba(255,255,255,.10);
+  --gold:#c99a4a;
+  --gold2:#f2c879;
+  --panel:rgba(255,255,255,.055);
   --max:1180px;
-  --shadow:0 35px 90px rgba(0,0,0,.55);
 }
 
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:Arial, Helvetica, sans-serif;
 }
 
 html{
@@ -31,10 +30,10 @@ html{
 }
 
 body{
-  background:#050505;
+  font-family: Arial, Helvetica, sans-serif;
+  background:var(--bg);
   color:var(--text);
   overflow-x:hidden;
-  padding-top:var(--header-h);
 }
 
 a{
@@ -42,496 +41,613 @@ a{
   text-decoration:none;
 }
 
-img,
-video{
-  display:block;
+img,video{
   max-width:100%;
-}
-
-.container{
-  width:min(100% - 36px, var(--max));
-  margin:0 auto;
+  display:block;
 }
 
 /* HEADER */
-header{
+
+.header{
   position:fixed;
   top:0;
   left:0;
   width:100%;
-  height:var(--header-h);
-  z-index:1000;
-  background:rgba(0,0,0,.78);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.header-inner{
-  width:min(100% - 36px, var(--max));
-  height:100%;
-  margin:0 auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:24px;
-}
-
-.logo img{
-  height:38px;
-  width:auto;
-}
-
-.nav{
-  display:flex;
-  align-items:center;
-  gap:30px;
-}
-
-.nav a{
-  font-size:12px;
-  text-transform:uppercase;
-  letter-spacing:1.7px;
-  font-weight:800;
-  opacity:.86;
-  transition:.25s ease;
-}
-
-.nav a:hover{
-  opacity:1;
-  color:var(--gold);
-}
-
-.nav-cta{
-  padding:10px 18px;
-  border:1px solid var(--gold);
-  border-radius:999px;
-}
-
-.menu-toggle{
-  display:none;
-  background:none;
-  border:none;
-  color:#fff;
-  font-size:26px;
-  cursor:pointer;
-}
-
-/* HERO */
-.hero{
-  min-height:calc(100vh - var(--header-h));
-  position:relative;
+  height:78px;
+  z-index:100;
   display:flex;
   align-items:center;
   justify-content:center;
-  text-align:center;
-  overflow:hidden;
-  isolation:isolate;
+  background:linear-gradient(to bottom, rgba(0,0,0,.72), rgba(0,0,0,0));
 }
 
-.hero-bg{
+.nav{
+  width:100%;
+  max-width:1280px;
+  padding:0 44px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo img{
+  height:34px;
+  width:auto;
+}
+
+.menu{
+  display:flex;
+  align-items:center;
+  gap:34px;
+}
+
+.menu a{
+  font-size:12px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  font-weight:700;
+  color:rgba(255,255,255,.82);
+  transition:.25s;
+}
+
+.menu a:hover{
+  color:var(--gold2);
+}
+
+.nav-btn{
+  border:1px solid var(--gold);
+  color:white;
+  padding:11px 22px;
+  border-radius:999px;
+  font-size:12px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  font-weight:700;
+  transition:.25s;
+}
+
+.nav-btn:hover{
+  background:var(--gold);
+  color:#000;
+}
+
+/* HERO */
+
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  border-bottom:1px solid var(--line);
+}
+
+.hero-video{
   position:absolute;
   inset:0;
-  z-index:-4;
-}
-
-.hero-bg video{
   width:100%;
   height:100%;
   object-fit:cover;
-  filter:brightness(.42) contrast(1.08) saturate(.95);
+  z-index:0;
 }
 
 .hero::before{
   content:"";
   position:absolute;
   inset:0;
-  z-index:-3;
+  z-index:1;
   background:
-    radial-gradient(circle at center, rgba(0,0,0,.10), rgba(0,0,0,.82) 76%),
-    linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,.92));
+    radial-gradient(circle at center, rgba(0,0,0,.18), rgba(0,0,0,.78) 68%, #000 100%),
+    linear-gradient(to bottom, rgba(0,0,0,.38), rgba(0,0,0,.55), #050505 98%);
 }
 
 .hero-content{
-  width:min(100% - 32px, 920px);
-  padding:80px 0;
+  position:relative;
+  z-index:2;
+  text-align:center;
+  padding:0 22px;
+  margin-top:40px;
 }
 
 .hero h1{
-  font-size:clamp(44px, 7vw, 88px);
-  line-height:.9;
-  letter-spacing:7px;
+  font-size:clamp(42px, 7vw, 78px);
+  line-height:1;
+  letter-spacing:9px;
+  font-weight:900;
   text-transform:uppercase;
-  margin-bottom:14px;
-  text-shadow:0 10px 40px rgba(0,0,0,.55);
+  text-shadow:0 8px 40px rgba(0,0,0,.8);
 }
 
-.hero-sub{
-  font-family:Georgia, serif;
-  font-style:italic;
-  font-size:clamp(25px, 4vw, 43px);
-  color:var(--gold);
-  margin-bottom:28px;
+.signature{
+  margin-top:8px;
+  font-family:"Brush Script MT", cursive;
+  color:var(--gold2);
+  font-size:clamp(32px, 5vw, 58px);
+  font-weight:400;
+  letter-spacing:2px;
+  transform:rotate(-2deg);
 }
 
 .hero p{
-  color:rgba(255,255,255,.82);
-  font-size:16px;
-  margin-bottom:30px;
+  margin-top:24px;
+  font-size:15px;
+  color:rgba(255,255,255,.88);
 }
 
 .hero-actions{
+  margin-top:32px;
   display:flex;
   justify-content:center;
-  gap:16px;
+  gap:18px;
   flex-wrap:wrap;
 }
 
 .btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-height:46px;
-  padding:0 28px;
+  min-width:175px;
+  padding:14px 25px;
   border-radius:4px;
   border:1px solid var(--gold);
-  color:#fff;
   font-size:12px;
   text-transform:uppercase;
-  letter-spacing:1.4px;
   font-weight:800;
-  transition:.3s ease;
-  cursor:pointer;
+  letter-spacing:1.5px;
+  transition:.25s;
+  background:rgba(0,0,0,.35);
 }
 
-.btn-primary{
-  background:rgba(199,154,75,.18);
+.btn.primary{
+  background:rgba(201,154,74,.13);
 }
 
 .btn:hover{
   background:var(--gold);
   color:#000;
-  transform:translateY(-2px);
 }
 
-/* LENS / ORBIT SECTION */
-.lens-section{
+.scroll-icon{
+  position:absolute;
+  left:50%;
+  bottom:38px;
+  transform:translateX(-50%);
+  z-index:3;
+  width:23px;
+  height:39px;
+  border:1px solid rgba(255,255,255,.7);
+  border-radius:999px;
+}
+
+.scroll-icon::after{
+  content:"";
+  position:absolute;
+  top:8px;
+  left:50%;
+  width:4px;
+  height:7px;
+  background:white;
+  border-radius:99px;
+  transform:translateX(-50%);
+  animation:scroll 1.6s infinite;
+}
+
+@keyframes scroll{
+  0%{opacity:1; transform:translate(-50%,0);}
+  100%{opacity:0; transform:translate(-50%,12px);}
+}
+
+/* SECTIONS */
+
+.section{
   position:relative;
-  padding:120px 0 100px;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at center, rgba(199,154,75,.12), transparent 30%),
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,.04), transparent 20%),
-    linear-gradient(to bottom, #050505, #080808 50%, #050505);
-  border-top:1px solid rgba(255,255,255,.07);
-  border-bottom:1px solid rgba(255,255,255,.07);
+  padding:70px 24px;
+  border-bottom:1px solid var(--line);
 }
 
-.section-small{
+.section::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:radial-gradient(circle at center, rgba(201,154,74,.06), transparent 50%);
+}
+
+.inner{
+  max-width:var(--max);
+  margin:0 auto;
+  position:relative;
+  z-index:1;
+}
+
+.section-label{
   text-align:center;
-  color:var(--gold);
-  letter-spacing:4px;
+  color:rgba(255,255,255,.45);
+  font-size:11px;
   text-transform:uppercase;
-  font-size:12px;
+  letter-spacing:3px;
   font-weight:800;
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
 
 .section-title{
   text-align:center;
-  font-size:clamp(30px, 5vw, 48px);
+  font-size:clamp(26px, 4vw, 36px);
   text-transform:uppercase;
-  letter-spacing:6px;
-  margin-bottom:60px;
-}
-
-/* hlavný stage */
-.lens-stage{
-  position:relative;
-  width:min(760px, 96vw);
-  height:min(760px, 96vw);
-  margin:0 auto;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-/* kružnica */
-.orbit-ring{
-  position:absolute;
-  width:78%;
-  height:78%;
-  border-radius:50%;
-  border:1px dashed rgba(199,154,75,.38);
-  box-shadow:
-    0 0 80px rgba(199,154,75,.08),
-    inset 0 0 80px rgba(199,154,75,.05);
-  z-index:1;
-}
-
-/* rotujúci orbit systém */
-.orbit-system{
-  position:absolute;
-  inset:0;
-  border-radius:50%;
-  z-index:3;
-  animation:orbitRotate 26s linear infinite;
-  transform-origin:center;
-}
-
-/* jednotlivé položky na jednej kružnici */
-.orbit-service{
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:190px;
-  min-height:58px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:12px 18px;
-  border-radius:999px;
-  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:var(--shadow);
-  backdrop-filter:blur(12px);
-  color:#fff;
-  text-align:center;
-  font-size:15px;
+  letter-spacing:7px;
   font-weight:900;
-  letter-spacing:.4px;
-  line-height:1.2;
+  margin-bottom:34px;
+}
+
+/* SERVICES */
+
+.services-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:22px;
+}
+
+.service-card{
+  min-height:190px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.085), rgba(255,255,255,.025));
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:11px;
+  padding:34px 24px 28px;
+  text-align:center;
+  box-shadow:0 28px 70px rgba(0,0,0,.35);
+  transition:.3s;
+}
+
+.service-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(201,154,74,.5);
+}
+
+.service-icon{
+  font-size:43px;
+  color:var(--gold);
+  margin-bottom:22px;
+}
+
+.service-card h3{
+  font-size:16px;
   text-transform:uppercase;
+  letter-spacing:2px;
+  margin-bottom:14px;
 }
 
-/* dôležité: položky sa držia čitateľne, aj keď systém rotuje */
-.orbit-service span{
-  display:block;
-  animation:orbitCounter 26s linear infinite;
+.service-card p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.6;
 }
 
-/* rovnaká kružnica, rôzne uhly */
-.orbit-service:nth-child(1){
-  transform:translate(-50%,-50%) rotate(0deg) translateX(300px) rotate(0deg);
+/* LENS */
+
+.lens-section{
+  padding:40px 24px 72px;
 }
 
-.orbit-service:nth-child(2){
-  transform:translate(-50%,-50%) rotate(60deg) translateX(300px) rotate(-60deg);
+.lens-wrap{
+  max-width:980px;
+  margin:0 auto;
+  position:relative;
+  min-height:430px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.orbit-service:nth-child(3){
-  transform:translate(-50%,-50%) rotate(120deg) translateX(300px) rotate(-120deg);
-}
-
-.orbit-service:nth-child(4){
-  transform:translate(-50%,-50%) rotate(180deg) translateX(300px) rotate(-180deg);
-}
-
-.orbit-service:nth-child(5){
-  transform:translate(-50%,-50%) rotate(240deg) translateX(300px) rotate(-240deg);
-}
-
-.orbit-service:nth-child(6){
-  transform:translate(-50%,-50%) rotate(300deg) translateX(300px) rotate(-300deg);
-}
-
-/* objektív */
 .lens{
-  width:min(330px, 48vw);
-  aspect-ratio:1/1;
+  width:310px;
+  height:310px;
   border-radius:50%;
   position:relative;
-  z-index:6;
   background:
-    radial-gradient(circle at 36% 30%, rgba(255,255,255,.45) 0 4%, transparent 10%),
-    radial-gradient(circle at 60% 58%, rgba(70,120,255,.38), transparent 16%),
-    radial-gradient(circle, #030305 0 30%, #08080b 31% 43%, #15151a 44% 55%, #2b2a32 56% 66%, #090909 67% 100%);
-  border:2px solid rgba(199,154,75,.42);
+    radial-gradient(circle at center, #2d6fa8 0%, #0b1420 12%, #050505 24%, #191919 42%, #060606 62%, #1d1d1d 74%, #050505 100%);
   box-shadow:
-    inset 0 0 40px rgba(255,255,255,.08),
-    inset 0 0 100px rgba(0,0,0,.95),
-    0 0 0 18px rgba(255,255,255,.025),
-    0 25px 90px rgba(0,0,0,.75),
-    0 0 80px rgba(199,154,75,.14);
+    0 0 0 16px rgba(255,255,255,.035),
+    0 0 0 23px rgba(201,154,74,.12),
+    0 0 55px rgba(201,154,74,.25),
+    inset 0 0 40px rgba(255,255,255,.12);
 }
 
 .lens::before{
   content:"";
   position:absolute;
-  inset:12%;
+  inset:-62px;
   border-radius:50%;
-  border:1px solid rgba(255,255,255,.12);
-  box-shadow:inset 0 0 45px rgba(0,0,0,.9);
+  border:1px solid rgba(201,154,74,.55);
+  box-shadow:0 0 25px rgba(201,154,74,.20);
 }
 
 .lens::after{
-  content:"VB";
+  content:"";
+  position:absolute;
+  inset:83px;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 35%, rgba(255,255,255,.5), transparent 18%),
+             radial-gradient(circle, #366e9f 0%, #07111b 48%, #000 100%);
+  box-shadow:inset 0 0 35px rgba(0,0,0,.9);
+}
+
+.lens-item{
+  position:absolute;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  max-width:270px;
+}
+
+.lens-item.left{
+  text-align:right;
+  flex-direction:row-reverse;
+}
+
+.lens-item h3{
+  font-size:18px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  margin-bottom:8px;
+}
+
+.lens-item p{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.45;
+}
+
+.lens-icon{
+  flex:0 0 54px;
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  border:1px solid var(--gold);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--gold2);
+  background:rgba(201,154,74,.10);
+  box-shadow:0 0 25px rgba(201,154,74,.25);
+  font-size:23px;
+}
+
+.item-klip{
+  left:0;
+  top:70px;
+}
+
+.item-zaznam{
+  left:0;
+  bottom:82px;
+}
+
+.item-pozvanka{
+  right:0;
+  top:70px;
+}
+
+.item-uvodne{
+  right:0;
+  bottom:82px;
+}
+
+.more{
+  position:absolute;
+  bottom:12px;
+  left:50%;
+  transform:translateX(-50%);
+  text-align:center;
+  color:rgba(255,255,255,.55);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+}
+
+/* PORTFOLIO */
+
+.portfolio-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+}
+
+.work-card{
+  position:relative;
+  height:115px;
+  border-radius:8px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  background:#111;
+}
+
+.work-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:brightness(.78);
+  transition:.3s;
+}
+
+.work-card:hover img{
+  transform:scale(1.08);
+  filter:brightness(.95);
+}
+
+.play{
   position:absolute;
   inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:42px;
-  letter-spacing:6px;
-  font-weight:900;
-  color:rgba(255,255,255,.86);
 }
 
-/* jemná zlatá aura */
-.lens-glow{
-  position:absolute;
-  width:390px;
-  height:390px;
+.play span{
+  width:45px;
+  height:45px;
   border-radius:50%;
-  background:radial-gradient(circle, rgba(199,154,75,.18), transparent 65%);
-  filter:blur(24px);
-  z-index:2;
+  background:rgba(0,0,0,.58);
+  border:1px solid rgba(255,255,255,.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.discover{
-  position:absolute;
-  bottom:34px;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:7;
-  padding:12px 26px;
+.play span::before{
+  content:"";
+  margin-left:4px;
+  border-left:12px solid white;
+  border-top:8px solid transparent;
+  border-bottom:8px solid transparent;
+}
+
+.more-btn-wrap{
+  margin-top:28px;
+  display:flex;
+  justify-content:center;
+}
+
+.small-btn{
+  border:1px solid var(--gold);
   border-radius:999px;
-  background:rgba(0,0,0,.72);
-  border:1px solid rgba(199,154,75,.45);
-  color:var(--gold);
-  letter-spacing:3px;
+  padding:11px 42px;
   text-transform:uppercase;
   font-size:12px;
-  font-weight:900;
+  font-weight:800;
+  letter-spacing:1.5px;
+  transition:.25s;
 }
 
-/* PORTFOLIO */
-.portfolio{
-  padding:100px 0;
-  background:#050505;
-}
-
-.video-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:18px;
-  margin-top:40px;
-}
-
-.video-card{
-  position:relative;
-  border-radius:12px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.12);
-  background:#111;
-  aspect-ratio:16/9;
-  box-shadow:0 20px 50px rgba(0,0,0,.45);
-  transition:.35s ease;
-}
-
-.video-card:hover{
-  transform:translateY(-8px);
-  border-color:var(--gold);
-}
-
-.video-card iframe{
-  width:100%;
-  height:100%;
-  border:0;
-}
-
-.more-wrap{
-  display:flex;
-  justify-content:center;
-  margin-top:34px;
-}
-
-/* FOOTER */
-.footer{
-  border-top:1px solid rgba(255,255,255,.08);
-  padding:44px 0 28px;
-  background:#030303;
-}
-
-.footer-inner{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:30px;
-  align-items:center;
-}
-
-.footer-logo img{
-  height:44px;
-}
-
-.footer-center{
-  text-align:center;
-  color:rgba(255,255,255,.48);
-  font-size:13px;
-  line-height:1.8;
-}
-
-.footer-contact{
-  text-align:right;
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.8;
-}
-
-.socials{
-  margin-top:10px;
-  display:flex;
-  justify-content:flex-end;
-  gap:12px;
-}
-
-.socials a{
-  width:34px;
-  height:34px;
-  border:1px solid rgba(199,154,75,.45);
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:var(--gold);
-  font-size:13px;
-  transition:.25s ease;
-}
-
-.socials a:hover{
+.small-btn:hover{
   background:var(--gold);
   color:#000;
 }
 
-/* ANIMATIONS */
-@keyframes orbitRotate{
-  from{transform:rotate(0deg);}
-  to{transform:rotate(360deg);}
+/* FOOTER */
+
+.footer{
+  padding:32px 24px;
+  background:#030303;
 }
 
-@keyframes orbitCounter{
-  from{transform:rotate(0deg);}
-  to{transform:rotate(-360deg);}
+.footer-inner{
+  max-width:var(--max);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  align-items:center;
+  gap:24px;
 }
 
-.reveal{
-  opacity:0;
-  transform:translateY(30px);
-  transition:.8s ease;
+.footer-brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
 }
 
-.reveal.visible{
-  opacity:1;
-  transform:translateY(0);
+.footer-brand img{
+  width:48px;
+}
+
+.footer-brand strong{
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+}
+
+.footer-brand small{
+  display:block;
+  color:rgba(255,255,255,.55);
+  font-size:10px;
+  letter-spacing:1.5px;
+  margin-top:3px;
+}
+
+.copyright{
+  text-align:center;
+  color:rgba(255,255,255,.45);
+  font-size:12px;
+}
+
+.footer-contact{
+  justify-self:end;
+  color:rgba(255,255,255,.65);
+  font-size:13px;
+  line-height:1.8;
+}
+
+.socials{
+  margin-top:8px;
+  display:flex;
+  gap:10px;
+}
+
+.socials a{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  border:1px solid rgba(201,154,74,.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--gold2);
+  font-size:13px;
 }
 
 /* RESPONSIVE */
-@media(max-width:1000px){
-  .nav{
-    gap:18px;
+
+@media(max-width:980px){
+  .menu{
+    display:none;
   }
 
-  .video-grid{
-    grid-template-columns:1fr 1fr;
+  .services-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .portfolio-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .work-card{
+    height:160px;
+  }
+
+  .lens-wrap{
+    min-height:auto;
+    padding-top:40px;
+    flex-direction:column;
+    gap:24px;
+  }
+
+  .lens{
+    width:260px;
+    height:260px;
+    margin:30px 0;
+  }
+
+  .lens-item{
+    position:relative;
+    left:auto;
+    right:auto;
+    top:auto;
+    bottom:auto;
+    max-width:420px;
+    width:100%;
+    justify-content:center;
+    text-align:left;
+  }
+
+  .lens-item.left{
+    text-align:left;
+    flex-direction:row;
+  }
+
+  .more{
+    position:relative;
+    bottom:auto;
+    left:auto;
+    transform:none;
+    margin-top:10px;
   }
 
   .footer-inner{
@@ -539,8 +655,12 @@ header{
     text-align:center;
   }
 
+  .footer-brand{
+    justify-content:center;
+  }
+
   .footer-contact{
-    text-align:center;
+    justify-self:center;
   }
 
   .socials{
@@ -548,309 +668,229 @@ header{
   }
 }
 
-@media(max-width:820px){
-  .menu-toggle{
-    display:block;
-  }
-
+@media(max-width:620px){
   .nav{
-    position:absolute;
-    top:100%;
-    left:0;
-    width:100%;
+    padding:0 20px;
+  }
+
+  .nav-btn{
     display:none;
-    flex-direction:column;
-    align-items:center;
-    gap:0;
-    background:rgba(0,0,0,.96);
-    border-bottom:1px solid rgba(255,255,255,.08);
-    padding:16px;
   }
 
-  .nav.active{
-    display:flex;
-  }
-
-  .nav a{
-    width:100%;
-    text-align:center;
-    padding:14px;
-  }
-}
-
-@media(max-width:700px){
   .hero h1{
-    letter-spacing:3px;
+    letter-spacing:4px;
   }
 
-  .lens-stage{
-    width:100%;
-    height:720px;
+  .signature{
+    font-size:36px;
   }
 
-  .orbit-ring{
-    width:86%;
-    height:86%;
-  }
-
-  .orbit-service{
-    width:145px;
-    min-height:52px;
-    font-size:12px;
-    padding:10px 12px;
-  }
-
-  .orbit-service:nth-child(1){
-    transform:translate(-50%,-50%) rotate(0deg) translateX(150px) rotate(0deg);
-  }
-
-  .orbit-service:nth-child(2){
-    transform:translate(-50%,-50%) rotate(60deg) translateX(150px) rotate(-60deg);
-  }
-
-  .orbit-service:nth-child(3){
-    transform:translate(-50%,-50%) rotate(120deg) translateX(150px) rotate(-120deg);
-  }
-
-  .orbit-service:nth-child(4){
-    transform:translate(-50%,-50%) rotate(180deg) translateX(150px) rotate(-180deg);
-  }
-
-  .orbit-service:nth-child(5){
-    transform:translate(-50%,-50%) rotate(240deg) translateX(150px) rotate(-240deg);
-  }
-
-  .orbit-service:nth-child(6){
-    transform:translate(-50%,-50%) rotate(300deg) translateX(150px) rotate(-300deg);
-  }
-
-  .lens{
-    width:220px;
-  }
-
-  .lens-glow{
-    width:260px;
-    height:260px;
-  }
-
-  .discover{
-    bottom:60px;
-  }
-
-  .video-grid{
+  .services-grid{
     grid-template-columns:1fr;
+  }
+
+  .portfolio-grid{
+    grid-template-columns:1fr;
+  }
+
+  .work-card{
+    height:190px;
+  }
+
+  .section-title{
+    letter-spacing:4px;
   }
 }
 </style>
 </head>
+
 <body>
 
-<header>
-  <div class="header-inner">
+<header class="header">
+  <nav class="nav">
     <a href="index.html" class="logo">
       <img src="logo_1.png" alt="Viktor Boguský logo">
     </a>
 
-    <button class="menu-toggle" aria-label="Menu">☰</button>
-
-    <nav class="nav">
+    <div class="menu">
       <a href="index.html">Domov</a>
-      <a href="sluzby.html">Služby</a>
-      <a href="duo.html">DUO balíky</a>
-      <a href="cennik.html">Cenník</a>
-      <a href="portfolio.html">Portfólio</a>
+      <a href="#sluzby">Služby</a>
+      <a href="duo.html">Duo balíky</a>
+      <a href="#portfolio">Portfólio</a>
       <a href="omne.html">O mne</a>
       <a href="kontakt.html">Kontakt</a>
-      <a href="objednavka.html" class="nav-cta">Rezervovať termín</a>
-    </nav>
-  </div>
+    </div>
+
+    <a href="rezervacia.html" class="nav-btn">Rezervovať termín</a>
+  </nav>
 </header>
 
-<section class="hero">
-  <div class="hero-bg">
-    <video autoplay muted loop playsinline>
-      <source src="video_1.mov" type="video/mp4">
-    </video>
-  </div>
+<main>
 
-  <div class="hero-content reveal">
+<section class="hero" id="domov">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="video_1.mov" type="video/quicktime">
+    <source src="video_1.mp4" type="video/mp4">
+  </video>
+
+  <div class="hero-content">
     <h1>Viktor Boguský</h1>
-    <div class="hero-sub">Kamera &amp; Postprodukcia</div>
+    <div class="signature">Kamera & Postprodukcia</div>
     <p>Zachytím momenty, ktoré už nikdy nezažiješ znova.</p>
 
     <div class="hero-actions">
-      <a href="portfolio.html" class="btn btn-primary">Pozrieť portfólio</a>
-      <a href="objednavka.html" class="btn">Rezervovať termín</a>
+      <a href="#portfolio" class="btn primary">Pozrieť portfólio</a>
+      <a href="rezervacia.html" class="btn">Rezervovať termín</a>
+    </div>
+  </div>
+
+  <div class="scroll-icon"></div>
+</section>
+
+<section class="section" id="sluzby">
+  <div class="inner">
+    <div class="section-label">Služby</div>
+    <h2 class="section-title">Čo pre vás tvorím</h2>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">▱</div>
+        <h3>Stužkové</h3>
+        <p>Každý detail vašej stužkovej premeníme na nezabudnuteľný film, ku ktorému sa budete radi vracať.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">◍</div>
+        <h3>Svadby</h3>
+        <p>Zachytím váš svadobný deň tak, aby ste mohli prežiť všetky tie emócie znova a znova.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">▣</div>
+        <h3>Promo videá</h3>
+        <p>Videá, ktoré predstavia váš projekt, značku alebo podujatie v tom najlepšom svetle.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">✦</div>
+        <h3>Postprodukcia</h3>
+        <p>Strih, color grading, sound design — dám vášmu záberom finálnu podobu.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="lens-section">
-  <div class="container">
-    <div class="section-small reveal">Výstupy podľa balíka</div>
-    <h2 class="section-title reveal">Čo môže obsahovať video</h2>
+<section class="section lens-section">
+  <div class="inner">
+    <div class="lens-wrap">
 
-    <div class="lens-stage reveal">
-      <div class="orbit-ring"></div>
-      <div class="lens-glow"></div>
+      <div class="lens-item left item-klip">
+        <div class="lens-icon">▣</div>
+        <div>
+          <h3>Klip</h3>
+          <p>Cinematický zostrih plný najlepších momentov.</p>
+        </div>
+      </div>
 
-      <div class="orbit-system">
-        <div class="orbit-service"><span>5–10 minútový klip</span></div>
-        <div class="orbit-service"><span>Záznam</span></div>
-        <div class="orbit-service"><span>45 minútový film</span></div>
-        <div class="orbit-service"><span>Pozvánka</span></div>
-        <div class="orbit-service"><span>Úvodné video</span></div>
-        <div class="orbit-service"><span>Kompletný balík</span></div>
+      <div class="lens-item left item-zaznam">
+        <div class="lens-icon">◉</div>
+        <div>
+          <h3>Záznam</h3>
+          <p>Kompletný záznam celej akcie od začiatku do konca.</p>
+        </div>
       </div>
 
       <div class="lens"></div>
-      <div class="discover">Objav viac</div>
+
+      <div class="lens-item item-pozvanka">
+        <div class="lens-icon">✉</div>
+        <div>
+          <h3>Pozvánka</h3>
+          <p>Štýlová pozvánka na mieru pre vašu udalosť.</p>
+        </div>
+      </div>
+
+      <div class="lens-item item-uvodne">
+        <div class="lens-icon">▶</div>
+        <div>
+          <h3>Úvodné video</h3>
+          <p>Krátke úvodné video, ktoré predstaví vašu akciu.</p>
+        </div>
+      </div>
+
+      <div class="more">Objav viac</div>
     </div>
   </div>
 </section>
 
-<section class="portfolio">
-  <div class="container">
-    <div class="section-small reveal">Portfólio</div>
-    <h2 class="section-title reveal">Najnovšie práce</h2>
+<section class="section" id="portfolio">
+  <div class="inner">
+    <div class="section-label">Portfólio</div>
+    <h2 class="section-title">Najnovšie práce</h2>
 
-    <div class="video-grid">
-      <div class="video-card reveal">
-        <iframe src="https://www.youtube.com/embed/3zES1AlxCd4?rel=0" title="Stužková slávnosť" allowfullscreen></iframe>
-      </div>
+    <div class="portfolio-grid">
+      <a href="#" class="work-card">
+        <img src="praca_1.jpg" alt="Najnovšia práca">
+        <div class="play"><span></span></div>
+      </a>
 
-      <div class="video-card reveal">
-        <iframe src="https://www.youtube.com/embed/V8z1SuHkfCk?rel=0" title="Stužková slávnosť" allowfullscreen></iframe>
-      </div>
+      <a href="#" class="work-card">
+        <img src="praca_2.jpg" alt="Najnovšia práca">
+        <div class="play"><span></span></div>
+      </a>
 
-      <div class="video-card reveal">
-        <iframe src="https://www.youtube.com/embed/LiYAjlk7jZg?rel=0" title="Dokumentárny film NIMA" allowfullscreen></iframe>
-      </div>
+      <a href="#" class="work-card">
+        <img src="praca_3.jpg" alt="Najnovšia práca">
+        <div class="play"><span></span></div>
+      </a>
 
-      <div class="video-card reveal">
-        <iframe src="https://www.youtube.com/embed/9Z8BojDP5no?rel=0" title="Dronové zábery Levoča" allowfullscreen></iframe>
-      </div>
+      <a href="#" class="work-card">
+        <img src="praca_4.jpg" alt="Najnovšia práca">
+        <div class="play"><span></span></div>
+      </a>
+
+      <a href="#" class="work-card">
+        <img src="praca_5.jpg" alt="Najnovšia práca">
+        <div class="play"><span></span></div>
+      </a>
     </div>
 
-    <div class="more-wrap reveal">
-      <a href="portfolio.html" class="btn">Zobraziť viac</a>
+    <div class="more-btn-wrap">
+      <a href="portfolio.html" class="small-btn">Zobraziť viac</a>
     </div>
   </div>
 </section>
+
+</main>
 
 <footer class="footer">
-  <div class="container footer-inner">
-    <div class="footer-logo">
+  <div class="footer-inner">
+
+    <div class="footer-brand">
       <img src="logo_1.png" alt="Viktor Boguský logo">
+      <div>
+        <strong>Viktor Boguský</strong>
+        <small>Kamera & Postprodukcia</small>
+      </div>
     </div>
 
-    <div class="footer-center">
-      <p>© 2026 Viktor Boguský. Všetky práva vyhradené.</p>
-      <p><a href="gdpr.html">GDPR</a> | <a href="podmienky.html">Obchodné podmienky</a></p>
+    <div class="copyright">
+      © 2026 Viktor Boguský. Všetky práva vyhradené.
     </div>
 
     <div class="footer-contact">
-      <p>kontakt@viktorbogusky.sk</p>
-      <p>+421 948 933 109</p>
+      <div>kontakt@viktorbogusky.sk</div>
+      <div>+421 904 123 456</div>
 
       <div class="socials">
-        <a href="https://www.instagram.com/vittquoo/" target="_blank">IG</a>
-        <a href="https://www.tiktok.com/@viktorbogusky" target="_blank">TT</a>
-        <a href="https://www.facebook.com/profile.php?id=100079203706823" target="_blank">FB</a>
+        <a href="#">IG</a>
+        <a href="#">TT</a>
+        <a href="#">YT</a>
       </div>
     </div>
+
   </div>
 </footer>
-<script>
 
-/* ======================
-   MOBILE MENU
-====================== */
-const toggle = document.querySelector('.menu-toggle');
-const nav = document.querySelector('.nav');
-
-if(toggle){
-  toggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    nav.classList.toggle('active');
-  });
-}
-
-document.addEventListener('click', () => {
-  nav.classList.remove('active');
-});
-
-
-/* ======================
-   REVEAL ANIMATIONS
-====================== */
-const revealItems = document.querySelectorAll('.reveal');
-
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      entry.target.classList.add('visible');
-    }
-  });
-}, {
-  threshold: 0.12
-});
-
-revealItems.forEach(el => revealObserver.observe(el));
-
-
-/* ======================
-   ORBIT SPEED CONTROL
-====================== */
-const orbit = document.querySelector('.orbit-system');
-
-const orbitObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      orbit.style.animationDuration = "18s"; // rýchlejšie keď viditeľné
-    } else {
-      orbit.style.animationDuration = "28s"; // pomalšie mimo
-    }
-  });
-}, { threshold: 0.4 });
-
-if(orbit){
-  orbitObserver.observe(orbit);
-}
-
-
-/* ======================
-   HERO PARALLAX (LIGHT)
-====================== */
-const hero = document.querySelector('.hero');
-
-window.addEventListener('mousemove', (e) => {
-  if(window.innerWidth < 768) return;
-
-  const x = (e.clientX / window.innerWidth - 0.5);
-  const y = (e.clientY / window.innerHeight - 0.5);
-
-  hero.style.transform = `translate3d(${x * 6}px, ${y * 4}px, 0)`;
-});
-
-window.addEventListener('mouseleave', () => {
-  hero.style.transform = 'translate3d(0,0,0)';
-});
-
-
-/* ======================
-   SMOOTH SCROLL (buttons)
-====================== */
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', (e) => {
-    const target = document.querySelector(link.getAttribute('href'));
-    if(target){
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
-  });
-});
-
-</script>
 </body>
 </html>
