@@ -702,7 +702,6 @@ ul{list-style:none;}
     <h2 class="section-title reveal">Stužkové DUO balíky</h2>
 
     <div class="duo-grid">
-
       <div class="duo-card reveal">
         <div class="duo-tag">Základ</div>
         <h3>Duo Start</h3>
@@ -712,7 +711,7 @@ ul{list-style:none;}
           <li>Pozvánka alebo úvodné video</li>
           <li>Natáčanie určitých častí podľa dohody</li>
           <li>150–250 upravených fotografií</li>
-          <li>Odovzdanie na USB</li>
+          <li>1 USB v krabičke zdarma</li>
         </ul>
         <button class="duo-btn" onclick="selectPackage('Stužková - Duo Start - 999 €')">Rezervovať</button>
       </div>
@@ -726,7 +725,7 @@ ul{list-style:none;}
           <li>Pozvánka alebo klip</li>
           <li>250–400 upravených fotografií</li>
           <li>Online galéria</li>
-          <li>Odovzdanie na USB</li>
+          <li>1 USB v krabičke zdarma</li>
         </ul>
         <button class="duo-btn" onclick="selectPackage('Stužková - Duo Memory - 1199 €')">Rezervovať</button>
       </div>
@@ -740,11 +739,10 @@ ul{list-style:none;}
           <li>Pozvánka alebo úvodné video</li>
           <li>400–600 upravených fotografií</li>
           <li>Online galéria</li>
-          <li>Odovzdanie na USB</li>
+          <li>1 USB v krabičke zdarma</li>
         </ul>
         <button class="duo-btn" onclick="selectPackage('Stužková - Duo Premium - 1399 €')">Rezervovať</button>
       </div>
-
     </div>
   </div>
 </section>
@@ -755,7 +753,6 @@ ul{list-style:none;}
     <h2 class="section-title reveal">Svadobné DUO balíky</h2>
 
     <div class="duo-grid">
-
       <div class="duo-card reveal">
         <div class="duo-tag">Start</div>
         <h3>Wedding Duo Start</h3>
@@ -764,7 +761,7 @@ ul{list-style:none;}
           <li>5–10 minútový klip</li>
           <li>30–45 minútový film</li>
           <li>200–300 upravených fotografií</li>
-          <li>Odovzdanie na USB</li>
+          <li>1 USB v krabičke zdarma</li>
           <li>Online galéria</li>
           <li>10 vytlačených fotografií</li>
         </ul>
@@ -779,7 +776,7 @@ ul{list-style:none;}
           <li>5–10 minútový klip</li>
           <li>30–45 minútový film</li>
           <li>300–450 upravených fotografií</li>
-          <li>Odovzdanie na USB</li>
+          <li>1 USB v krabičke zdarma</li>
           <li>Online galéria</li>
           <li>20 vytlačených fotografií</li>
         </ul>
@@ -794,13 +791,12 @@ ul{list-style:none;}
           <li>5–10 minútový klip</li>
           <li>Záznam v plnej dĺžke</li>
           <li>450–600 upravených fotografií</li>
-          <li>Odovzdanie na USB</li>
+          <li>1 USB v krabičke zdarma</li>
           <li>Online galéria</li>
           <li>30 vytlačených fotografií</li>
         </ul>
         <button class="duo-btn" onclick="selectPackage('Svadba - Wedding Duo Premium - 1199 €')">Rezervovať</button>
       </div>
-
     </div>
   </div>
 </section>
@@ -812,7 +808,7 @@ ul{list-style:none;}
 
     <p class="section-lead reveal">
       Vyskladajte si vlastnú kombináciu pre stužkovú alebo svadbu.
-      Cena sa automaticky prepočíta podľa vybraných položiek.
+      1 USB v krabičke je zdarma, každé ďalšie USB v krabičke je +20 € a USB bez krabičky je +10 €/ks.
     </p>
 
     <div class="builders-grid">
@@ -850,8 +846,13 @@ ul{list-style:none;}
         </div>
 
         <div class="builder-item">
-          <span>USB odovzdanie</span>
-          <input type="checkbox" data-builder="stuzkova" data-price="69">
+          <span>USB v krabičke / 1 ks zdarma, ďalšie 20 €/ks</span>
+          <input type="number" id="stuzkovaUsbBox" value="1" min="1">
+        </div>
+
+        <div class="builder-item">
+          <span>USB bez krabičky / 10 €/ks</span>
+          <input type="number" id="stuzkovaUsb" value="0" min="0">
         </div>
 
         <div class="builder-total">
@@ -887,11 +888,6 @@ ul{list-style:none;}
         </div>
 
         <div class="builder-item">
-          <span>Odovzdanie na USB</span>
-          <input type="checkbox" data-builder="svadba" data-price="40">
-        </div>
-
-        <div class="builder-item">
           <span>Online galéria</span>
           <input type="checkbox" data-builder="svadba" data-price="50">
         </div>
@@ -903,6 +899,16 @@ ul{list-style:none;}
             <option value="50">20 ks / 50 €</option>
             <option value="60">30 ks / 60 €</option>
           </select>
+        </div>
+
+        <div class="builder-item">
+          <span>USB v krabičke / 1 ks zdarma, ďalšie 20 €/ks</span>
+          <input type="number" id="svadbaUsbBox" value="1" min="1">
+        </div>
+
+        <div class="builder-item">
+          <span>USB bez krabičky / 10 €/ks</span>
+          <input type="number" id="svadbaUsb" value="0" min="0">
         </div>
 
         <div class="builder-total">
@@ -928,8 +934,9 @@ ul{list-style:none;}
         <input placeholder="Dátum akcie" name="datum">
         <input placeholder="Typ akcie / škola / svadba" name="typ_akcie">
         <input placeholder="Miesto konania" name="miesto">
-        <input placeholder="Mesto" name="mesto">
+        <input placeholder="Adresa bydliska" name="adresa_bydliska">
         <input placeholder="PSČ" name="psc">
+        <input placeholder="Zľavový kód" name="zlavovy_kod">
         <textarea placeholder="Doplňujúce informácie" name="poznamka"></textarea>
 
         <button type="submit" class="duo-btn primary">Odoslať rezerváciu</button>
@@ -1002,6 +1009,15 @@ function calculateStuzkova(){
 
   total += Number(document.getElementById('stuzkovaPhotos').value || 0);
 
+  const usbBox = Number(document.getElementById('stuzkovaUsbBox').value || 1);
+  const usb = Number(document.getElementById('stuzkovaUsb').value || 0);
+
+  if(usbBox > 1){
+    total += (usbBox - 1) * 20;
+  }
+
+  total += usb * 10;
+
   document.getElementById('stuzkovaTotal').textContent = Math.round(total);
 }
 
@@ -1018,15 +1034,24 @@ function calculateSvadba(){
   total += Number(document.getElementById('svadbaPhotos').value || 0);
   total += Number(document.getElementById('svadbaPrints').value || 0);
 
+  const usbBox = Number(document.getElementById('svadbaUsbBox').value || 1);
+  const usb = Number(document.getElementById('svadbaUsb').value || 0);
+
+  if(usbBox > 1){
+    total += (usbBox - 1) * 20;
+  }
+
+  total += usb * 10;
+
   document.getElementById('svadbaTotal').textContent = Math.round(total);
 }
 
-document.querySelectorAll('[data-builder="stuzkova"], #stuzkovaPhotos').forEach(el => {
+document.querySelectorAll('[data-builder="stuzkova"], #stuzkovaPhotos, #stuzkovaUsbBox, #stuzkovaUsb').forEach(el => {
   el.addEventListener('change', calculateStuzkova);
   el.addEventListener('input', calculateStuzkova);
 });
 
-document.querySelectorAll('[data-builder="svadba"], #svadbaFilm, #svadbaPhotos, #svadbaPrints').forEach(el => {
+document.querySelectorAll('[data-builder="svadba"], #svadbaFilm, #svadbaPhotos, #svadbaPrints, #svadbaUsbBox, #svadbaUsb').forEach(el => {
   el.addEventListener('change', calculateSvadba);
   el.addEventListener('input', calculateSvadba);
 });
@@ -1069,6 +1094,9 @@ function selectCustom(type){
     });
 
     details.push('Fotky: ' + document.getElementById('stuzkovaPhotos').selectedOptions[0].text);
+    details.push('USB v krabičke: ' + document.getElementById('stuzkovaUsbBox').value + ' ks');
+    details.push('USB bez krabičky: ' + document.getElementById('stuzkovaUsb').value + ' ks');
+
     price = document.getElementById('stuzkovaTotal').textContent;
   }
 
@@ -1085,6 +1113,9 @@ function selectCustom(type){
     details.push('Film / záznam: ' + document.getElementById('svadbaFilm').selectedOptions[0].text);
     details.push('Fotky: ' + document.getElementById('svadbaPhotos').selectedOptions[0].text);
     details.push('Vytlačené fotografie: ' + document.getElementById('svadbaPrints').selectedOptions[0].text);
+    details.push('USB v krabičke: ' + document.getElementById('svadbaUsbBox').value + ' ks');
+    details.push('USB bez krabičky: ' + document.getElementById('svadbaUsb').value + ' ks');
+
     price = document.getElementById('svadbaTotal').textContent;
   }
 
