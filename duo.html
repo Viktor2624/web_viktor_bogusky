@@ -17,12 +17,7 @@
   --max:1180px;
 }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 
 body{
@@ -32,16 +27,8 @@ body{
   overflow-x:hidden;
 }
 
-a{
-  color:inherit;
-  text-decoration:none;
-}
-
-ul{
-  list-style:none;
-}
-
-/* HEADER */
+a{color:inherit;text-decoration:none;}
+ul{list-style:none;}
 
 .header{
   position:absolute;
@@ -65,10 +52,7 @@ ul{
   align-items:center;
 }
 
-.logo img{
-  height:48px;
-  width:auto;
-}
+.logo img{height:48px;width:auto;}
 
 .menu{
   grid-column:2;
@@ -87,11 +71,7 @@ ul{
   transition:.25s;
 }
 
-.menu a:hover{
-  color:var(--gold2);
-}
-
-/* HERO */
+.menu a:hover{color:var(--gold2);}
 
 .hero{
   position:relative;
@@ -236,8 +216,6 @@ ul{
   100%{opacity:0; transform:translate(-50%,12px);}
 }
 
-/* SECTIONS */
-
 .section{
   position:relative;
   padding:76px 24px;
@@ -287,8 +265,6 @@ ul{
   line-height:1.8;
 }
 
-/* DUO CARDS */
-
 .duo-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -297,9 +273,8 @@ ul{
 
 .duo-card{
   position:relative;
-  min-height:430px;
-  background:
-    linear-gradient(145deg, rgba(255,255,255,.085), rgba(255,255,255,.025));
+  min-height:450px;
+  background:linear-gradient(145deg, rgba(255,255,255,.085), rgba(255,255,255,.025));
   border:1px solid rgba(255,255,255,.08);
   border-radius:13px;
   padding:30px 24px;
@@ -324,10 +299,7 @@ ul{
 
 .duo-card.best{
   border-color:rgba(201,154,74,.65);
-  box-shadow:
-    0 0 0 1px rgba(201,154,74,.15),
-    0 0 45px rgba(201,154,74,.16),
-    0 28px 80px rgba(0,0,0,.45);
+  box-shadow:0 0 0 1px rgba(201,154,74,.15), 0 0 45px rgba(201,154,74,.16), 0 28px 80px rgba(0,0,0,.45);
 }
 
 .duo-tag{
@@ -395,18 +367,28 @@ ul{
   width:100%;
 }
 
-/* BUILDER */
+.builders-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:26px;
+  align-items:start;
+}
 
 .builder-box,
 .form-section{
-  max-width:820px;
-  margin:0 auto;
-  background:
-    linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
+  background:linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
   border:1px solid rgba(201,154,74,.28);
   border-radius:13px;
   padding:30px;
   box-shadow:0 0 45px rgba(201,154,74,.08);
+}
+
+.builder-title{
+  font-size:22px;
+  text-transform:uppercase;
+  letter-spacing:3px;
+  margin-bottom:20px;
+  color:var(--gold2);
 }
 
 .builder-item{
@@ -433,7 +415,8 @@ ul{
 .builder-item input[type="number"],
 .builder-item input[type="text"],
 .builder-item select,
-.form-section input{
+.form-section input,
+.form-section textarea{
   width:220px;
   background:#080808;
   border:1px solid rgba(255,255,255,.14);
@@ -443,9 +426,16 @@ ul{
   outline:none;
 }
 
+.form-section textarea{
+  width:100%;
+  min-height:90px;
+  resize:vertical;
+}
+
 .builder-item input:focus,
 .builder-item select:focus,
-.form-section input:focus{
+.form-section input:focus,
+.form-section textarea:focus{
   border-color:rgba(201,154,74,.65);
 }
 
@@ -461,7 +451,10 @@ ul{
 
 .form-section{
   display:none;
-  margin-top:38px;
+  margin-top:44px;
+  max-width:820px;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 .form-section h3{
@@ -486,8 +479,6 @@ ul{
   width:100%;
 }
 
-/* FOOTER */
-
 .footer{
   padding:34px 24px;
   background:#030303;
@@ -508,9 +499,7 @@ ul{
   gap:14px;
 }
 
-.footer-brand img{
-  width:48px;
-}
+.footer-brand img{width:48px;}
 
 .footer-brand strong{
   font-size:12px;
@@ -526,9 +515,7 @@ ul{
   margin-top:3px;
 }
 
-.footer-center{
-  text-align:center;
-}
+.footer-center{text-align:center;}
 
 .copyright{
   color:rgba(255,255,255,.45);
@@ -550,9 +537,7 @@ ul{
   transition:.25s;
 }
 
-.footer-links a:hover{
-  color:var(--gold2);
-}
+.footer-links a:hover{color:var(--gold2);}
 
 .footer-contact{
   justify-self:end;
@@ -579,8 +564,6 @@ ul{
   font-size:13px;
 }
 
-/* ANIMATION */
-
 .reveal{
   opacity:0;
   transform:translateY(34px);
@@ -592,39 +575,18 @@ ul{
   transform:translateY(0);
 }
 
-/* RESPONSIVE */
-
 @media(max-width:1050px){
-  .menu{
-    display:none;
-  }
-
-  .nav{
-    display:flex;
-    justify-content:space-between;
-  }
-
-  .duo-grid{
-    grid-template-columns:1fr;
-  }
+  .menu{display:none;}
+  .nav{display:flex;justify-content:space-between;}
+  .duo-grid{grid-template-columns:1fr;}
+  .builders-grid{grid-template-columns:1fr;}
 }
 
 @media(max-width:700px){
-  .nav{
-    padding:0 20px;
-  }
-
-  .logo img{
-    height:42px;
-  }
-
-  .hero h1{
-    letter-spacing:4px;
-  }
-
-  .signature{
-    font-size:36px;
-  }
+  .nav{padding:0 20px;}
+  .logo img{height:42px;}
+  .hero h1{letter-spacing:4px;}
+  .signature{font-size:36px;}
 
   .hero-actions{
     flex-direction:column;
@@ -637,13 +599,8 @@ ul{
     max-width:280px;
   }
 
-  .section{
-    padding:64px 18px;
-  }
-
-  .section-title{
-    letter-spacing:4px;
-  }
+  .section{padding:64px 18px;}
+  .section-title{letter-spacing:4px;}
 
   .builder-item{
     flex-direction:column;
@@ -671,17 +628,9 @@ ul{
     text-align:center;
   }
 
-  .footer-brand{
-    justify-content:center;
-  }
-
-  .footer-contact{
-    justify-self:center;
-  }
-
-  .socials{
-    justify-content:center;
-  }
+  .footer-brand{justify-content:center;}
+  .footer-contact{justify-self:center;}
+  .socials{justify-content:center;}
 }
 </style>
 </head>
@@ -719,15 +668,15 @@ ul{
     <h1>DUO Balíky</h1>
     <div class="signature">Kameraman + Fotografka</div>
     <p>
-      Kompletné zachytenie stužkovej vo fotkách aj vo videu.
+      Kompletné zachytenie stužkovej alebo svadby vo fotkách aj vo videu.
       Vyberte si hotový balík alebo si vyskladajte vlastný podľa toho,
       čo chcete mať zachytené.
     </p>
 
     <div class="hero-actions">
-      <a href="#duo-packages" class="btn primary">Pozrieť balíky</a>
-      <a href="#custom-builder" class="btn">Vyskladať custom balík</a>
-      <a href="rezervacia.html" class="btn">Rezervovať termín</a>
+      <a href="#stuzkove-duo" class="btn primary">Stužkové DUO</a>
+      <a href="#svadobne-duo" class="btn">Svadobné DUO</a>
+      <a href="#custom-builder" class="btn">Custom balík</a>
     </div>
   </div>
 
@@ -741,59 +690,115 @@ ul{
 
     <p class="section-lead reveal">
       Spojenie kameramana a fotografky znamená jednoduchšiu komunikáciu,
-      lepší priebeh počas večera a jednotný výsledok. Fotky zachytia okamihy,
-      video atmosféru, emócie a celý príbeh vašej stužkovej.
+      lepší priebeh počas dňa a jednotný výsledok. Fotky zachytia okamihy,
+      video atmosféru, emócie a celý príbeh udalosti.
     </p>
   </div>
 </section>
 
-<section class="section" id="duo-packages">
+<section class="section" id="stuzkove-duo">
   <div class="inner">
-    <div class="section-label reveal">Hotové balíky</div>
-    <h2 class="section-title reveal">Vyberte si balík</h2>
+    <div class="section-label reveal">Stužkové</div>
+    <h2 class="section-title reveal">Stužkové DUO balíky</h2>
 
     <div class="duo-grid">
 
       <div class="duo-card reveal">
         <div class="duo-tag">Základ</div>
         <h3>Duo Start</h3>
-        <div class="duo-price">350 €</div>
+        <div class="duo-price">999 €</div>
         <ul>
           <li>5–10 min klip</li>
           <li>Pozvánka alebo úvodné video</li>
           <li>Natáčanie určitých častí podľa dohody</li>
-          <li>150–250 fotiek</li>
+          <li>150–250 upravených fotografií</li>
           <li>Odovzdanie na USB</li>
         </ul>
-        <button class="duo-btn" onclick="selectPackage('Duo Start - 350 €')">Rezervovať</button>
+        <button class="duo-btn" onclick="selectPackage('Stužková - Duo Start - 999 €')">Rezervovať</button>
       </div>
 
       <div class="duo-card reveal">
         <div class="duo-tag">Najčastejšie</div>
         <h3>Duo Memory</h3>
-        <div class="duo-price">550 €</div>
+        <div class="duo-price">1199 €</div>
         <ul>
           <li>Záznam v plnej dĺžke</li>
           <li>Pozvánka alebo klip</li>
-          <li>250–400 fotiek</li>
+          <li>250–400 upravených fotografií</li>
           <li>Online galéria</li>
           <li>Odovzdanie na USB</li>
         </ul>
-        <button class="duo-btn" onclick="selectPackage('Duo Memory - 550 €')">Rezervovať</button>
+        <button class="duo-btn" onclick="selectPackage('Stužková - Duo Memory - 1199 €')">Rezervovať</button>
       </div>
 
       <div class="duo-card best reveal">
         <div class="duo-tag">Premium</div>
         <h3>Duo Premium</h3>
-        <div class="duo-price">700 €</div>
+        <div class="duo-price">1399 €</div>
         <ul>
           <li>Klip + záznam v plnej dĺžke</li>
           <li>Pozvánka alebo úvodné video</li>
-          <li>400–600 fotiek</li>
+          <li>400–600 upravených fotografií</li>
           <li>Online galéria</li>
           <li>Odovzdanie na USB</li>
         </ul>
-        <button class="duo-btn" onclick="selectPackage('Duo Premium - 700 €')">Rezervovať</button>
+        <button class="duo-btn" onclick="selectPackage('Stužková - Duo Premium - 1399 €')">Rezervovať</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" id="svadobne-duo">
+  <div class="inner">
+    <div class="section-label reveal">Svadby</div>
+    <h2 class="section-title reveal">Svadobné DUO balíky</h2>
+
+    <div class="duo-grid">
+
+      <div class="duo-card reveal">
+        <div class="duo-tag">Start</div>
+        <h3>Wedding Duo Start</h3>
+        <div class="duo-price">999 €</div>
+        <ul>
+          <li>5–10 minútový klip</li>
+          <li>30–45 minútový film</li>
+          <li>200–300 upravených fotografií</li>
+          <li>Odovzdanie na USB</li>
+          <li>Online galéria</li>
+          <li>10 vytlačených fotografií</li>
+        </ul>
+        <button class="duo-btn" onclick="selectPackage('Svadba - Wedding Duo Start - 999 €')">Rezervovať</button>
+      </div>
+
+      <div class="duo-card reveal">
+        <div class="duo-tag">Memory</div>
+        <h3>Wedding Duo Memory</h3>
+        <div class="duo-price">1099 €</div>
+        <ul>
+          <li>5–10 minútový klip</li>
+          <li>30–45 minútový film</li>
+          <li>300–450 upravených fotografií</li>
+          <li>Odovzdanie na USB</li>
+          <li>Online galéria</li>
+          <li>20 vytlačených fotografií</li>
+        </ul>
+        <button class="duo-btn" onclick="selectPackage('Svadba - Wedding Duo Memory - 1099 €')">Rezervovať</button>
+      </div>
+
+      <div class="duo-card best reveal">
+        <div class="duo-tag">Premium</div>
+        <h3>Wedding Duo Premium</h3>
+        <div class="duo-price">1199 €</div>
+        <ul>
+          <li>5–10 minútový klip</li>
+          <li>Záznam v plnej dĺžke</li>
+          <li>450–600 upravených fotografií</li>
+          <li>Odovzdanie na USB</li>
+          <li>Online galéria</li>
+          <li>30 vytlačených fotografií</li>
+        </ul>
+        <button class="duo-btn" onclick="selectPackage('Svadba - Wedding Duo Premium - 1199 €')">Rezervovať</button>
       </div>
 
     </div>
@@ -803,68 +808,114 @@ ul{
 <section class="section" id="custom-builder">
   <div class="inner">
     <div class="section-label reveal">Na mieru</div>
-    <h2 class="section-title reveal">Custom DUO balík</h2>
+    <h2 class="section-title reveal">Custom DUO balíky</h2>
 
     <p class="section-lead reveal">
-      Vyskladajte si vlastnú kombináciu podľa toho, čo potrebujete.
+      Vyskladajte si vlastnú kombináciu pre stužkovú alebo svadbu.
       Cena sa automaticky prepočíta podľa vybraných položiek.
     </p>
 
-    <div class="builder-box reveal">
+    <div class="builders-grid">
 
-      <div class="builder-item">
-        <span>Klip</span>
-        <input type="checkbox" data-price="150">
+      <div class="builder-box reveal">
+        <h3 class="builder-title">Custom stužková</h3>
+
+        <div class="builder-item">
+          <span>Klip</span>
+          <input type="checkbox" data-builder="stuzkova" data-price="250">
+        </div>
+
+        <div class="builder-item">
+          <span>Záznam v plnej dĺžke</span>
+          <input type="checkbox" data-builder="stuzkova" data-price="350">
+        </div>
+
+        <div class="builder-item">
+          <span>Úvodné video / pozvánka</span>
+          <input type="checkbox" data-builder="stuzkova" data-price="150">
+        </div>
+
+        <div class="builder-item">
+          <span>Fotky</span>
+          <select id="stuzkovaPhotos">
+            <option value="250">150–250 fotiek / 250 €</option>
+            <option value="400">250–400 fotiek / 400 €</option>
+            <option value="500">400–600 fotiek / 500 €</option>
+          </select>
+        </div>
+
+        <div class="builder-item">
+          <span>Online galéria</span>
+          <input type="checkbox" data-builder="stuzkova" data-price="80">
+        </div>
+
+        <div class="builder-item">
+          <span>USB odovzdanie</span>
+          <input type="checkbox" data-builder="stuzkova" data-price="69">
+        </div>
+
+        <div class="builder-total">
+          Cena: <span id="stuzkovaTotal">0</span> €
+        </div>
+
+        <button class="duo-btn primary" onclick="selectCustom('stuzkova')">Rezervovať custom stužkovú</button>
       </div>
 
-      <div class="builder-item">
-        <span>Záznam v plnej dĺžke</span>
-        <input type="checkbox" data-price="200">
+      <div class="builder-box reveal">
+        <h3 class="builder-title">Custom svadba</h3>
+
+        <div class="builder-item">
+          <span>5–10 minútový klip</span>
+          <input type="checkbox" data-builder="svadba" data-price="250">
+        </div>
+
+        <div class="builder-item">
+          <span>Typ filmu / záznamu</span>
+          <select id="svadbaFilm">
+            <option value="250">30–45 minútový film / 250 €</option>
+            <option value="350">Záznam v plnej dĺžke / 350 €</option>
+          </select>
+        </div>
+
+        <div class="builder-item">
+          <span>Fotky</span>
+          <select id="svadbaPhotos">
+            <option value="249">200–300 fotiek / 249 €</option>
+            <option value="349">300–450 fotiek / 349 €</option>
+            <option value="449">450–600 fotiek / 449 €</option>
+          </select>
+        </div>
+
+        <div class="builder-item">
+          <span>Odovzdanie na USB</span>
+          <input type="checkbox" data-builder="svadba" data-price="40">
+        </div>
+
+        <div class="builder-item">
+          <span>Online galéria</span>
+          <input type="checkbox" data-builder="svadba" data-price="50">
+        </div>
+
+        <div class="builder-item">
+          <span>Vytlačené fotografie</span>
+          <select id="svadbaPrints">
+            <option value="30">10 ks / 30 €</option>
+            <option value="50">20 ks / 50 €</option>
+            <option value="60">30 ks / 60 €</option>
+          </select>
+        </div>
+
+        <div class="builder-total">
+          Cena: <span id="svadbaTotal">0</span> €
+        </div>
+
+        <button class="duo-btn primary" onclick="selectCustom('svadba')">Rezervovať custom svadbu</button>
       </div>
 
-      <div class="builder-item">
-        <span>Úvodné video / pozvánka</span>
-        <input type="checkbox" data-price="80">
-      </div>
-
-      <div class="builder-item">
-        <span>Fotky</span>
-        <select id="photos">
-          <option value="150">150–250 fotiek / 150 €</option>
-          <option value="250">250–400 fotiek / 250 €</option>
-          <option value="350">400–600 fotiek / 350 €</option>
-        </select>
-      </div>
-
-      <div class="builder-item">
-        <span>Online galéria</span>
-        <input type="checkbox" data-price="30">
-      </div>
-
-      <div class="builder-item">
-        <span>USB v krabičke / 1 zdarma, ďalšie 20 €/ks</span>
-        <input type="number" id="usbBox" value="1" min="1">
-      </div>
-
-      <div class="builder-item">
-        <span>USB bez krabičky / 10 €/ks</span>
-        <input type="number" id="usb" value="0" min="0">
-      </div>
-
-      <div class="builder-item">
-        <span>Zľavový kód</span>
-        <input type="text" id="discount">
-      </div>
-
-      <div class="builder-total">
-        Cena: <span id="total">0</span> €
-      </div>
-
-      <button class="duo-btn primary" onclick="selectCustom()">Rezervovať custom balík</button>
     </div>
 
     <div class="form-section reveal" id="form">
-      <h3>Vyplň údaje</h3>
+      <h3>Doplňujúce údaje</h3>
 
       <form action="https://formspree.io/f/xjknzwew" method="POST">
         <input type="hidden" name="balik" id="selectedPackage">
@@ -875,13 +926,11 @@ ul{
         <input placeholder="Email" name="email" required>
         <input placeholder="Telefón" name="telefon" required>
         <input placeholder="Dátum akcie" name="datum">
-        <input placeholder="Škola" name="skola">
+        <input placeholder="Typ akcie / škola / svadba" name="typ_akcie">
         <input placeholder="Miesto konania" name="miesto">
-        <input placeholder="Trieda" name="trieda">
-        <input placeholder="Adresa" name="adresa">
         <input placeholder="Mesto" name="mesto">
         <input placeholder="PSČ" name="psc">
-        <input type="text" name="zlava" placeholder="Zľavový kód">
+        <textarea placeholder="Doplňujúce informácie" name="poznamka"></textarea>
 
         <button type="submit" class="duo-btn primary">Odoslať rezerváciu</button>
       </form>
@@ -942,59 +991,60 @@ const observer = new IntersectionObserver((entries) => {
 
 revealItems.forEach(item => observer.observe(item));
 
-const inputs = document.querySelectorAll('.builder-box input[type="checkbox"]');
-const totalEl = document.getElementById('total');
-
-function calculate(){
+function calculateStuzkova(){
   let total = 0;
 
-  inputs.forEach(input => {
+  document.querySelectorAll('[data-builder="stuzkova"]').forEach(input => {
     if(input.checked){
       total += Number(input.dataset.price || 0);
     }
   });
 
-  const photos = document.getElementById('photos');
-  total += Number(photos.value || 0);
+  total += Number(document.getElementById('stuzkovaPhotos').value || 0);
 
-  const usbBox = Number(document.getElementById('usbBox').value || 0);
-  const usb = Number(document.getElementById('usb').value || 0);
-
-  if(usbBox > 1){
-    total += (usbBox - 1) * 20;
-  }
-
-  total += usb * 10;
-
-  const code = document.getElementById('discount').value.trim();
-
-  if(code === 'STUZKOVASKUSKA10'){
-    total = total * 0.9;
-  }
-
-  if(code === 'NEWDUO50'){
-    total = total - 50;
-  }
-
-  totalEl.textContent = Math.max(0, Math.round(total));
+  document.getElementById('stuzkovaTotal').textContent = Math.round(total);
 }
 
-document.querySelectorAll('.builder-box input, #photos').forEach(el => {
-  el.addEventListener('change', calculate);
-  el.addEventListener('input', calculate);
+function calculateSvadba(){
+  let total = 0;
+
+  document.querySelectorAll('[data-builder="svadba"]').forEach(input => {
+    if(input.checked){
+      total += Number(input.dataset.price || 0);
+    }
+  });
+
+  total += Number(document.getElementById('svadbaFilm').value || 0);
+  total += Number(document.getElementById('svadbaPhotos').value || 0);
+  total += Number(document.getElementById('svadbaPrints').value || 0);
+
+  document.getElementById('svadbaTotal').textContent = Math.round(total);
+}
+
+document.querySelectorAll('[data-builder="stuzkova"], #stuzkovaPhotos').forEach(el => {
+  el.addEventListener('change', calculateStuzkova);
+  el.addEventListener('input', calculateStuzkova);
 });
 
-calculate();
+document.querySelectorAll('[data-builder="svadba"], #svadbaFilm, #svadbaPhotos, #svadbaPrints').forEach(el => {
+  el.addEventListener('change', calculateSvadba);
+  el.addEventListener('input', calculateSvadba);
+});
+
+calculateStuzkova();
+calculateSvadba();
 
 function showForm(){
   const form = document.getElementById('form');
   form.style.display = 'block';
   form.classList.add('visible');
 
-  window.scrollTo({
-    top:form.offsetTop - 80,
-    behavior:'smooth'
-  });
+  setTimeout(() => {
+    form.scrollIntoView({
+      behavior:'smooth',
+      block:'start'
+    });
+  }, 80);
 }
 
 function selectPackage(name){
@@ -1004,31 +1054,41 @@ function selectPackage(name){
   showForm();
 }
 
-function selectCustom(){
-  const details = [];
+function selectCustom(type){
+  let details = [];
+  let price = 0;
 
-  document.querySelectorAll('.builder-box input[type="checkbox"]').forEach(input => {
-    if(input.checked){
-      const text = input.closest('.builder-item').querySelector('span').textContent.trim();
-      details.push(text);
-    }
-  });
+  if(type === 'stuzkova'){
+    details.push('Typ: Custom stužková');
 
-  const photosText = document.getElementById('photos').selectedOptions[0].text;
-  details.push('Fotky: ' + photosText);
+    document.querySelectorAll('[data-builder="stuzkova"]').forEach(input => {
+      if(input.checked){
+        const text = input.closest('.builder-item').querySelector('span').textContent.trim();
+        details.push(text);
+      }
+    });
 
-  details.push('USB v krabičke: ' + document.getElementById('usbBox').value);
-  details.push('USB bez krabičky: ' + document.getElementById('usb').value);
-
-  const code = document.getElementById('discount').value.trim();
-
-  if(code){
-    details.push('Zľavový kód: ' + code);
+    details.push('Fotky: ' + document.getElementById('stuzkovaPhotos').selectedOptions[0].text);
+    price = document.getElementById('stuzkovaTotal').textContent;
   }
 
-  const price = document.getElementById('total').textContent;
+  if(type === 'svadba'){
+    details.push('Typ: Custom svadba');
 
-  document.getElementById('selectedPackage').value = 'Custom DUO';
+    document.querySelectorAll('[data-builder="svadba"]').forEach(input => {
+      if(input.checked){
+        const text = input.closest('.builder-item').querySelector('span').textContent.trim();
+        details.push(text);
+      }
+    });
+
+    details.push('Film / záznam: ' + document.getElementById('svadbaFilm').selectedOptions[0].text);
+    details.push('Fotky: ' + document.getElementById('svadbaPhotos').selectedOptions[0].text);
+    details.push('Vytlačené fotografie: ' + document.getElementById('svadbaPrints').selectedOptions[0].text);
+    price = document.getElementById('svadbaTotal').textContent;
+  }
+
+  document.getElementById('selectedPackage').value = type === 'stuzkova' ? 'Custom DUO stužková' : 'Custom DUO svadba';
   document.getElementById('customDetails').value = details.join(' | ');
   document.getElementById('customPrice').value = price + ' €';
 
