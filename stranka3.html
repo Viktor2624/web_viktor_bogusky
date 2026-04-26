@@ -24,9 +24,7 @@
   box-sizing:border-box;
 }
 
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth;}
 
 body{
   font-family:Arial, Helvetica, sans-serif;
@@ -388,42 +386,37 @@ a{
   font-size:23px;
 }
 
-.item-stuzkove{
-  left:0;
-  top:70px;
-}
-
-.item-svadby{
-  left:0;
-  bottom:82px;
-}
-
-.item-promo{
-  right:0;
-  top:70px;
-}
-
-.item-post{
-  right:0;
-  bottom:82px;
-}
+.item-stuzkove{left:0;top:70px;}
+.item-svadby{left:0;bottom:82px;}
+.item-promo{right:0;top:70px;}
+.item-post{right:0;bottom:82px;}
 
 /* PORTFOLIO */
 
 .portfolio-grid{
   display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:14px;
+  grid-template-columns:repeat(6, 1fr);
+  gap:22px;
 }
 
 .video-card{
+  grid-column:span 2;
   position:relative;
-  height:145px;
-  border-radius:9px;
+  aspect-ratio:16 / 9;
+  min-height:235px;
+  border-radius:12px;
   overflow:hidden;
   border:1px solid rgba(255,255,255,.12);
   background:#111;
   box-shadow:0 20px 50px rgba(0,0,0,.35);
+}
+
+.video-card.big-left{
+  grid-column:2 / span 2;
+}
+
+.video-card.big-right{
+  grid-column:4 / span 2;
 }
 
 .video-card iframe{
@@ -432,8 +425,10 @@ a{
   border:0;
 }
 
+/* BUTTON */
+
 .more-btn-wrap{
-  margin-top:28px;
+  margin-top:32px;
   display:flex;
   justify-content:center;
 }
@@ -541,8 +536,11 @@ a{
     grid-template-columns:repeat(2,1fr);
   }
 
-  .video-card{
-    height:210px;
+  .video-card,
+  .video-card.big-left,
+  .video-card.big-right{
+    grid-column:auto;
+    min-height:210px;
   }
 
   .lens-wrap{
@@ -624,13 +622,34 @@ a{
     grid-template-columns:1fr;
   }
 
-  .video-card{
-    height:220px;
+  .video-card,
+  .video-card.big-left,
+  .video-card.big-right{
+    min-height:auto;
   }
 
   .section-title{
     letter-spacing:4px;
   }
+}
+
+  .footer-links{
+  margin-top:8px;
+  font-size:12px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  color:rgba(255,255,255,.5);
+}
+
+.footer-links a{
+  color:rgba(255,255,255,.6);
+  transition:.25s;
+}
+
+.footer-links a:hover{
+  color:var(--gold2);
 }
 </style>
 </head>
@@ -748,11 +767,11 @@ a{
         <iframe src="https://www.youtube.com/embed/LiYAjlk7jZg" allowfullscreen></iframe>
       </div>
 
-      <div class="video-card">
+      <div class="video-card big-left">
         <iframe src="https://www.youtube.com/embed/9Z8BojDP5no" allowfullscreen></iframe>
       </div>
 
-      <div class="video-card">
+      <div class="video-card big-right">
         <iframe src="https://www.youtube.com/embed/VIDEO_ID_TU" allowfullscreen></iframe>
       </div>
 
@@ -781,6 +800,13 @@ a{
       © 2026 Viktor Boguský. Všetky práva vyhradené.
     </div>
 
+    <div class="footer-links">
+        <a href="podmienky.html">Obchodné podmienky</a>
+        <span>•</span>
+        <a href="gdpr.html">GDPR</a>
+      </div>
+    </div>
+    
     <div class="footer-contact">
       <div>kontakt@viktorbogusky.sk</div>
       <div>+421 904 123 456</div>
