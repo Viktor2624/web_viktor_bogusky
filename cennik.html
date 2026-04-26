@@ -23,9 +23,7 @@
   box-sizing:border-box;
 }
 
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth;}
 
 body{
   font-family:Arial, Helvetica, sans-serif;
@@ -458,10 +456,32 @@ a{
   margin-top:3px;
 }
 
-.copyright{
+.footer-center{
   text-align:center;
+}
+
+.copyright{
   color:rgba(255,255,255,.45);
   font-size:12px;
+}
+
+.footer-links{
+  margin-top:9px;
+  font-size:12px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  color:rgba(255,255,255,.5);
+}
+
+.footer-links a{
+  color:rgba(255,255,255,.6);
+  transition:.25s;
+}
+
+.footer-links a:hover{
+  color:var(--gold2);
 }
 
 .footer-contact{
@@ -590,25 +610,6 @@ a{
     justify-content:center;
   }
 }
-
-  .footer-links{
-  margin-top:8px;
-  font-size:12px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:8px;
-  color:rgba(255,255,255,.5);
-}
-
-.footer-links a{
-  color:rgba(255,255,255,.6);
-  transition:.25s;
-}
-
-.footer-links a:hover{
-  color:var(--gold2);
-}
 </style>
 </head>
 
@@ -626,6 +627,7 @@ a{
       <a href="cennik.html">Cenník</a>
       <a href="duo.html">Duo balíky</a>
       <a href="portfolio.html">Portfólio</a>
+      <a href="referencie.html">Referencie</a>
       <a href="omne.html">O mne</a>
       <a href="kontakt.html">Kontakt</a>
     </div>
@@ -782,18 +784,18 @@ a{
       </div>
     </div>
 
-    <div class="copyright">
-      © 2026 Viktor Boguský. Všetky práva vyhradené.
-    </div>
+    <div class="footer-center">
+      <div class="copyright">
+        © 2026 Viktor Boguský. Všetky práva vyhradené.
+      </div>
 
-  <div class="footer-links">
+      <div class="footer-links">
         <a href="podmienky.html">Obchodné podmienky</a>
         <span>•</span>
         <a href="gdpr.html">GDPR</a>
       </div>
     </div>
 
-    
     <div class="footer-contact">
       <div>kontakt@viktorbogusky.sk</div>
       <div>+421 948 933 109</div>
