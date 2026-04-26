@@ -4,1039 +4,827 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Viktor Boguský | Kamera & Postprodukcia</title>
-<link rel="icon" type="image/png" href="Viktor-removebg-preview.png">
+
+<link rel="icon" type="image/png" href="logo_1.png">
 
 <style>
 :root{
   --bg:#050505;
   --text:#ffffff;
-  --muted:rgba(255,255,255,.72);
-  --shadow:0 30px 80px rgba(0,0,0,.45);
-  --radius:28px;
-  --header-h:72px;
-  --max:1240px;
+  --muted:rgba(255,255,255,.68);
+  --line:rgba(255,255,255,.10);
+  --gold:#c99a4a;
+  --gold2:#f2c879;
+  --max:1180px;
 }
 
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family:Arial, Helvetica, sans-serif;
 }
 
 html{scroll-behavior:smooth;}
 
 body{
-  background:
-    radial-gradient(circle at 18% 20%, rgba(85,110,255,.10), transparent 26%),
-    radial-gradient(circle at 80% 15%, rgba(255,255,255,.04), transparent 18%),
-    radial-gradient(circle at 65% 72%, rgba(120,70,255,.08), transparent 24%),
-    var(--bg);
+  font-family:Arial, Helvetica, sans-serif;
+  background:var(--bg);
   color:var(--text);
-  padding-top:var(--header-h);
   overflow-x:hidden;
 }
 
-a{color:inherit;}
-ul{list-style:none;padding:0;}
+a{
+  color:inherit;
+  text-decoration:none;
+}
 
-.container{
-  width:min(100% - 32px, var(--max));
-  margin:0 auto;
+/* INTRO */
+
+.intro-loader{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:#050505;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  animation:introHide 1.5s ease forwards;
+}
+
+.intro-loader h1{
+  font-size:clamp(38px, 7vw, 82px);
+  text-transform:uppercase;
+  letter-spacing:8px;
+  font-weight:900;
+  animation:introText .9s ease forwards;
+}
+
+.intro-loader p{
+  margin-top:10px;
+  font-family:"Brush Script MT", cursive;
+  color:var(--gold2);
+  font-size:clamp(30px, 5vw, 58px);
+  animation:introText .9s ease forwards;
+}
+
+@keyframes introHide{
+  0%,70%{opacity:1; visibility:visible;}
+  100%{opacity:0; visibility:hidden; pointer-events:none;}
+}
+
+@keyframes introText{
+  from{opacity:0; transform:translateY(18px) scale(.96);}
+  to{opacity:1; transform:translateY(0) scale(1);}
 }
 
 /* HEADER */
-header{
-  position:fixed;
-  inset:0 0 auto 0;
-  height:var(--header-h);
-  background:rgba(0,0,0,.55);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid rgba(255,255,255,.08);
-  z-index:1000;
-}
 
-.header-inner{
-  width:min(100% - 32px, var(--max));
-  height:100%;
-  margin:0 auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-}
-
-.logo{
-  color:#fff;
-  text-decoration:none;
-  font-size:16px;
-  letter-spacing:2px;
-  font-weight:700;
-  white-space:nowrap;
-}
-
-.main-nav{
-  display:flex;
-  align-items:center;
-  gap:28px;
-}
-
-.main-nav a,
-.nav-btn{
-  background:none;
-  border:none;
-  color:#fff;
-  text-decoration:none;
-  font-size:14px;
-  cursor:pointer;
-  opacity:.86;
-  padding:8px 0;
-  font-family:inherit;
-  transition:.25s ease;
-}
-
-.main-nav a:hover,
-.nav-btn:hover{
-  opacity:1;
-  transform:translateY(-1px);
-}
-
-.nav-item{position:relative;}
-
-.dropdown{
+.header{
   position:absolute;
-  top:calc(100% + 12px);
+  top:0;
   left:0;
-  background:rgba(10,10,12,.96);
-  display:none;
-  flex-direction:column;
-  min-width:220px;
-  padding:10px;
-  border-radius:16px;
-  box-shadow:var(--shadow);
-  border:1px solid rgba(255,255,255,.08);
-  z-index:2000;
+  width:100%;
+  height:86px;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(to bottom, rgba(0,0,0,.72), rgba(0,0,0,0));
 }
 
-.dropdown a{
-  padding:10px 12px;
-  font-size:13px;
-  white-space:nowrap;
-  border-radius:10px;
+.nav{
+  width:100%;
+  max-width:1280px;
+  padding:0 44px;
+  display:grid;
+  grid-template-columns:160px 1fr 160px;
+  align-items:center;
 }
 
-.dropdown a:hover{background:rgba(255,255,255,.06);}
-.nav-item.active .dropdown{display:flex;}
+.logo img{
+  height:48px;
+  width:auto;
+}
 
-.menu-toggle{
-  display:none;
-  background:none;
-  border:none;
-  color:#fff;
-  font-size:24px;
-  cursor:pointer;
+.menu{
+  grid-column:2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:24px;
+}
+
+.menu a{
+  font-size:12px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  font-weight:700;
+  color:rgba(255,255,255,.82);
+  transition:.25s;
+}
+
+.menu a:hover{
+  color:var(--gold2);
 }
 
 /* HERO */
+
 .hero{
   position:relative;
-  min-height:calc(100vh - var(--header-h));
+  min-height:100vh;
   display:flex;
   align-items:center;
+  justify-content:center;
   overflow:hidden;
-  isolation:isolate;
+  border-bottom:1px solid var(--line);
 }
 
-.hero video,
-.hero-overlay,
-.hero-glow{
+.hero-video{
   position:absolute;
   inset:0;
-}
-
-.hero video{
   width:100%;
   height:100%;
   object-fit:cover;
-  transform:scale(1.08);
-  filter:brightness(.28) saturate(1.05);
-  z-index:-5;
+  z-index:0;
 }
 
-.hero-overlay{
-  z-index:-4;
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,.28), rgba(0,0,0,.70)),
-    radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,.22) 42%, rgba(0,0,0,.72) 100%);
-}
-
-.hero-glow{
-  z-index:-3;
-  background:
-    radial-gradient(circle at 78% 34%, rgba(85,110,255,.16), transparent 18%),
-    radial-gradient(circle at 58% 68%, rgba(130,60,255,.10), transparent 22%),
-    radial-gradient(circle at 22% 50%, rgba(255,255,255,.04), transparent 18%);
-  filter:blur(18px);
-  pointer-events:none;
-}
-
-.hero-inner{
-  width:min(100% - 32px, var(--max));
-  margin:0 auto;
-  display:grid;
-  grid-template-columns:.95fr .78fr;
-  gap:86px;
-  align-items:center;
-  padding:48px 0 46px;
-}
-
-.hero-copy{
-  max-width:640px;
-  position:relative;
-  z-index:2;
-}
-
-.hero-name{
-  display:inline-block;
-  margin-bottom:14px;
-  font-size:15px;
-  font-weight:700;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.68);
-  position:relative;
-  padding-left:20px;
-}
-
-.hero-name::before{
+.hero::before{
   content:"";
   position:absolute;
-  left:0;
-  top:50%;
-  width:10px;
-  height:10px;
-  border-radius:50%;
-  transform:translateY(-50%);
-  background:rgba(255,255,255,.85);
-  box-shadow:0 0 18px rgba(255,255,255,.38);
+  inset:0;
+  z-index:1;
+  background:
+    radial-gradient(circle at center, rgba(0,0,0,.08), rgba(0,0,0,.55) 68%, #000 100%),
+    linear-gradient(to bottom, rgba(0,0,0,.20), rgba(0,0,0,.34), #050505 98%);
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  padding:0 22px;
+  margin-top:40px;
 }
 
 .hero h1{
-  font-size:clamp(42px, 7vw, 84px);
-  line-height:.94;
-  letter-spacing:-2px;
+  font-size:clamp(42px, 7vw, 78px);
+  line-height:1;
+  letter-spacing:9px;
+  font-weight:900;
   text-transform:uppercase;
-  text-shadow:0 10px 30px rgba(0,0,0,.28);
+  text-shadow:0 8px 40px rgba(0,0,0,.8);
 }
 
-.hero h1 .muted{
-  color:rgba(255,255,255,.58);
-  display:inline-block;
-  margin-top:6px;
+.signature{
+  margin-top:8px;
+  font-family:"Brush Script MT", cursive;
+  color:var(--gold2);
+  font-size:clamp(32px, 5vw, 58px);
+  font-weight:400;
+  letter-spacing:2px;
+  transform:rotate(-2deg);
 }
 
-.hero-copy p{
+.hero p{
   margin-top:24px;
-  max-width:620px;
-  font-size:clamp(16px, 2vw, 19px);
-  line-height:1.62;
-  color:var(--muted);
+  font-size:15px;
+  color:rgba(255,255,255,.88);
 }
 
 .hero-actions{
-  margin-top:30px;
+  margin-top:32px;
   display:flex;
+  justify-content:center;
+  gap:18px;
   flex-wrap:wrap;
-  gap:14px;
 }
 
 .btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-height:50px;
-  padding:0 24px;
-  border-radius:999px;
-  text-decoration:none;
-  font-weight:700;
-  font-size:14px;
-  transition:.28s ease;
-  border:1px solid transparent;
-  position:relative;
-  overflow:hidden;
-}
-
-.btn::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(120deg, transparent 20%, rgba(255,255,255,.22), transparent 80%);
-  transform:translateX(-140%);
-  transition:transform .7s ease;
-}
-
-.btn:hover::after{transform:translateX(140%);}
-
-.btn-primary{background:#fff;color:#000;}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,255,255,.16);}
-
-.btn-secondary{
-  background:rgba(255,255,255,.06);
-  border-color:rgba(255,255,255,.10);
-  backdrop-filter:blur(10px);
-}
-
-.btn-secondary:hover{
-  background:rgba(255,255,255,.1);
-  transform:translateY(-2px);
-}
-
-.hero-stats{
-  margin-top:26px;
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-}
-
-.hero-stat{
-  padding:12px 14px;
-  border-radius:18px;
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.04);
-  color:rgba(255,255,255,.78);
-  font-size:13px;
-}
-
-.hero-side{
-  position:relative;
-  height:520px;
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-}
-
-.hero-panel{
-  width:min(100%, 420px);
-  min-height:360px;
-  padding:26px;
-  border-radius:32px;
-  border:1px solid rgba(255,255,255,.12);
-  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
-  backdrop-filter:blur(18px);
-  box-shadow:var(--shadow);
-  position:relative;
-  overflow:hidden;
-}
-
-.hero-panel::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(130deg, rgba(255,255,255,.14), transparent 30%, transparent 70%, rgba(120,100,255,.10));
-  pointer-events:none;
-}
-
-.hero-badge{
-  display:inline-flex;
-  padding:8px 12px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(0,0,0,.24);
+  min-width:175px;
+  padding:14px 25px;
+  border-radius:4px;
+  border:1px solid var(--gold);
   font-size:12px;
-  letter-spacing:1.2px;
   text-transform:uppercase;
-  margin-bottom:16px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  transition:.25s;
+  background:rgba(0,0,0,.35);
 }
 
-.hero-panel h3{
-  font-size:32px;
-  margin-bottom:14px;
-  letter-spacing:-1px;
-  text-transform:uppercase;
+.btn.primary{
+  background:rgba(201,154,74,.13);
 }
 
-.hero-panel p{
-  color:var(--muted);
-  line-height:1.7;
-  margin-bottom:18px;
+.btn:hover{
+  background:var(--gold);
+  color:#000;
 }
 
-.hero-list{
-  display:grid;
-  gap:14px;
+.scroll-icon{
+  position:absolute;
+  left:50%;
+  bottom:38px;
+  transform:translateX(-50%);
+  z-index:3;
+  width:23px;
+  height:39px;
+  border:1px solid rgba(255,255,255,.7);
+  border-radius:999px;
+}
+
+.scroll-icon::after{
+  content:"";
+  position:absolute;
+  top:8px;
+  left:50%;
+  width:4px;
+  height:7px;
+  background:white;
+  border-radius:99px;
+  transform:translateX(-50%);
+  animation:scroll 1.6s infinite;
+}
+
+@keyframes scroll{
+  0%{opacity:1; transform:translate(-50%,0);}
+  100%{opacity:0; transform:translate(-50%,12px);}
+}
+
+/* GENERAL */
+
+.section{
+  position:relative;
+  padding:70px 24px;
+  border-bottom:1px solid var(--line);
+}
+
+.section::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:radial-gradient(circle at center, rgba(201,154,74,.06), transparent 50%);
+}
+
+.inner{
+  max-width:var(--max);
+  margin:0 auto;
   position:relative;
   z-index:1;
 }
 
-.hero-list div{
-  padding:14px 16px;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:18px;
-  background:rgba(255,255,255,.04);
-}
-
-/* SECTIONS */
-.section{
-  width:min(100% - 32px, var(--max));
-  margin:0 auto;
-  padding:110px 0;
+.section-label{
+  text-align:center;
+  color:rgba(255,255,255,.45);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:3px;
+  font-weight:800;
+  margin-bottom:8px;
 }
 
 .section-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  gap:24px;
+  text-align:center;
+  font-size:clamp(26px, 4vw, 36px);
+  text-transform:uppercase;
+  letter-spacing:7px;
+  font-weight:900;
   margin-bottom:34px;
 }
 
-.section-title h2{
-  font-size:clamp(30px, 5vw, 54px);
-  line-height:1;
-  letter-spacing:-1px;
-  text-transform:uppercase;
+/* LENS SERVICES */
+
+.lens-section{
+  padding-top:80px;
+  padding-bottom:90px;
 }
 
-.section-title p{
-  max-width:460px;
-  color:var(--muted);
-  line-height:1.65;
-}
-
-.about-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:28px;
-}
-
-.about-card,
-.about-highlight,
-.service-card,
-.video-card,
-.cta-panel{
-  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:28px;
-  box-shadow:var(--shadow);
-  backdrop-filter:blur(18px);
+.lens-wrap{
+  max-width:980px;
+  margin:0 auto;
   position:relative;
-  overflow:hidden;
+  min-height:430px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.about-card::before,
-.about-highlight::before,
-.service-card::before,
-.video-card::before,
-.cta-panel::before{
+.lens{
+  width:310px;
+  height:310px;
+  border-radius:50%;
+  position:relative;
+  background:
+    radial-gradient(circle at center, #2d6fa8 0%, #0b1420 12%, #050505 24%, #191919 42%, #060606 62%, #1d1d1d 74%, #050505 100%);
+  box-shadow:
+    0 0 0 16px rgba(255,255,255,.035),
+    0 0 0 23px rgba(201,154,74,.12),
+    0 0 55px rgba(201,154,74,.25),
+    inset 0 0 40px rgba(255,255,255,.12);
+}
+
+.lens::before{
   content:"";
   position:absolute;
-  inset:0;
-  background:linear-gradient(130deg, rgba(255,255,255,.14), transparent 28%, transparent 72%, rgba(120,100,255,.10));
-  pointer-events:none;
+  inset:-62px;
+  border-radius:50%;
+  border:1px solid rgba(201,154,74,.55);
+  box-shadow:0 0 25px rgba(201,154,74,.20);
 }
 
-.about-card,
-.about-highlight{padding:30px;}
+.lens::after{
+  content:"";
+  position:absolute;
+  inset:83px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 35%, rgba(255,255,255,.5), transparent 18%),
+    radial-gradient(circle, #366e9f 0%, #07111b 48%, #000 100%);
+  box-shadow:inset 0 0 35px rgba(0,0,0,.9);
+}
 
-.about-card h3,
-.about-highlight h3,
-.cta-panel h3{
-  font-size:30px;
-  margin-bottom:14px;
-  letter-spacing:-1px;
+.lens-item{
+  position:absolute;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  max-width:280px;
+}
+
+.lens-item.left{
+  text-align:right;
+  flex-direction:row-reverse;
+}
+
+.lens-item h3{
+  font-size:18px;
   text-transform:uppercase;
-  position:relative;
-  z-index:1;
+  letter-spacing:2px;
+  margin-bottom:8px;
 }
 
-.about-card p,
-.about-highlight p,
-.cta-panel p{
+.lens-item p{
+  font-size:13px;
   color:var(--muted);
-  line-height:1.75;
-  position:relative;
-  z-index:1;
+  line-height:1.45;
 }
 
-.about-list{
+.lens-icon{
+  flex:0 0 54px;
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  border:1px solid var(--gold);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--gold2);
+  background:rgba(201,154,74,.10);
+  box-shadow:0 0 25px rgba(201,154,74,.25);
+  font-size:23px;
+}
+
+.item-stuzkove{left:0;top:70px;}
+.item-svadby{left:0;bottom:82px;}
+.item-promo{right:0;top:70px;}
+.item-post{right:0;bottom:82px;}
+
+/* PORTFOLIO */
+
+.portfolio-grid{
   display:grid;
-  gap:12px;
-  margin-top:18px;
-  position:relative;
-  z-index:1;
-}
-
-.about-list div{
-  padding:13px 14px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.04);
-}
-
-.services-grid{
-  display:grid;
-  grid-template-columns:repeat(4, 1fr);
-  gap:22px;
-}
-
-.service-card{
-  padding:24px;
-  transition:.3s ease;
-}
-
-.service-card:hover{
-  transform:translateY(-6px);
-  border-color:rgba(255,255,255,.18);
-}
-
-.service-card h3{
-  font-size:22px;
-  margin-bottom:12px;
-  text-transform:uppercase;
-  position:relative;
-  z-index:1;
-}
-
-.service-card p{
-  color:var(--muted);
-  line-height:1.7;
-  position:relative;
-  z-index:1;
-}
-
-.videos-grid{
-  display:grid;
-  grid-template-columns:repeat(12, 1fr);
+  grid-template-columns:repeat(6, 1fr);
   gap:22px;
 }
 
 .video-card{
-  grid-column:span 6;
-  transition:.35s ease;
-}
-
-.video-card:hover{
-  transform:translateY(-6px) scale(1.01);
-  border-color:rgba(255,255,255,.18);
-  filter:brightness(1.05);
-}
-
-.video-shell{
+  grid-column:span 2;
   position:relative;
-  width:100%;
-  padding-top:56.25%;
-  background:#000;
+  aspect-ratio:16 / 9;
+  min-height:235px;
+  border-radius:12px;
   overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  background:#111;
+  box-shadow:0 20px 50px rgba(0,0,0,.35);
 }
 
-.video-shell iframe{
-  position:absolute;
-  inset:0;
+.video-card.big-left{
+  grid-column:2 / span 2;
+}
+
+.video-card.big-right{
+  grid-column:4 / span 2;
+}
+
+.video-card iframe{
   width:100%;
   height:100%;
   border:0;
 }
 
-.video-meta{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:14px;
-  padding:16px 18px;
-  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-}
+/* BUTTON */
 
-.video-meta strong{font-size:15px;}
-
-.video-meta span{
-  font-size:12px;
-  color:rgba(255,255,255,.6);
-  text-transform:uppercase;
-  letter-spacing:1.2px;
-  white-space:nowrap;
-}
-
-.cta-panel{
-  padding:34px;
-  text-align:center;
-}
-
-.cta-actions{
-  margin-top:24px;
+.more-btn-wrap{
+  margin-top:32px;
   display:flex;
   justify-content:center;
-  gap:14px;
-  flex-wrap:wrap;
+}
+
+.small-btn{
+  border:1px solid var(--gold);
+  border-radius:999px;
+  padding:11px 42px;
+  text-transform:uppercase;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  transition:.25s;
+}
+
+.small-btn:hover{
+  background:var(--gold);
+  color:#000;
 }
 
 /* FOOTER */
+
 .footer{
-  padding:38px 0 28px;
-  border-top:1px solid rgba(255,255,255,.08);
-  margin-top:20px;
+  padding:34px 24px;
+  background:#030303;
 }
 
-.footer-wrap{
-  width:min(100% - 32px, var(--max));
-  margin:auto;
-}
-
-.footer-top{
-  display:flex;
-  justify-content:center;
+.footer-inner{
+  max-width:var(--max);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
   align-items:center;
-  gap:26px;
-  flex-wrap:wrap;
-  margin-bottom:14px;
+  gap:24px;
+}
+
+.footer-brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.footer-brand img{
+  width:48px;
+}
+
+.footer-brand strong{
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+}
+
+.footer-brand small{
+  display:block;
+  color:rgba(255,255,255,.55);
+  font-size:10px;
+  letter-spacing:1.5px;
+  margin-top:3px;
+}
+
+.footer-center{
   text-align:center;
 }
 
-.footer-contact p{
-  color:var(--muted);
-  line-height:1.7;
+.copyright{
+  color:rgba(255,255,255,.45);
+  font-size:12px;
 }
 
-.footer-socials{
+.footer-links{
+  margin-top:8px;
+  font-size:12px;
   display:flex;
   justify-content:center;
-  gap:20px;
-  flex-wrap:wrap;
-  margin-bottom:14px;
-}
-
-.footer-socials a{
-  text-decoration:none;
-  opacity:.72;
-  transition:.25s ease;
-}
-
-.footer-socials a:hover{
-  opacity:1;
-  transform:translateY(-1px);
-}
-
-.footer-bottom{
-  display:flex;
-  flex-direction:column;
   align-items:center;
   gap:8px;
-  text-align:center;
+  color:rgba(255,255,255,.5);
+}
+
+.footer-links a{
+  color:rgba(255,255,255,.6);
+  transition:.25s;
+}
+
+.footer-links a:hover{
+  color:var(--gold2);
+}
+
+.footer-contact{
+  justify-self:end;
+  color:rgba(255,255,255,.65);
   font-size:13px;
-  color:rgba(255,255,255,.56);
+  line-height:1.8;
 }
 
-.footer-bottom a{text-decoration:none;color:inherit;}
-
-.reveal{
-  opacity:0;
-  transform:translateY(34px);
-  transition:opacity .8s ease, transform .8s ease;
+.socials{
+  margin-top:8px;
+  display:flex;
+  gap:10px;
 }
 
-.reveal.visible{
-  opacity:1;
-  transform:translateY(0);
+.socials a{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  border:1px solid rgba(201,154,74,.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--gold2);
+  font-size:13px;
 }
 
 /* RESPONSIVE */
-@media(max-width:1080px){
-  .hero-inner,
-  .about-grid,
-  .services-grid{
+
+@media(max-width:980px){
+  .nav{
+    display:flex;
+    justify-content:space-between;
+  }
+
+  .menu{
+    display:none;
+  }
+
+  .portfolio-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .video-card,
+  .video-card.big-left,
+  .video-card.big-right{
+    grid-column:auto;
+    min-height:210px;
+  }
+
+  .lens-wrap{
+    min-height:auto;
+    padding-top:30px;
+    flex-direction:column;
+    gap:24px;
+  }
+
+  .lens{
+    width:260px;
+    height:260px;
+    margin:30px 0;
+  }
+
+  .lens-item{
+    position:relative;
+    left:auto;
+    right:auto;
+    top:auto;
+    bottom:auto;
+    max-width:420px;
+    width:100%;
+    justify-content:center;
+    text-align:left;
+  }
+
+  .lens-item.left{
+    text-align:left;
+    flex-direction:row;
+  }
+
+  .footer-inner{
     grid-template-columns:1fr;
+    text-align:center;
   }
 
-  .hero-side{
-    height:auto;
-    justify-content:flex-start;
+  .footer-brand{
+    justify-content:center;
   }
 
-  .hero-panel{
-    width:min(100%, 520px);
+  .footer-contact{
+    justify-self:center;
+  }
+
+  .socials{
+    justify-content:center;
   }
 }
 
-@media(max-width:768px){
-  :root{--header-h:64px;}
-
-  .menu-toggle{display:block;}
-
-  .main-nav{
-    position:absolute;
-    top:100%;
-    left:0;
-    width:100%;
-    flex-direction:column;
-    align-items:stretch;
-    display:none;
-    background:rgba(5,5,5,.96);
-    z-index:999;
-    gap:0;
-    padding:14px 16px 18px;
-    border-bottom:1px solid rgba(255,255,255,.08);
+@media(max-width:620px){
+  .nav{
+    padding:0 20px;
   }
 
-  .main-nav.active{display:flex;}
-
-  .main-nav a,
-  .nav-btn{
-    padding:14px 6px;
-    width:100%;
-    text-align:left;
-    font-size:15px;
-  }
-
-  .nav-item .dropdown{
-    position:static;
-    box-shadow:none;
-    border-radius:14px;
-    width:100%;
-    min-width:100%;
-    margin:0 0 8px 0;
-  }
-
-  .hero-inner{
-    padding:34px 0 56px;
-    gap:30px;
+  .logo img{
+    height:42px;
   }
 
   .hero h1{
-    font-size:clamp(40px, 13vw, 74px);
+    letter-spacing:4px;
   }
 
-  .section-title{
+  .signature{
+    font-size:36px;
+  }
+
+  .hero-actions{
     flex-direction:column;
-    align-items:flex-start;
+    align-items:center;
   }
 
-  .videos-grid{
+  .btn{
+    width:100%;
+    max-width:280px;
+  }
+
+  .portfolio-grid{
     grid-template-columns:1fr;
   }
 
-  .videos-grid .video-card{
-    grid-column:auto;
+  .video-card,
+  .video-card.big-left,
+  .video-card.big-right{
+    min-height:auto;
   }
-}
-  .intro-loader{
-  position:fixed;
-  inset:0;
-  background:#000;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-  transition:opacity 1s ease, transform 1.2s ease;
-}
 
-.intro-loader.hide{
-  opacity:0;
-  transform:scale(1.1);
-  pointer-events:none;
-}
-
-.intro-content{
-  text-align:center;
-  animation:introZoom 2.5s ease forwards;
-}
-
-.intro-content h1{
-  font-size:clamp(42px, 8vw, 120px);
-  letter-spacing:2px;
-  text-transform:uppercase;
-}
-
-.intro-content p{
-  margin-top:12px;
-  font-size:clamp(14px, 2vw, 22px);
-  opacity:0.7;
-  letter-spacing:3px;
-}
-
-@keyframes introZoom{
-  0%{
-    transform:scale(1.4);
-    opacity:0;
-  }
-  40%{
-    opacity:1;
-  }
-  100%{
-    transform:scale(1);
-    opacity:1;
+  .section-title{
+    letter-spacing:4px;
   }
 }
 </style>
 </head>
 
 <body>
-<div class="intro-loader" id="introLoader">
-  <div class="intro-content">
+
+<div class="intro-loader">
+  <div>
     <h1>Viktor Boguský</h1>
-    <p>Kamera &amp; Postprodukcia</p>
-    <p>Prišiel čas vytvoriť nezabudnuteľný príbeh!</p>
+    <p>Kamera & Postprodukcia</p>
   </div>
 </div>
-<header>
-  <div class="header-inner">
-    <a href="index.html" class="logo">Viktor Boguský</a>
-    <button class="menu-toggle" aria-label="Menu">☰</button>
 
-    <nav class="main-nav">
+<header class="header">
+  <nav class="nav">
+    <a href="index.html" class="logo">
+      <img src="logo_1.png" alt="Viktor Boguský logo">
+    </a>
+
+    <div class="menu">
+      <a href="index.html">Domov</a>
+      <a href="#sluzby">Služby</a>
       <a href="cennik.html">Cenník</a>
-      <a href="duo.html">DUO BALÍKY</a>
+      <a href="duo.html">Duo balíky</a>
       <a href="referencie.html">Referencie</a>
-      <a href="portfolio.html">Portfólio</a>
-      <a href="objednavka.html">Rezervácia</a>
-      <div class="nav-item">
-        <button class="nav-btn">Služby ▾</button>
-        <div class="dropdown">
-          <a href="sluzby.html">Prehľad služieb</a>
-        </div>
-      </div>
+      <a href="#portfolio">Portfólio</a>
+      <a href="omne.html">O mne</a>
       <a href="kontakt.html">Kontakt</a>
-    </nav>
-  </div>
+    </div>
+  </nav>
 </header>
 
-<section class="hero">
-  <video autoplay muted loop playsinline>
-    <source src="uvod_video.mp4" type="video/mp4">
+<main>
+
+<section class="hero" id="domov">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="video_1.mp4" type="video/mp4">
   </video>
-  <div class="hero-overlay"></div>
-  <div class="hero-glow"></div>
 
-  <div class="hero-inner">
-    <div class="hero-copy reveal">
-      <div class="hero-name">Viktor Boguský</div>
+  <div class="hero-content">
+    <h1>Viktor Boguský</h1>
+    <div class="signature">Kamera & Postprodukcia</div>
+    <p>Zachytím momenty, ktoré už nikdy nezažiješ znova.</p>
 
-      <h1>
-        Kamera &amp;<br>
-        <span class="muted">postprodukcia</span>
-      </h1>
-
-      <p>
-        Vizuálne spomienky, ktoré majú atmosféru, rytmus a emóciu. Tvorím video obsah pre stužkové, svadby, eventy, promo videá aj ďalšie projekty tak, aby výsledok nepôsobil obyčajne, ale filmovo a zapamätateľne.
-      </p>
-
-      <div class="hero-actions">
-        <a href="objednavka.html" class="btn btn-primary">Rezervovať termín</a>
-        <a href="#about" class="btn btn-secondary">Viac o mne</a>
-      </div>
-
-      <div class="hero-stats">
-        <div class="hero-stat">Stužkové • svadby • eventy • promo</div>
-        <div class="hero-stat">Video a foto služby na jednom mieste</div>
-      </div>
+    <div class="hero-actions">
+      <a href="cennik.html" class="btn primary">Pozrieť cenník</a>
+      <a href="duo.html" class="btn">Pozrieť Duo balíky</a>
+      <a href="rezervacia.html" class="btn">Rezervovať termín</a>
     </div>
+  </div>
 
-    <div class="hero-side reveal">
-      <div class="hero-panel">
-        <div class="hero-badge">KAMERA + POSTPRODUKCIA</div>
-        <h3>Jedna spolupráca, kompletný výsledok</h3>
-        <p>
-          Každý projekt beriem ako príbeh. Nejde len o zábery, ale o emóciu, atmosféru a výsledok, ku ktorému sa budeš rád vracať.
-        </p>
-        <div class="hero-list">
-          <div>Stužkové, svadby, eventy aj promo videá</div>
-          <div>Klipy, záznamy, pozvánky, colorgrading</div>
-          <div>Rýchla komunikácia a jednoduchá rezervácia</div>
+  <div class="scroll-icon"></div>
+</section>
+
+<section class="section lens-section" id="sluzby">
+  <div class="inner">
+    <div class="section-label">Služby</div>
+    <h2 class="section-title">Čo pre vás tvorím</h2>
+
+    <div class="lens-wrap">
+
+      <div class="lens-item left item-stuzkove">
+        <div class="lens-icon">▱</div>
+        <div>
+          <h3>Stužkové</h3>
+          <p>Každý detail vašej stužkovej premením na film, ku ktorému sa budete radi vracať.</p>
         </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<section class="section" id="about">
-  <div class="section-title reveal">
-    <h2>O mne</h2>
-    <p>Krátke predstavenie, čo tvorím, ako pracujem a čo môže klient od spolupráce očakávať.</p>
-  </div>
-
-  <div class="about-grid">
-    <div class="about-card reveal">
-      <h3>Kto som</h3>
-      <p>
-        Som Viktor Boguský a venujem sa kamere a postprodukcii. Zameriavam sa na tvorbu videí, ktoré majú dynamiku, emóciu a vizuálnu čistotu. Pri práci sa snažím spájať technickú stránku s citom pre atmosféru a detail.
-      </p>
-      <div class="about-list">
-        <div>Pracujem na stužkových, svadbách, eventoch aj promo projektoch</div>
-        <div>Dôraz kladiem na moderný strih, hudbu a colorgrading</div>
-        <div>Komunikácia a spoľahlivosť sú pre mňa rovnako dôležité ako samotný výsledok</div>
+      <div class="lens-item left item-svadby">
+        <div class="lens-icon">◍</div>
+        <div>
+          <h3>Svadby</h3>
+          <p>Zachytím váš svadobný deň tak, aby ste si emócie mohli prežiť znova.</p>
+        </div>
       </div>
-    </div>
 
-    <div class="about-highlight reveal">
-      <h3>Prečo práve ja</h3>
-      <p>
-        Nejde mi len o to, aby bolo video hotové. Dôležité je, aby malo charakter, aby zachytilo pravú atmosféru a aby pôsobilo prirodzene aj po rokoch. Každý projekt prispôsobujem konkrétnej udalosti aj ľuďom.
-      </p>
-      <div class="about-list">
-        <div>Individuálny prístup ku každému projektu</div>
-        <div>Snahu vytvoriť video, ktoré má vlastnú náladu</div>
-        <div>Čistý vizuál a zladenie celého výsledku od záberov po export</div>
+      <div class="lens"></div>
+
+      <div class="lens-item item-promo">
+        <div class="lens-icon">▣</div>
+        <div>
+          <h3>Promo videá</h3>
+          <p>Videá pre značky, projekty a podujatia v čistom profesionálnom štýle.</p>
+        </div>
       </div>
+
+      <div class="lens-item item-post">
+        <div class="lens-icon">✦</div>
+        <div>
+          <h3>Postprodukcia</h3>
+          <p>Strih, color grading, sound design a finálna podoba vašich záberov.</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<section class="section">
-  <div class="section-title reveal">
-    <h2>Služby</h2>
-    <p>Prehľad hlavných typov projektov, na ktoré sa zameriavam. Každý z nich môže mať vlastný rozsah aj štýl spracovania.</p>
-  </div>
+<section class="section" id="portfolio">
+  <div class="inner">
+    <div class="section-label">Portfólio</div>
+    <h2 class="section-title">Najnovšie práce</h2>
 
-  <div class="services-grid">
-    <div class="service-card reveal">
-      <h3>Stužkové</h3>
-      <p>Klipy, záznamy, pozvánky a úvodné videá so zameraním na emóciu, energiu a spomienku na celý večer.</p>
+    <div class="portfolio-grid">
+
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/3zES1AlxCd4" allowfullscreen></iframe>
+      </div>
+
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/V8z1SuHkfCk" allowfullscreen></iframe>
+      </div>
+
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/LiYAjlk7jZg" allowfullscreen></iframe>
+      </div>
+
+      <div class="video-card big-left">
+        <iframe src="https://www.youtube.com/embed/9Z8BojDP5no" allowfullscreen></iframe>
+      </div>
+
+      <div class="video-card big-right">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID_TU" allowfullscreen></iframe>
+      </div>
+
     </div>
 
-    <div class="service-card reveal">
-      <h3>Svadby</h3>
-      <p>Svadobné klipy aj plné záznamy s citom pre atmosféru, momenty a prirodzené zachytenie dňa.</p>
-    </div>
-
-    <div class="service-card reveal">
-      <h3>Eventy</h3>
-      <p>Aftermovies, zostrihy a dynamické videá z akcií, ktoré zachytia priebeh aj celkový vibe podujatia.</p>
-    </div>
-
-    <div class="service-card reveal">
-      <h3>Promo</h3>
-      <p>Promo videá, kampane a obsah pre značky, projekty alebo organizácie podľa konkrétneho zadania.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="section-title reveal">
-    <h2>Vybrané práce</h2>
-  </div>
-
-  <div class="videos-grid">
-    <article class="video-card reveal">
-      <div class="video-shell"><iframe src="https://www.youtube.com/embed/3zES1AlxCd4?rel=0" title="Video projekt 1" allowfullscreen></iframe></div>
-      <div class="video-meta"><strong>Stužková slávnosť</strong><span>Gymnázium v Humennom</span></div>
-    </article>
-
-    <article class="video-card reveal">
-      <div class="video-shell"><iframe src="https://www.youtube.com/embed/V8z1SuHkfCk?rel=0" title="Video projekt 2" allowfullscreen></iframe></div>
-      <div class="video-meta"><strong>Stužková slávnosť</strong><span>Cirkevné gymnázium vo Vranove n/T</span></div>
-    </article>
-
-    <article class="video-card reveal">
-      <div class="video-shell"><iframe src="https://www.youtube.com/embed/LiYAjlk7jZg?rel=0" title="Video projekt 3" allowfullscreen></iframe></div>
-      <div class="video-meta"><strong>Dokumentárny film /TRAILER/</strong><span>NIMA</span></div>
-    </article>
-
-    <article class="video-card reveal">
-      <div class="video-shell"><iframe src="https://www.youtube.com/embed/9Z8BojDP5no?rel=0" title="Video projekt 4" allowfullscreen></iframe></div>
-      <div class="video-meta"><strong>Dronové zábery</strong><span>Levoča</span></div>
-    </article>
-  </div>
-</section>
-
-<section class="section">
-  <div class="cta-panel reveal">
-    <h3>Máš záujem o spoluprácu?</h3>
-    <p>
-      Ak chceš video zo stužkovej, svadby, eventu alebo potrebuješ promo obsah, ozvi sa mi. Spolu nájdeme riešenie, ktoré bude sedieť tvojmu projektu aj rozpočtu.
-    </p>
-    <div class="cta-actions">
-      <a href="objednavka.html" class="btn btn-primary">Rezervovať termín</a>
-      <a href="kontakt.html" class="btn btn-secondary">Kontaktovať</a>
+    <div class="more-btn-wrap">
+      <a href="portfolio.html" class="small-btn">Zobraziť viac</a>
     </div>
   </div>
 </section>
+
+</main>
 
 <footer class="footer">
-  <div class="footer-wrap">
-    <div class="footer-top">
-      <div class="footer-contact"><p>kontakt@viktorbogusky.sk</p></div>
-      <div class="footer-contact"><p>+421 948 933 109</p></div>
+  <div class="footer-inner">
+
+    <div class="footer-brand">
+      <img src="logo_1.png" alt="Viktor Boguský logo">
+      <div>
+        <strong>Viktor Boguský</strong>
+        <small>Kamera & Postprodukcia</small>
+      </div>
     </div>
 
-    <div class="footer-socials">
-      <a href="https://www.instagram.com/vittquoo/" target="_blank">Instagram</a>
-      <a href="https://www.facebook.com/profile.php?id=100079203706823" target="_blank">Facebook</a>
-      <a href="https://www.tiktok.com/@viktorbogusky" target="_blank">TikTok</a>
+    <div class="footer-center">
+      <div class="copyright">
+        © 2026 Viktor Boguský. Všetky práva vyhradené.
+      </div>
+
+      <div class="footer-links">
+        <a href="podmienky.html">Obchodné podmienky</a>
+        <span>•</span>
+        <a href="gdpr.html">GDPR</a>
+      </div>
     </div>
 
-    <div class="footer-bottom">
-      <span><a href="gdpr.html">GDPR</a> | <a href="podmienky.html">Obchodné podmienky</a></span>
-      <span>Vytvoril: Viktor Boguský</span>
+    <div class="footer-contact">
+      <div>kontakt@viktorbogusky.sk</div>
+      <div>+421 904 123 456</div>
+
+      <div class="socials">
+        <a href="#">IG</a>
+        <a href="#">TT</a>
+        <a href="#">YT</a>
+      </div>
     </div>
+
   </div>
 </footer>
 
-<script>
-const toggle = document.querySelector('.menu-toggle');
-const nav = document.querySelector('.main-nav');
-const navItems = document.querySelectorAll('.nav-item');
-const heroCopy = document.querySelector('.hero-copy');
-
-toggle.addEventListener('click', (e) => {
-  e.stopPropagation();
-  nav.classList.toggle('active');
-});
-
-navItems.forEach(item => {
-  const btn = item.querySelector('.nav-btn');
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    navItems.forEach(i => {
-      if(i !== item) i.classList.remove('active');
-    });
-    item.classList.toggle('active');
-  });
-});
-
-document.addEventListener('click', () => {
-  nav.classList.remove('active');
-  navItems.forEach(item => item.classList.remove('active'));
-});
-
-const revealItems = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.12 });
-revealItems.forEach(item => observer.observe(item));
-
-function applyFloating(x = 0, y = 0){
-  if(window.innerWidth <= 768){
-    if(heroCopy) heroCopy.style.transform = 'none';
-    return;
-  }
-  if(heroCopy) heroCopy.style.transform = `translate3d(${x * 8}px, ${y * -6}px, 0)`;
-}
-
-applyFloating(0,0);
-
-window.addEventListener('mousemove', (e) => {
-  const x = (e.clientX / window.innerWidth - 0.5);
-  const y = (e.clientY / window.innerHeight - 0.5);
-  document.documentElement.style.setProperty('--mx', `${(e.clientX / window.innerWidth) * 100}%`);
-  document.documentElement.style.setProperty('--my', `${(e.clientY / window.innerHeight) * 100}%`);
-  applyFloating(x, y);
-});
-
-window.addEventListener('resize', () => applyFloating(0,0));
-  
-</script>
-<script>
-const introLoader = document.getElementById('introLoader');
-
-window.addEventListener('load', () => {
-  window.scrollTo(0,0);
-
-  setTimeout(() => {
-    introLoader.classList.add('hide');
-  }, 1500);
-});
-</script>
 </body>
 </html>
